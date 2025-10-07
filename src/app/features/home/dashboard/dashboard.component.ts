@@ -23,10 +23,10 @@ export class DashboardComponent {
 
   readonly menu = signal<MenuItem[]>([
     { label: 'Inicio',            icon: 'assets/icons/Home.svg',           route: '/home',                chevron: true },
+    { label: 'Solicitar préstamo',icon: 'assets/icons/Handshake.svg',      route: '/home/solicitar',      chevron: true },
     { label: 'Fortuna Puntos',    icon: 'assets/icons/favorite-database.svg', route: '/home/recargar-puntos',     chevron: true },
     { label: 'Pagar',             icon: 'assets/icons/HandCoins.svg',     route: '/home/pagar',          chevron: true },
     { label: 'Reporte de deudas', icon: 'assets/icons/FileLineChart.svg',  route: '/home/reportes',       chevron: true },
-    { label: 'Solicitar préstamo',icon: 'assets/icons/Handshake.svg',      route: '/home/solicitar',      chevron: true },
     { label: 'Cerrar Sesión',     icon: 'assets/icons/LogOut.svg',    action: 'logout',              chevron: false },
   ]);
 

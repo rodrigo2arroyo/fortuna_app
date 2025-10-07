@@ -1,6 +1,7 @@
 import {Component, signal} from '@angular/core';
 import {RouterLink} from '@angular/router';
 import {StepCardComponent} from '../../../shared/step-card/step-card.component';
+import {environment} from '../../../../environments/environments';
 
 @Component({
   selector: 'app-recargar-puntos',
@@ -9,6 +10,9 @@ import {StepCardComponent} from '../../../shared/step-card/step-card.component';
 })
 export class RecargarPuntosComponent {
   step = signal(0);
+  numeroCuentaInterbank = environment.numeroCuentaInterbank;
+  numeroCuentaInterbancarioInterbank = environment.numeroCuentaInterbancarioInterbank;
+  titularCuentaInterbank = environment.titularCuentaInterbank;
 
   goToStep(n: number) {
     this.step.set(n);

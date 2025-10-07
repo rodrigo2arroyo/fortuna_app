@@ -26,13 +26,12 @@
 
   <div class="w-full max-w-[1200px] px-20 pt-4 pb-12">
     <div class="w-full max-w-[584px] mx-auto shadow-sm rounded-lg bg-white border border-[#d5d7da] p-6 flex flex-col gap-6 text-[#535862]">
-
-      <div class="flex items-center justify-between text-left">
-        <div class="w-[131px] flex flex-col gap-0.5">
+      <div class="flex items-center justify-between">
+        <div class="flex flex-col gap-0.5">
           <span class="text-[14px] leading-5">Capital por pagar</span>
           <b class="text-[24px] leading-8 text-[#0a0d12]">S/ 600</b>
         </div>
-        <div class="w-[131px] flex flex-col gap-0.5 text-right">
+        <div class="flex flex-col gap-0.5 text-right">
           <span class="text-[14px] leading-5">Pagado</span>
           <b class="text-[24px] leading-8 text-[#0a0d12]">S/ 600</b>
         </div>
@@ -49,11 +48,11 @@
       </div>
 
       <div class="w-full flex items-center justify-between text-[#252b37]">
-        <div class="w-[131px] flex gap-1">
+        <div class="flex items-baseline gap-2">
           <span class="text-[14px] leading-5 font-medium">Cuotas pagadas</span>
-          <b class="text-[14px] leading-5">1 de 6</b>
+          <b class="text-[14px] leading-5 whitespace-nowrap">1 de 6</b>
         </div>
-        <div class="flex gap-1 text-right">
+        <div class="flex gap-2 text-right">
           <span class="text-[14px] leading-5 font-medium">Monto inicial</span>
           <b class="text-[14px] leading-5">S/1,000.00</b>
         </div>
@@ -61,21 +60,40 @@
 
       <div class="w-full rounded-lg bg-[#eef4ff] p-2 text-[#0a0d12]">
         <div class="w-full flex items-center justify-between">
-          <div class="w-[131px] flex flex-col gap-0.5">
+          <div class="flex flex-col gap-0.5">
             <span class="text-[14px] leading-5 font-medium">Siguiente pago:</span>
             <span class="text-[14px] leading-5 font-medium text-[#717680]">Vencimiento:</span>
           </div>
-          <div class="w-[131px] flex flex-col gap-0.5 text-right text-[#181d27]">
+          <div class="flex flex-col gap-0.5 text-right text-[#181d27]">
             <b class="text-[14px] leading-5">S/118.23</b>
             <span class="text-[14px] leading-5 font-semibold">05/07/2025</span>
           </div>
         </div>
       </div>
 
-      <button class="w-full flex items-center justify-between text-[#dc6803]">
-        <span class="font-semibold leading-5">Ver más detalles</span>
-        <img src="assets/icons/ChevronRight.svg" alt="" class="w-6 h-6">
+      <button class="w-full flex items-center justify-between text-[#dc6803] select-none"
+              type="button"
+              (click)="toggleDetails()"
+              [attr.aria-expanded]="showDetails()">
+        <span class="font-semibold leading-5">{{ label() }}</span>
+        <img src="assets/icons/ChevronRight.svg"
+             class="w-6 h-6 transition-transform duration-200"
+             [class.rotate-90]="showDetails()">
       </button>
+
+      @if(showDetails()){
+        <div class="border-t border-[#e5e7ea] pt-4 text-[14px] leading-5 text-[#252b37]">
+          <div class="flex items-center justify-between py-1">
+            <span>Plan:</span><b>6 cuotas</b>
+          </div>
+          <div class="flex items-center justify-between py-1">
+            <span>Tasa:</span><b>12% EA</b>
+          </div>
+          <div class="flex items-center justify-between py-1">
+            <span>Próximas 3 cuotas:</span><b>S/118.23 • S/118.23 • S/118.23</b>
+          </div>
+        </div>
+      }
     </div>
   </div>
 </section>
