@@ -1,0 +1,258 @@
+<div class="w-full bg-white min-h-[900px] text-center text-[14px] text-black ">
+  <main>
+    <section class="w-full flex flex-col items-center gap-16 p-10">
+      <div class="w-full max-w-[1192px] h-10 flex items-center gap-[51px]">
+        <button
+          routerLink="/home"
+          class="rounded-full bg-white border border-[#e9eaeb] h-10 px-4 inline-flex items-center justify-center gap-2 cursor-pointer"
+        >
+          <img src="assets/icons/arrow-left.svg" alt="" class="w-6 h-6">
+          <span class="font-semibold text-[14px] leading-4">Atrás</span>
+        </button>
+
+        <nav class="flex items-center gap-[23px] text-left text-[#d5d7da]">
+          <span class="tracking-[0.03em] uppercase font-semibold">Productos</span>
+          <img src="assets/icons/ChevronRight.svg" class="w-6 h-6" alt="">
+          <span class="tracking-[0.03em] uppercase font-semibold text-[#414651]">RECARGAR PUNTOS</span>
+        </nav>
+      </div>
+
+      @if (step() === 0) {
+        <div class="w-full max-w-[1192px] mx-auto flex justify-center items-start gap-[45px] text-[#fdfdfd]">
+          <div class="w-[407px] rounded-2xl bg-[#f79009] overflow-hidden flex flex-col items-center">
+            <div class="w-full bg-[#f79009] rounded-t-[4px] py-2 px-4 flex items-center justify-center">
+              <img class="w-[30px] h-auto object-cover" alt="">
+              <div class="px-2">
+                <div class="leading-4 font-semibold">Préstamos sin evaluación</div>
+              </div>
+            </div>
+
+            <div class="w-[407px] flex-1 shadow-[0_1px_2px_rgba(10,13,18,0.05)] rounded-2xl bg-white border-2 border-[#f79009] box-border flex flex-col items-center justify-center p-6 gap-4 text-[#717680] ">
+              <div class="w-full flex items-center justify-center text-[30px] text-[#f79009]">
+                <b class="leading-[38px]">Fortuna Opportunity</b>
+              </div>
+
+              <div class="w-full leading-5 font-medium h-10 text-left">
+                ¿No calificas? Recarga puntos como garantía para un préstamo sin evaluación.
+              </div>
+
+              <div class="w-[211px] flex flex-col items-center gap-2 text-[#a4a7ae]">
+                <div class="flex items-center">
+                  <div class="leading-5">Desde s/300.00 hasta s/3,000.00</div>
+                </div>
+
+                <div class="w-full rounded-xl bg-[#f9fafb] border border-[#e5e7ea] px-3 py-3 flex items-center text-[24px] text-[#131927]">
+                  <div class="w-[187px] flex items-center gap-3">
+                    <b class="leading-8">s/</b>
+                    <div class="flex-1 leading-8 font-medium text-[#a4a7ae]">0.00</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="w-full flex flex-col items-start gap-4 text-left">
+                <div class="w-full flex items-center justify-center text-[24px] text-black">
+                  <div class="flex-1 leading-8 font-semibold">Beneficios</div>
+                </div>
+
+                <div class="w-full flex items-start gap-4">
+                  <img class="w-6 h-6" alt="" src="assets/icons/checkbox-circle-fill.svg">
+                  <div class="flex-1 leading-5">Accede a préstamos sin evaluaciones.</div>
+                </div>
+                <div class="w-full flex items-start gap-4">
+                  <img class="w-6 h-6" alt="" src="assets/icons/checkbox-circle-fill.svg">
+                  <div class="flex-1 leading-5">Accede a préstamos sin evaluaciones.</div>
+                </div>
+                <div class="w-full flex items-start gap-4">
+                  <img class="w-6 h-6" alt="" src="assets/icons/checkbox-circle-fill.svg">
+                  <div class="flex-1 leading-5">Te prestamos sin mirar tu historial crediticio.</div>
+                </div>
+              </div>
+
+              <button
+                class="w-full rounded-full bg-gradient-to-r from-[#ff5b00] to-[#ff9500] text-white py-4 px-6 text-[18px] cursor-pointer"
+                (click)="goToStep(1)">
+                <span class="leading-6 uppercase font-semibold">Recarga Puntos</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="w-[407px] rounded-2xl bg-[#2e90fa] overflow-hidden flex flex-col items-center">
+            <div class="w-full bg-[#2e90fa] rounded-t-[4px] py-2 px-4 flex items-center justify-center">
+              <img class="w-[30px] h-auto object-cover" alt="">
+              <div class="px-2">
+                <div class="leading-4 font-semibold">Ten el control de tus deudas</div>
+              </div>
+            </div>
+
+            <div class="w-[407px] shadow-[0_1px_2px_rgba(10,13,18,0.05)] rounded-2xl bg-white border-2 border-[#53b1fd] box-border flex flex-col items-center justify-center p-6 gap-4 text-[#717680]  text-[30px]">
+              <div class="w-full flex items-center justify-center text-[#0ba5ec]">
+                <b class="leading-[38px]">Fortuna Plus</b>
+              </div>
+
+              <div class="w-full text-left text-[14px] leading-5 font-medium h-10">
+                Acumula puntos cada mes y usalos cuando quieras para pagar tus préstamos
+              </div>
+
+              <div class="w-full flex flex-col items-start text-black">
+                <b class="leading-[38px]">S/19.90</b>
+                <div class="text-[14px] leading-5 text-[#9ea2ae]">Suscripción mensual</div>
+              </div>
+
+              <div class="w-full flex flex-col items-start gap-4 text-left text-[14px]">
+                <div class="w-full flex items-center justify-center text-[24px] text-black">
+                  <div class="flex-1 leading-8 font-semibold">Beneficios</div>
+                </div>
+
+                <div class="w-full flex items-start gap-4">
+                  <img class="w-8 h-8 object-cover" alt="" src="assets/icons/Loan.png">
+                  <div class="flex-1 leading-5">Úsalo como pago mínimo de tu préstamo.</div>
+                </div>
+                <div class="w-full flex items-start gap-4">
+                  <img class="w-8 h-8 object-cover" alt="" src="assets/icons/Money.png">
+                  <div class="flex-1 leading-5">Úsalo para pagar tu préstamo en cualquier momento.</div>
+                </div>
+                <div class="w-full flex items-start gap-4">
+                  <img class="w-8 h-8 object-cover" alt="" src="assets/icons/Calendar.png">
+                  <div class="flex-1 leading-5">
+                    Reprograma 1 mes de pago sin penalidad una vez al año, mínimo 3 meses seguido de suscripción.
+                  </div>
+                </div>
+              </div>
+
+              <button class="w-full rounded-full bg-[#0a0d12] text-white py-4 px-6 text-[18px]">
+                <span class="leading-6 font-semibold">Actualizar a plus</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      }
+
+      @if (step() === 1) {
+        <app-step-card
+          [currentStep]="1"
+          [totalSteps]="2"
+          [headerText]="'PASO 01'"
+          [title]="'Confirmar'"
+          [footerPlacement]="'inside'">
+
+          <div step-content class="flex flex-col gap-6">
+            <div class="rounded-xl bg-[#f9fafb] border border-[#e5e7ea] px-3 py-3 flex items-center gap-3">
+              <b class="leading-8">s/</b>
+              <div class="flex-1 leading-8 font-medium text-[22px] sm:text-[24px] text-[#131927]">500.00</div>
+            </div>
+            <div class="text-[14px] text-[#a4a7ae] -mt-2">Desde s/300.00 hasta s/3,000.00</div>
+            <div class="shadow-[0_1px_2px_rgba(10,13,18,0.05)] rounded-2xl bg-white border-2 border-[#e9eaeb] p-6 flex flex-col gap-4">
+              <div class="text-center text-[20px] sm:text-[22px] font-semibold text-[#181d27]">Costos</div>
+
+              <div class="flex items-center justify-between text-[14px] text-[#717680]">
+                <div class="font-medium">Comisión</div>
+                <b class="w-[131px] text-right text-[#181d27]">S/25.00</b>
+              </div>
+              <div class="flex items-center justify-between text-[14px] text-[#717680]">
+                <div class="font-medium">Puntos a recargar</div>
+                <b class="w-[131px] text-right text-[#181d27]">s/475.00</b>
+              </div>
+              <div class="flex items-center justify-between text-[14px] text-[#717680]">
+                <div class="font-medium">Monto a garantizar</div>
+                <b class="w-[131px] text-right text-[#181d27]">s/475.00</b>
+              </div>
+            </div>
+          </div>
+          <div step-footer>
+            <button
+              class="w-full rounded-full bg-black text-white py-4 px-6 text-[16px] sm:text-[18px] font-semibold cursor-pointer"
+              (click)="goToStep(2)">
+              CONFIRMAR RECARGA
+            </button>
+          </div>
+        </app-step-card>
+      }
+      @if (step() === 2) {
+        <app-step-card
+          [currentStep]="2"
+          [totalSteps]="2"
+          size="md"
+          headerText="PASO 02"
+          title="¡Recarga!"
+          footerPlacement="inside">
+
+          <div step-content class="flex flex-col gap-8">
+            <div class="flex flex-col gap-1">
+              <div class="text-[14px] text-[#a4a7ae]">Monto a transferir</div>
+              <b class="text-[30px] leading-[38px] text-black">S/500.00</b>
+            </div>
+
+            <div class="w-full shadow-[0_1px_2px_rgba(10,13,18,0.05)] rounded-lg bg-white border-2 border-[#e9eaeb] p-6 flex flex-col gap-4">
+              <div class="text-center text-[24px] font-semibold text-black">Fortuna puntos</div>
+              <div class="flex items-center justify-between text-[14px]">
+                <div class="font-medium text-[#717680]">N° movimiento</div>
+                <b class="text-[#181d27]">114441441</b>
+              </div>
+              <div class="flex items-center justify-between text-[14px]">
+                <div class="font-medium text-[#717680]">Fecha</div>
+                <b class="text-[#181d27]">22 ago 2025 10:00 pm</b>
+              </div>
+            </div>
+
+            <div class="w-full rounded-lg bg-[#f5f8ff] p-6 flex flex-col gap-4 text-[#444ce7]">
+              <b class="text-center text-[24px]">¿Cómo pagar tu recarga?</b>
+
+              <div class="flex flex-col gap-2">
+                <b class="text-[14px] text-[#444ce7]">PASO 1</b>
+                <div class="text-[14px] text-[#717680]">
+                  Transfiere o deposita a cualquiera de las siguientes cuentas bancarias
+                </div>
+              </div>
+
+              <div class="flex flex-col gap-4 text-black">
+                <div class="flex items-center gap-6">
+                  <img class="w-[57px] h-[57px]" src="assets/icons/yape-seeklogo-yape.png"/>
+                  <div>
+                    <div class="text-[12px] text-[#717680] leading-[18px]">AL NÚMERO</div>
+                    <div class="leading-6 font-medium">993 531 820</div>
+                    <div class="leading-6 font-medium">Nombre Apellido</div>
+                  </div>
+                </div>
+                <hr class="border-[#e9eaeb]">
+                <div class="flex items-center gap-6">
+                  <img class="w-[57px] h-[57px]" src="assets/icons/yape-seeklogo-interbank.png"/>
+                  <div>
+                    <div class="text-[12px] text-[#717680] leading-[18px]">Cuenta corriente soles</div>
+                    <div class="leading-6 font-medium">Nº 000 000 00000000</div>
+                    <div class="leading-6 font-medium whitespace-pre-wrap">CCI 000 000 00000000</div>
+                    <div class="leading-6 font-medium">Nombre Apellido</div>
+                  </div>
+                </div>
+
+                <hr class="border-[#e9eaeb]">
+                <div class="flex items-center gap-6">
+                  <img class="w-[57px] h-[57px]" src="assets/icons/yape-seeklogo-bcp.png"/>
+                  <div>
+                    <div class="text-[12px] text-[#717680] leading-[18px]">Cuenta corriente soles</div>
+                    <div class="leading-6 font-medium">Nº 000 000 00000000</div>
+                    <div class="leading-6 font-medium whitespace-pre-wrap">CCI 000 000 00000000</div>
+                    <div class="leading-6 font-medium">Nombre Apellido</div>
+                  </div>
+                </div>
+
+                <div class="flex flex-col gap-1">
+                  <b class="text-[14px] text-[#444ce7]">PASO 2</b>
+                  <div class="text-[14px] text-[#717680]">
+                    <span class="font-medium">Envíanos la constancia de transferencia o depósito a nuestro Whatsapp </span>
+                    <b>993 531 820</b>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div step-footer class="px-6 py-6 bg-transparent">
+            <button class="w-full rounded-full bg-[#0a0d12] text-white py-4 px-6 text-[18px] font-semibold">
+              Enviar comprobante
+            </button>
+          </div>
+        </app-step-card>
+      }
+    </section>
+  </main>
+</div>

@@ -1,0 +1,68 @@
+<div class="w-full bg-white text-left text-[14px] text-black font-sans min-h-screen">
+  <div class="w-full grid grid-cols-1 md:grid-cols-2 min-h-screen items-stretch">
+    <div class="bg-[#ffbf51] min-h-[900px] hidden md:block"></div>
+
+    <div class="flex flex-col items-center justify-center gap-20 py-20 px-8 md:px-30 min-h-[900px]">
+      <div class="w-full flex flex-col items-start gap-4 text-[30px] text-[#1a202c]">
+        <div class="flex flex-col gap-4">
+          <b class="leading-[38px]">Iniciar Sesión</b>
+          <p class="text-[14px] leading-5 text-[#2d3748]">
+            Doy mi consentimiento para el procesamiento de mis datos personales de acuerdo con la
+            <a class="underline text-inherit" href="https://fortuna.com.pe/politica-de-privacidad" target="_blank">Política de Privacidad</a>
+            y
+            <a class="underline text-inherit" href="https://fortuna.com.pe/terminos-y-condiciones" target="_blank">Términos y Condiciones</a>.
+          </p>
+        </div>
+
+        <div class="w-full flex flex-col gap-6 text-[16px] text-[#131927] mt-4">
+          <div class="flex flex-col gap-2">
+            <label class="flex items-center">
+              <span class="flex-1 leading-6 font-medium">Documentos de identidad (DNI)</span>
+            </label>
+            <div class="w-full rounded-xl bg-gray-50 border border-[#e5e7ea] px-3 py-3 flex items-center">
+              <input
+                type="text"
+                inputmode="numeric"
+                placeholder="44444444"
+                class="w-full bg-transparent outline-none leading-6 placeholder:text-[#8a8f9c]"
+              />
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <label class="flex items-center">
+              <span class="flex-1 leading-6 font-medium">Contraseña</span>
+            </label>
+            <div class="w-full rounded-xl bg-gray-50 border border-[#e5e7ea] px-3 py-3 flex items-center gap-3">
+              <input
+                type="password"
+                placeholder="*******"
+                class="w-full bg-transparent outline-none leading-6 placeholder:text-[#8a8f9c]"
+              />
+              <img class="w-6 h-6" alt="" />
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2 text-center text-[18px] text-white">
+            <button
+              type="button"
+              class="inline-flex items-center justify-center rounded-full bg-[#0a0d12] px-6 py-4"
+              (click)="onLogin()"
+            >
+              <span class="leading-6 font-semibold">Iniciar sesión</span>
+            </button>
+
+            <div class="px-2 text-black">
+              <a href="#" class="underline leading-6 font-semibold">Recuperar contraseña</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 text-[16px]">
+        <span class="leading-6">¿No tienes cuenta?</span>
+        <a href="#" class="underline leading-6 text-[#2e90fa]">Crea una cuenta ahora</a>
+      </div>
+    </div>
+  </div>
+</div>

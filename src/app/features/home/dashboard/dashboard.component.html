@@ -1,0 +1,139 @@
+<main class="bg-white text-neutral-900 font-sans">
+  <div class="absolute top-20 left-0 w-full flex items-start gap-16 px-20 py-10">
+    <aside class="w-[247px] flex flex-col">
+      <div class="flex flex-col gap-4">
+        @for (item of menu(); track item.label) {
+          @if (item.route) {
+            <a [routerLink]="item.route"
+               #rla="routerLinkActive"
+               routerLinkActive="text-neutral-900"
+               [routerLinkActiveOptions]="{ exact: true }"
+               class="w-full rounded-2xl border border-gray-200 px-4 py-6 flex items-center justify-center gap-4 transition-colors cursor-pointer"
+               [class.bg-amber-50]="rla.isActive"
+               [class.bg-white]="!rla.isActive">
+              <div class="flex items-center gap-2 flex-1">
+                <img [src]="item.icon" [alt]="item.label" class="w-6 h-6" />
+                <div class="font-semibold leading-6">{{ item.label }}</div>
+              </div>
+
+              @if (item.chevron) {
+                <img src="assets/icons/ChevronRight.svg" alt="" class="w-6 h-6" />
+              }
+            </a>
+          } @else {
+            <button (click)="onItemClick(item)"
+                    class="w-full rounded-2xl px-4 py-6 flex items-center gap-2 hover:bg-gray-50 cursor-pointer">
+              <img [src]="item.icon" [alt]="item.label" class="w-6 h-6" />
+              <div class="font-semibold leading-6">{{ item.label }}</div>
+            </button>
+          }
+        }
+      </div>
+    </aside>
+
+    <section class="flex-1 flex flex-col text-lg">
+      <div class="flex flex-col gap-6">
+        <div class="flex flex-col gap-6">
+          <div class="w-full shadow-sm border-b-2 border-amber-500 px-4 py-4 flex items-center">
+            <div class="flex items-center gap-4 flex-1">
+              <img class="w-8 h-8 object-cover" alt="" src="assets/img/Personal.png">
+              <div class="flex-1 font-semibold leading-7">Mis préstamos</div>
+            </div>
+          </div>
+
+          <div class="w-[450px] flex flex-col">
+            <div class="shadow-sm rounded-t-md bg-white border border-gray-300 px-6 py-6 flex items-center gap-2">
+              <div class="flex-1 flex flex-col items-center gap-2">
+                <div class="w-full font-semibold leading-7">Préstamos sin historial</div>
+
+                <div class="w-[361px] flex flex-col gap-2 text-base text-black">
+                  <div class="flex items-center justify-between">
+                    <div class="leading-6">Estado:</div>
+                    <div class="rounded-full bg-red-500 h-10 px-3 flex items-center text-sm text-white">
+                      <span class="font-semibold leading-4 px-2">No califica</span>
+                    </div>
+                  </div>
+                  <div class="h-10 flex items-center justify-between">
+                    <div class="leading-6">Vencimiento:</div>
+                    <div class="rounded-md h-6 px-2.5 flex items-center text-xs text-gray-400">
+                      <span class="leading-4">Ninguno</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <img
+                routerLink="/home/mis-prestamos"
+                class="w-6 h-6 cursor-pointer"
+                alt="Ir a Mis Préstamos"
+                src="assets/icons/ChevronRight.svg"
+              />
+            </div>
+
+            <div class="shadow-sm rounded-b-md bg-white border border-t-0 border-gray-300 px-6 py-4 text-center">
+              <button
+                routerLink="/home/garantizar-puntos"
+                class="w-full rounded-full bg-neutral-900 h-12 flex items-center justify-center px-5 text-white cursor-pointer"
+              >
+                <span class="font-semibold leading-5">Garantizar con puntos</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-6">
+          <div class="w-full shadow-sm border-b-2 border-amber-500 px-4 py-4 flex items-center">
+            <div class="flex items-center gap-4 flex-1">
+              <img class="w-8 h-8" alt="" src="assets/icons/favorite-database.svg">
+              <div class="flex-1 font-semibold leading-7">Fortuna Puntos</div>
+            </div>
+          </div>
+
+          <div class="shadow-sm rounded-lg bg-white border border-gray-300 h-[136px] px-6 py-6 flex items-center gap-2 text-base text-black">
+            <div class="flex-1 flex flex-col gap-2">
+              <div class="flex items-center justify-between">
+                <div class="leading-6">Puntos disponibles:</div>
+                <div class="text-sm leading-5 font-medium text-neutral-900">475 pts</div>
+              </div>
+              <div class="flex items-center justify-between">
+                <div class="leading-6">Puntos en garantía</div>
+                <div class="text-sm leading-5 font-medium text-gray-400">0 pts</div>
+              </div>
+              <div class="flex items-center justify-between">
+                <div class="leading-6">Puntos por activar</div>
+                <div class="text-sm leading-5 font-medium text-gray-400">0 pts</div>
+              </div>
+            </div>
+            <img class="w-6 h-6" alt="" src="assets/icons/ChevronRight.svg">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <aside class="w-[450px] relative flex flex-col items-center gap-6 text-2xl text-black bg-[#ffa101] rounded-2xl shadow-sm px-6 pt-6 pb-0 overflow-hidden">
+      <div class="absolute top-[180px] -left-[245px] w-[560px] h-[581px] bg-[#ffbf51] rounded-[194px] -rotate-[48deg]"></div>
+      <div class="absolute top-[511px] left-[46px] w-[238px] h-[27px] bg-[#ffb83f] rounded-full"></div>
+      <div class="w-full flex flex-col gap-2 z-10">
+        <h3 class="tracking-tight leading-[1.2] font-semibold">
+          Solicita tu crédito sin evaluaciones con Fortuna Puntos
+        </h3>
+        <p class="text-sm leading-relaxed text-black/60">
+          ¿No calificas? Recarga puntos como garantía para un préstamo sin evaluación.
+        </p>
+
+        <div class="flex gap-3 text-center text-sm text-white">
+          <button
+            routerLink="/home/recargar-puntos"
+            class="flex-1 rounded-full bg-neutral-900 h-10 flex items-center justify-center px-4 cursor-pointer"
+          >
+            <span class="font-semibold leading-4 text-white">Recargar</span>
+          </button>
+          <button class="flex-1 rounded-full bg-white border border-gray-200 h-10 flex items-center justify-center px-4 text-black">
+            <span class="font-semibold leading-4">Ver más</span>
+          </button>
+        </div>
+      </div>
+
+      <img class="relative z-10 w-[475px] h-[360px] object-cover" alt="" src="assets/img/freepik--Character--inject-106.svg">
+    </aside>
+  </div>
+</main>

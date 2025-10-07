@@ -1,0 +1,52 @@
+<section
+  class="flex flex-col items-center gap-6 text-[#0a0d12] text-[12px] w-full"
+  [ngClass]="containerClass()"
+  [attr.aria-label]="ariaLabel()">
+  @if (showProgress()) {
+    <div class="w-full flex items-center gap-5"
+         [ngStyle]="{ width: computedWidth(), 'max-width': computedMaxWidth() }"
+         role="progressbar"
+         [attr.aria-valuemin]="1" [attr.aria-valuemax]="totalSteps()" [attr.aria-valuenow]="currentStep()">
+      <div class="flex-1 flex items-center gap-2">
+        @for (filled of steps(); track $index) {
+          <div class="relative h-2 flex-1 rounded-full"
+               [class.bg-[#47cd89]]="filled"
+               [class.bg-[#e9eaeb]]="!filled"></div>
+        }
+      </div>
+      <b class="tracking-[0.5px] leading-[150%] text-black">{{ currentStep() }}/{{ totalSteps() }}</b>
+    </div>
+  }
+
+  <div class="w-full shadow-[0_1px_2px_rgba(10,13,18,0.05)] rounded-2xl bg-white border-2 border-[#e9eaeb] overflow-hidden"
+       [ngClass]="cardClass()"
+       [ngStyle]="{ width: computedWidth(), 'max-width': computedMaxWidth() }">
+
+    @if (showHeader()) {
+      <div class="w-full h-[69px] bg-[#eef4ff] flex items-center justify-center text-center text-[#6172f3] text-[20px]">
+        <div class="leading-[30px] font-semibold w-full text-center">
+          {{ headerText() || ('PASO ' + stepPadded()) }}
+        </div>
+      </div>
+    }
+
+    <div class="px-6 pt-8 pb-6">
+      @if (title()) {
+        <h2 class="text-center text-[22px] sm:text-[24px] leading-8 font-semibold text-[#181d27] mb-6">
+          {{ title() }}
+        </h2>
+      }
+      <ng-content select="[step-content]"></ng-content>
+    </div>
+
+    @if (showFooter() && footerPlacement() === 'inside') {
+      <ng-content select="[step-footer]"></ng-content>
+    }
+  </div>
+
+  @if (showFooter() && footerPlacement() === 'outside') {
+    <div class="w-full" [ngStyle]="{ width: computedWidth(), 'max-width': computedMaxWidth() }">
+      <ng-content select="[step-footer]"></ng-content>
+    </div>
+  }
+</section>
