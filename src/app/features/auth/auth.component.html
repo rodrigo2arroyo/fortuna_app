@@ -17,14 +17,19 @@
         <div class="w-full flex flex-col gap-6 text-[16px] text-[#131927] mt-4">
           <div class="flex flex-col gap-2">
             <label class="flex items-center">
-              <span class="flex-1 leading-6 font-medium">Documentos de identidad (DNI)</span>
+              <span class="flex-1 leading-6 font-medium">Documento de identidad (DNI)</span>
             </label>
-            <div class="w-full rounded-xl bg-gray-50 border border-[#e5e7ea] px-3 py-3 flex items-center">
+
+            <div
+              class="w-full rounded-xl bg-gray-50 border px-3 py-3 flex items-center"
+            >
               <input
                 type="text"
                 inputmode="numeric"
                 placeholder="44444444"
                 class="w-full bg-transparent outline-none leading-6 placeholder:text-[#8a8f9c]"
+                [ngModel]="dni()"
+                (ngModelChange)="dni.set($event)"
               />
             </div>
           </div>
@@ -33,23 +38,52 @@
             <label class="flex items-center">
               <span class="flex-1 leading-6 font-medium">Contraseña</span>
             </label>
-            <div class="w-full rounded-xl bg-gray-50 border border-[#e5e7ea] px-3 py-3 flex items-center gap-3">
+
+            <div
+              class="w-full rounded-xl bg-gray-50 border px-3 py-3 flex items-center gap-3"
+              [class.border-red-400]="password() && !passValid()"
+              [class.border-[#e5e7ea]]="!(password() && !passValid())"
+            >
               <input
-                type="password"
+                [type]="showPass() ? 'text' : 'password'"
                 placeholder="*******"
                 class="w-full bg-transparent outline-none leading-6 placeholder:text-[#8a8f9c]"
+                [ngModel]="password()"
+                (ngModelChange)="password.set($event)"
               />
-              <img class="w-6 h-6" alt="" />
+              <button
+                type="button"
+                class="w-6 h-6"
+                (click)="showPass.set(!showPass())"
+                aria-label="Mostrar/Ocultar"
+                title="Mostrar/Ocultar"
+              >
+                👁️
+              </button>
             </div>
+
+            @if (password() && !passValid()) {
+              <small class="text-red-500">Mínimo 6 caracteres.</small>
+            }
           </div>
+
+          @if (errorMsg()) {
+            <div class="text-red-600 text-sm">
+              {{ errorMsg() }}
+            </div>
+          }
 
           <div class="flex items-center gap-2 text-center text-[18px] text-white">
             <button
               type="button"
-              class="inline-flex items-center justify-center rounded-full bg-[#0a0d12] px-6 py-4"
+              class="inline-flex items-center justify-center rounded-full px-6 py-4
+                     disabled:opacity-50 disabled:cursor-not-allowed bg-[#0a0d12]"
+              [disabled]="!canSubmit()"
               (click)="onLogin()"
             >
-              <span class="leading-6 font-semibold">Iniciar sesión</span>
+              <span class="leading-6 font-semibold">
+                {{ isLoading() ? 'Ingresando...' : 'Iniciar sesión' }}
+              </span>
             </button>
 
             <div class="px-2 text-black">

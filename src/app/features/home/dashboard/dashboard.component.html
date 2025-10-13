@@ -49,31 +49,42 @@
                 <div class="w-[361px] flex flex-col gap-2 text-base text-black">
                   <div class="flex items-center justify-between">
                     <div class="leading-6">Estado:</div>
-                    <div class="rounded-full bg-red-500 h-10 px-3 flex items-center text-sm text-white">
-                      <span class="font-semibold leading-4 px-2">No califica</span>
+
+                    <div class="rounded-full h-10 px-3 flex items-center text-sm text-white"
+                         [class.bg-red-500]="(dashboard()?.prestamoEstado || '').toLowerCase() === 'no califica'"
+                         [class.bg-green-600]="(dashboard()?.prestamoEstado || '').toLowerCase() !== 'no califica'">
+                  <span class="font-semibold leading-4 px-2">
+                    {{ dashboard()?.prestamoEstado ?? '—' }}
+                  </span>
                     </div>
                   </div>
+
                   <div class="h-10 flex items-center justify-between">
                     <div class="leading-6">Vencimiento:</div>
                     <div class="rounded-md h-6 px-2.5 flex items-center text-xs text-gray-400">
-                      <span class="leading-4">Ninguno</span>
+                  <span class="leading-4">
+                    {{ dashboard()?.prestamoVencimiento ?? 'Ninguno' }}
+                  </span>
                     </div>
                   </div>
                 </div>
               </div>
-              <img
-                routerLink="/home/mis-prestamos"
-                class="w-6 h-6 cursor-pointer"
-                alt="Ir a Mis Préstamos"
-                src="assets/icons/ChevronRight.svg"
-              />
+
+              <button type="button"
+                      (click)="goMisPrestamos()"
+                      [disabled]="!canGoMisPrestamos()"
+                      [class.cursor-pointer]="canGoMisPrestamos()"
+                      [class.cursor-not-allowed]="!canGoMisPrestamos()"
+                      [class.opacity-50]="!canGoMisPrestamos()"
+                      class="p-0 bg-transparent border-0">
+                <img class="w-6 h-6" alt="Ir a Mis Préstamos" src="assets/icons/ChevronRight.svg" />
+              </button>
             </div>
 
             <div class="shadow-sm rounded-b-md bg-white border border-t-0 border-gray-300 px-6 py-4 text-center">
               <button
                 routerLink="/home/garantizar-puntos"
-                class="w-full rounded-full bg-neutral-900 h-12 flex items-center justify-center px-5 text-white cursor-pointer"
-              >
+                class="w-full rounded-full bg-neutral-900 h-12 flex items-center justify-center px-5 text-white cursor-pointer">
                 <span class="font-semibold leading-5">Garantizar con puntos</span>
               </button>
             </div>
@@ -92,15 +103,21 @@
             <div class="flex-1 flex flex-col gap-2">
               <div class="flex items-center justify-between">
                 <div class="leading-6">Puntos disponibles:</div>
-                <div class="text-sm leading-5 font-medium text-neutral-900">475 pts</div>
+                <div class="text-sm leading-5 font-medium text-neutral-900">
+                  {{ dashboard()?.puntosDisponibles ?? 0 }} pts
+                </div>
               </div>
               <div class="flex items-center justify-between">
                 <div class="leading-6">Puntos en garantía</div>
-                <div class="text-sm leading-5 font-medium text-gray-400">0 pts</div>
+                <div class="text-sm leading-5 font-medium text-gray-400">
+                  {{ dashboard()?.puntosGarantia ?? 0 }} pts
+                </div>
               </div>
               <div class="flex items-center justify-between">
                 <div class="leading-6">Puntos por activar</div>
-                <div class="text-sm leading-5 font-medium text-gray-400">0 pts</div>
+                <div class="text-sm leading-5 font-medium text-gray-400">
+                  {{ dashboard()?.puntosActivar ?? 0 }} pts
+                </div>
               </div>
             </div>
             <img class="w-6 h-6" alt="" src="assets/icons/ChevronRight.svg">

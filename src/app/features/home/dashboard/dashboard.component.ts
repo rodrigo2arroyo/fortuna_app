@@ -1,5 +1,8 @@
-import {Component, inject, signal} from '@angular/core';
-import {Router, RouterLink, RouterLinkActive} from '@angular/router';
+import {Component, computed, inject, OnInit, signal} from '@angular/core';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { AuthService } from '../../auth/services/auth.service';
+import {DashboardService} from '../services/dashboard.service';
+import {DashboardData} from '../models/dashboard.models';
 
 type MenuAction = 'logout' | null;
 type MenuItem = {
@@ -18,8 +21,10 @@ type MenuItem = {
   ],
   templateUrl: './dashboard.component.html',
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
   private readonly router = inject(Router);
+  private readonly authService = inject(AuthService);
+  private readonly dashboardSvc = inject(DashboardService);
 
   readonly menu = signal<MenuItem[]>([
     { label: 'Inicio',            icon: 'assets/icons/Home.svg',           route: '/home',                chevron: true },
@@ -30,9 +35,32 @@ export class DashboardComponent {
     { label: 'Cerrar Sesión',     icon: 'assets/icons/LogOut.svg',    action: 'logout',              chevron: false },
   ]);
 
+  dashboard = signal<DashboardData | null>(null);
+  isLoading = signal<boolean>(false);
+  errorMsg = signal<string | null>(null);
+
+  canGoMisPrestamos = computed(() => this.dashboard()?.tienePrestamo === '1');
+
+  async ngOnInit() {
+    this.isLoading.set(true);
+    this.errorMsg.set(null);
+    try {
+      const data = await this.dashboardSvc.getMyDashboard();
+      this.dashboard.set(data);
+    } catch (e: any) {
+      this.errorMsg.set(e?.message ?? 'No se pudo cargar el dashboard');
+    } finally {
+      this.isLoading.set(false);
+    }
+  }
+
+  goMisPrestamos() {
+    if (this.canGoMisPrestamos()) this.router.navigate(['/home/mis-prestamos']);
+  }
+
   onItemClick(item: MenuItem) {
     if (item.action === 'logout') {
-      // TODO: authService.logout();
+      this.authService.logout();
       this.router.navigate(['/auth/login']);
     }
   }
