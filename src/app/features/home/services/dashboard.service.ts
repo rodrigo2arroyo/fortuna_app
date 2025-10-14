@@ -5,8 +5,8 @@ import { environment } from '../../../../environments/environments';
 import { DashboardData } from '../models/dashboard.models';
 import { ApiResponse } from '../../../shared/models/api-response.model';
 import { AuthStore } from '../../../shared/stores/auth.store';
-import {PuntosStore} from '../../../shared/stores/puntos.store';
-import {PrestamoStore} from '../../../shared/stores/prestamo.store';
+import { PuntosStore } from '../../../shared/stores/puntos.store';
+import { PrestamoStore } from '../../../shared/stores/prestamo.store';
 
 @Injectable({ providedIn: 'root' })
 export class DashboardService {
@@ -25,7 +25,7 @@ export class DashboardService {
     const url = `${this.DASHBOARD}/${id}`;
 
     const resp = await firstValueFrom(
-      this.http.get<ApiResponse<DashboardData>>(url) // Authorization lo añade el interceptor
+      this.http.get<ApiResponse<DashboardData>>(url)
     );
 
     if (!resp?.data || resp.code !== '0') {

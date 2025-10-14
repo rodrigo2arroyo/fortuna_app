@@ -1,20 +1,46 @@
-import {Component, signal} from '@angular/core';
-import {RouterLink} from '@angular/router';
-import {StepCardComponent} from '../../../shared/components/step-card/step-card.component';
-import {environment} from '../../../../environments/environments';
+import { Component, inject, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { environment } from '../../../../environments/environments';
+import { PuntosService } from '../services/puntos.service';
+import { StepCardComponent } from '../../../shared/components/step-card/step-card.component';
+import { RouterLink } from '@angular/router';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-recargar-puntos',
-  imports: [StepCardComponent, RouterLink],
+  standalone: true,
+  imports: [FormsModule, StepCardComponent, RouterLink, DecimalPipe],
   templateUrl: './recargar-puntos.component.html',
 })
 export class RecargarPuntosComponent {
   step = signal(0);
+
+  monto = signal<number>(500);
+
+  isLoading = signal(false);
+  errorMsg  = signal<string | null>(null);
+
   numeroCuentaInterbank = environment.numeroCuentaInterbank;
   numeroCuentaInterbancarioInterbank = environment.numeroCuentaInterbancarioInterbank;
   titularCuentaInterbank = environment.titularCuentaInterbank;
 
+  private readonly puntosSvc = inject(PuntosService);
+
   goToStep(n: number) {
     this.step.set(n);
+  }
+
+  async confirmarRecarga() {
+    this.errorMsg.set(null);
+    this.isLoading.set(true);
+    try {
+      const m = Math.max(300, Math.min(3000, Number(this.monto()) || 0));
+      await this.puntosSvc.recargarPuntos(m);
+      this.step.set(2);
+    } catch (e: any) {
+      this.errorMsg.set(e?.message ?? 'No se pudo recargar puntos');
+    } finally {
+      this.isLoading.set(false);
+    }
   }
 }
