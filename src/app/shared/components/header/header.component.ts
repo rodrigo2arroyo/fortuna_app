@@ -1,10 +1,14 @@
 import { Component, computed, inject } from '@angular/core';
 import { UserStore } from '../../stores/user.store';
 import { PuntosStore } from '../../stores/puntos.store';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
+  imports: [
+    RouterLink
+  ]
 })
 export class HeaderComponent {
   private readonly userStore   = inject(UserStore);

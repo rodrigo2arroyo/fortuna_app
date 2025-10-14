@@ -3,6 +3,7 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../auth/services/auth.service';
 import {DashboardService} from '../services/dashboard.service';
 import {DashboardData} from '../models/dashboard.models';
+import {Skeleton} from 'primeng/skeleton';
 
 type MenuAction = 'logout' | null;
 type MenuItem = {
@@ -17,7 +18,8 @@ type MenuItem = {
   selector: 'app-dashboard',
   imports: [
     RouterLink,
-    RouterLinkActive
+    RouterLinkActive,
+    Skeleton
   ],
   templateUrl: './dashboard.component.html',
 })
