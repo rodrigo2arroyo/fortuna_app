@@ -45,7 +45,7 @@ export class DashboardComponent implements OnInit {
     this.isLoading.set(true);
     this.errorMsg.set(null);
     try {
-      const data = await this.dashboardSvc.getMyDashboard();
+      const data = await this.dashboardSvc.loadMyDashboard();
       this.dashboard.set(data);
     } catch (e: any) {
       this.errorMsg.set(e?.message ?? 'No se pudo cargar el dashboard');

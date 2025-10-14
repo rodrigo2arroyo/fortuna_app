@@ -1,6 +1,6 @@
 import {Component, signal} from '@angular/core';
 import {RouterLink} from '@angular/router';
-import {StepCardComponent} from '../../../shared/step-card/step-card.component';
+import {StepCardComponent} from '../../../shared/components/step-card/step-card.component';
 import {environment} from '../../../../environments/environments';
 
 @Component({

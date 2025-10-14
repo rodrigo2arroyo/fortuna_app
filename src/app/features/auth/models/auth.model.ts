@@ -8,7 +8,3 @@ export interface LoginData {
   nombreCompleto: string;
   token: string;
 }
-
-export interface RefreshRequest {
-  usuario: string;
-}

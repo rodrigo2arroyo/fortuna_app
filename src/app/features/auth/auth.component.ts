@@ -5,7 +5,7 @@ import {LoginRequest} from './models/auth.model';
 import {FormsModule} from '@angular/forms';
 
 @Component({
-  selector: 'app-auth',
+  selector: 'app-guard',
   imports: [
     FormsModule
   ],
@@ -38,7 +38,7 @@ export class AuthComponent {
         password: this.password(),
       };
       await this.auth.login(payload);
-      this.router.navigate(['/home']);
+      await this.router.navigate(['/home']);
     } catch (e: any) {
       this.errorMsg.set(e?.message ?? 'No se pudo iniciar sesión');
     } finally {

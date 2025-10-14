@@ -1,6 +1,6 @@
 import {Component, inject} from '@angular/core';
 import {Router, RouterLink} from '@angular/router';
-import {StepCardComponent} from '../../../shared/step-card/step-card.component';
+import {StepCardComponent} from '../../../shared/components/step-card/step-card.component';
 
 @Component({
   selector: 'app-garantizar-puntos',

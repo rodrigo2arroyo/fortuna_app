@@ -7,7 +7,7 @@
       <div class="w-[561px] flex items-center gap-8">
         <a routerLink="/home" class="block w-[173px] h-[26px] relative overflow-hidden cursor-pointer">
           <img
-            src="assets/text/FULL.png"
+            src="../../../../assets/text/FULL.png"
             alt="Logo"
             class="absolute top-0 left-[22.01%] w-[77.98%] h-[80.99%] object-contain"
           />
@@ -16,22 +16,26 @@
         <div class="flex items-center">
           <div class="w-[202px] flex flex-col">
             <div class="text-sm leading-6 text-black/60">Bienvenido</div>
-            <div class="text-xl leading-7 font-semibold text-black">Sonia Villanueva</div>
+            <div class="text-xl leading-7 font-semibold text-black">
+              {{ displayName() || 'Usuario' }}
+            </div>
           </div>
         </div>
       </div>
 
       <div class="flex items-center gap-6 text-xs text-[#4e1d09]">
         <div class="rounded-full bg-[#fef0c7] px-6 py-2 flex items-center gap-4">
-          <img class="w-8 h-8 object-contain" alt="" src="assets/icons/favorite-database.svg">
+          <img class="w-8 h-8 object-contain" alt="" src="../../../../assets/icons/favorite-database.svg">
           <div class="flex flex-col">
             <div class="tracking-[0.4px] leading-4">Fortuna Puntos</div>
-            <div class="text-2xl leading-8 font-sans -mt-1.5 font-semibold">475 pts</div>
+            <div class="text-2xl leading-8 font-sans -mt-1.5 font-semibold">
+              {{ puntosFmt() }} pts
+            </div>
           </div>
         </div>
 
         <div class="relative rounded p-4 flex items-center justify-center">
-          <img class="w-6 h-6" alt="" src="assets/icons/BellDot.svg">
+          <img class="w-6 h-6" alt="" src="../../../../assets/icons/BellDot.svg">
           <span class="absolute top-5 left-[30px] w-2 h-2 rounded-full bg-[#47cd89]"></span>
         </div>
 
@@ -39,13 +43,13 @@
           <div class="rounded-lg bg-[#fef0c7] p-1 flex flex-col items-center">
             <div class="relative w-8 h-8 flex items-center justify-center overflow-hidden rounded-lg">
               <div class="absolute inset-0 rounded-lg bg-[#fedf89]"></div>
-              <span class="relative z-10 font-bold leading-6">S</span>
+              <span class="relative z-10 font-bold leading-6">{{ firstLetter() || '·' }}</span>
             </div>
             <div class="mt-1 rounded-full px-2 py-0.5 text-center text-[10px] leading-4 font-semibold">
               Nivel 1
             </div>
           </div>
-          <img class="w-6 h-6" alt="" src="assets/icons/ChevronDown.svg">
+          <img class="w-6 h-6" alt="" src="../../../../assets/icons/ChevronDown.svg">
         </div>
       </div>
     </div>
