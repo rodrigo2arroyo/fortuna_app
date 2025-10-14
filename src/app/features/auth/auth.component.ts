@@ -22,7 +22,7 @@ export class AuthComponent {
   isLoading = signal<boolean>(false);
   errorMsg  = signal<string | null>(null);
 
-  //dniValid = computed(() => /^\d{8}$/.test(this.dni().trim()));
+  dniValid = computed(() => /^\d{8}$/.test(this.dni().trim()));
   passValid = computed(() => this.password().trim().length >= 6);
 
   canSubmit = computed(() => this.passValid() && !this.isLoading());

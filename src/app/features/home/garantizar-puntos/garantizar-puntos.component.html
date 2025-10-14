@@ -40,10 +40,16 @@
         footerPlacement="inside">
         <div step-content class="flex flex-col items-center gap-8 text-black">
           <div class="w-full max-w-[480px] flex flex-col items-center gap-2 text-[#131927]">
-            <div class="w-full text-left text-[14px] leading-5 text-[#0a0d12]">Puntos de garantía</div>
+            <div class="w-full text-[14px] leading-5 text-[#0a0d12] text-center">Puntos de garantía</div>
 
             <div class="w-[236px] h-14 rounded-xl bg-gray-50 border border-[#47cd89] px-3 flex items-center gap-3">
-              <span class="flex-1 leading-8 font-medium text-[24px]">475</span>
+              <input
+
+                type="number"
+                class="flex-1 leading-8 font-medium text-[24px] bg-transparent outline-none"
+                [ngModel]="monto()"
+                (ngModelChange)="onInputMonto($event)"
+                min="0"/>
               <b class="leading-8">pts</b>
             </div>
 
@@ -51,35 +57,38 @@
               Cuenta con suficientes puntos,
             </p>
           </div>
+
           <div class="w-full flex flex-col gap-4 text-left text-[#09090a]">
             <div class="w-full flex items-center gap-4">
               <img src="assets/icons/favorite-database.svg" class="w-8 h-8" alt="">
-              <div class="flex-1 font-semibold leading-7 text-[18px]">Sonia tus:</div>
+              <div class="flex-1 font-semibold leading-7 text-[18px]">{{ firstName() }} tus:</div>
             </div>
 
             <div class="w-full flex flex-col gap-2 text-[14px] text-[#717680]">
               <div class="w-full flex items-center justify-between">
                 <span class="leading-5 font-medium">Puntos disponibles:</span>
                 <span class="text-[16px] leading-6 font-medium text-[#0a0d12]">
-            475 pts
-          </span>
+              {{ dispFmt() }} pts
+            </span>
               </div>
               <div class="w-full flex items-center justify-between">
                 <span class="leading-5 font-medium">Puntos en garantía</span>
-                <span class="leading-5 font-medium text-[#a4a7ae]">0 pts</span>
+                <span class="leading-5 font-medium text-[#a4a7ae]">{{ garanFmt() }} pts</span>
               </div>
               <div class="w-full flex items-center justify-between">
                 <span class="leading-5 font-medium">Puntos por activar</span>
-                <span class="leading-5 font-medium text-[#a4a7ae]">0 pts</span>
+                <span class="leading-5 font-medium text-[#a4a7ae]">{{ activarFmt() }} pts</span>
               </div>
             </div>
           </div>
+
           <div class="w-full rounded-lg bg-[#eef4ff] border border-[#6172f3] p-2 flex items-center gap-2">
             <img src="assets/icons/Step%20Details%20Icon.svg" alt="" class="w-5 h-5">
             <p class="flex-1 text-[14px] leading-5 font-medium">1 punto equivale a S/ 1 de garantía</p>
           </div>
         </div>
-        <div step-footer class="flex items-start gap-4 text-[18px]">
+
+        <div step-footer class="flex items-start gap-4 text-[18px] p-3">
           <button class="flex-1 rounded-full bg-white border border-[#e9eaeb] px-6 py-4 cursor-pointer" routerLink="/home/recargar-puntos">
             <span class="font-semibold leading-6">Ir a Recargar</span>
           </button>
@@ -105,13 +114,13 @@
               <div class="w-full text-left text-[14px] text-[#717680] font-medium">Monto a solicitar</div>
               <div class="w-full flex items-center gap-3 text-[24px]">
                 <b class="leading-8">S/</b>
-                <span class="leading-8 font-medium">{{ montoSolicitado }}</span>
+                <span class="leading-8 font-medium">{{ montoFmtSoles() }}</span>
               </div>
             </div>
             <div class="w-[121px] flex flex-col items-center gap-2 text-[16px]">
               <div class="w-full text-left text-[14px] text-[#717680] font-medium">Garantía (Puntos)</div>
               <div class="w-full flex items-center gap-3 text-[24px]">
-                <span class="leading-8 font-medium">{{ garantiaPts }}</span>
+                <span class="leading-8 font-medium">{{ montoFmtPts() }}</span>
                 <b class="leading-8">pts</b>
               </div>
             </div>
@@ -154,7 +163,7 @@
           </div>
 
           <div class="mt-2 flex items-center gap-4 text-[18px] text-black">
-            <button class="flex-1 rounded-full bg-white border border-[#e9eaeb] px-6 py-4 inline-flex items-center justify-center gap-2" (click)="prevStep()">
+            <button class="flex-1 rounded-full bg-white border border-[#e9eaeb] px-6 py-4 inline-flex items-center justify-center gap-2 cursor-pointer" (click)="prevStep()">
               <img src="assets/icons/arrow-left.svg" alt="" class="w-6 h-6">
               <span class="font-semibold leading-6">Atrás</span>
             </button>
