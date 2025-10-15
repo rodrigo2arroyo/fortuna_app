@@ -29,7 +29,6 @@ export class MisPrestamosComponent {
 
   readonly tienePrestamo = this.loans.tienePrestamo;
   readonly prestamo      = this.loans.prestamo;
-  readonly estado        = this.loans.prestamoEstado;
   readonly vencimiento   = this.loans.prestamoVencimiento;
 
   readonly capitalPorPagar = computed(() => money(this.prestamo()?.capitalPorPagar));
@@ -41,6 +40,9 @@ export class MisPrestamosComponent {
 
   readonly cuotasPagadas = computed(() => toNumber(this.prestamo()?.cuotasPagadas));
   readonly plazoCuotas   = computed(() => toNumber(this.prestamo()?.plazoCuotas));
+  readonly montoPrestamo  = computed(() => money(this.prestamo()?.montoPrestamo));
+  readonly montoLiquidar  = computed(() => money(this.prestamo()?.montoLiquidar));
+  readonly deudaAtrasada  = computed(() => money(this.prestamo()?.deudaTotalAtrasada));
 
   readonly progresoPct = computed(() => {
     const pag = this.cuotasPagadas();

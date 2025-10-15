@@ -93,15 +93,22 @@
         @if(showDetails()){
           <div class="border-t border-[#e5e7ea] pt-4 text-[14px] leading-5 text-[#252b37]">
             <div class="flex items-center justify-between py-1">
-              <span>Plan:</span><b>{{ plazoCuotas() }} cuotas</b>
+              <span>Monto de préstamo</span><b>{{ montoPrestamo() }}</b>
             </div>
             <div class="flex items-center justify-between py-1">
-              <span>Tasa:</span>
-              <b>{{ tea() || tcea() }}</b>
+              <span>Plazo en cuotas</span><b>{{ plazoCuotas() }}</b>
             </div>
             <div class="flex items-center justify-between py-1">
-              <span>Próximas 3 cuotas:</span>
-              <b>{{ montoSgtePago() }} • {{ montoSgtePago() }} • {{ montoSgtePago() }}</b>
+              <span>Monto a liquidar</span><b>{{ montoLiquidar() }}</b>
+            </div>
+            <div class="flex items-center justify-between py-1">
+              <span>Deuda total atrasada</span><b>{{ deudaAtrasada() }}</b>
+            </div>
+            <div class="flex items-center justify-between py-1">
+              <span>Interés - TEA</span><b>{{ tea() }}</b>
+            </div>
+            <div class="flex items-center justify-between py-1">
+              <span>Interés - TCEA</span><b>{{ tcea() }}</b>
             </div>
           </div>
         }
