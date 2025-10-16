@@ -155,10 +155,12 @@
                 <b class="w-[131px] text-right text-[#181d27]">Pts {{ (monto() - (monto() * 0.05)) | number:'1.2-2' }}</b>
               </div>
             </div>
-
+            <div class="w-full rounded-lg bg-[#eef4ff] border border-[#6172f3] p-2 flex text-left gap-2">
+              <img src="assets/icons/Step%20Details%20Icon.svg" alt="" class="w-5 h-5">
+              <p class="flex-1 text-[14px] leading-5 font-medium">1 punto equivale a S/ 1</p>
+            </div>
             @if (errorMsg()) { <div class="text-red-600 text-sm">{{ errorMsg() }}</div> }
           </div>
-
           <div step-footer>
             <button
               class="w-full rounded-full bg-black text-white py-4 px-6 text-[16px] sm:text-[18px] font-semibold cursor-pointer
@@ -178,7 +180,6 @@
           headerText="PASO 02"
           title="¡Recarga!"
           footerPlacement="inside">
-
           <div step-content class="flex flex-col gap-8">
             <div class="flex flex-col gap-1">
               <div class="text-[14px] text-[#a4a7ae]">Monto a transferir</div>
@@ -186,7 +187,7 @@
             </div>
 
             <div class="w-full shadow-[0_1px_2px_rgba(10,13,18,0.05)] rounded-lg bg-white border-2 border-[#e9eaeb] p-6 flex flex-col gap-4">
-              <div class="text-center text-[24px] font-semibold text-black">Fortuna puntos</div>
+              <div class="text-left text-[24px] font-semibold text-black">Fortuna puntos</div>
               <div class="flex items-center justify-between text-[14px]">
                 <div class="font-medium text-[#717680]">N° movimiento</div>
                 <b class="text-[#181d27]">114441441</b>
@@ -199,48 +200,36 @@
 
             <div class="w-full rounded-lg bg-[#f5f8ff] p-6 flex flex-col gap-4 text-[#444ce7]">
               <b class="text-center text-[24px]">¿Cómo pagar tu recarga?</b>
-
               <div class="flex flex-col gap-2">
-                <b class="text-[14px] text-[#444ce7]">PASO 1</b>
-                <div class="text-[14px] text-[#717680]">
+                <b class="text-[14px] text-[#444ce7] text-left">PASO 1</b>
+                <div class="text-[14px] text-[#717680] text-left">
                   Transfiere o deposita a cualquiera de las siguientes cuentas bancarias
                 </div>
               </div>
-
               <div class="flex flex-col gap-4 text-black">
-                <div class="flex items-center gap-6">
-                  <img class="w-[57px] h-[57px]" src="assets/icons/yape-seeklogo-yape.png"/>
-                  <div>
-                    <div class="text-[12px] text-[#717680] leading-[18px]">AL NÚMERO</div>
-                    <div class="leading-6 font-medium">993 531 820</div>
-                    <div class="leading-6 font-medium">Nombre Apellido</div>
+                <div class="flex items-start gap-6">
+                  <img class="w-[57px] h-[57px]" src="assets/icons/yape-seeklogo-yape.png" />
+                  <div class="flex flex-col text-left">
+                    <div class="text-[12px] text-[#717680] leading-[18px] font-semibold">AL CÓDIGO QR</div>
+                    <img class="w-[150px] h-[150px] object-contain" src="assets/img/yape-qr.png" />
+                    <div class="leading-6 font-bold text-[14px] md:text-[16px]">
+                      Titular: {{ titularCuentaInterbank }}
+                    </div>
                   </div>
                 </div>
                 <hr class="border-[#e9eaeb]">
-                <div class="flex items-center gap-6">
-                  <img class="w-[57px] h-[57px]" src="assets/icons/yape-seeklogo-interbank.png"/>
-                  <div>
-                    <div class="text-[12px] text-[#717680] leading-[18px]">Cuenta corriente soles</div>
-                    <div class="leading-6 font-medium">{{ numeroCuentaInterbank }}</div>
-                    <div class="leading-6 font-medium whitespace-pre-wrap">{{ numeroCuentaInterbancarioInterbank }}</div>
-                    <div class="leading-6 font-medium">{{ titularCuentaInterbank }}</div>
+                <div class="flex items-start gap-6">
+                  <img class="w-[57px] h-[57px]" src="assets/icons/yape-seeklogo-interbank.png" />
+                  <div class="flex flex-col text-left">
+                    <div class="text-[12px] text-[#717680] leading-[18px] font-semibold">Cuenta corriente soles</div>
+                    <div class="leading-6 font-bold text-[16px] md:text-[16px]">N° {{ numeroCuentaInterbank }}</div>
+                    <div class="leading-6 font-bold text-[16px] md:text-[16px]">CCI: {{ numeroCuentaInterbancarioInterbank }}</div>
+                    <div class="leading-6 font-bold text-[16px] md:text-[16px]">Titular: {{ titularCuentaInterbank }}</div>
                   </div>
                 </div>
-
-<!--                <hr class="border-[#e9eaeb]">-->
-<!--                <div class="flex items-center gap-6">-->
-<!--                  <img class="w-[57px] h-[57px]" src="assets/icons/yape-seeklogo-bcp.png"/>-->
-<!--                  <div>-->
-<!--                    <div class="text-[12px] text-[#717680] leading-[18px]">Cuenta corriente soles</div>-->
-<!--                    <div class="leading-6 font-medium">Nº 000 000 00000000</div>-->
-<!--                    <div class="leading-6 font-medium whitespace-pre-wrap">CCI 000 000 00000000</div>-->
-<!--                    <div class="leading-6 font-medium">Nombre Apellido</div>-->
-<!--                  </div>-->
-<!--                </div>-->
-
                 <div class="flex flex-col gap-1">
-                  <b class="text-[14px] text-[#444ce7]">PASO 2</b>
-                  <div class="text-[14px] text-[#717680]">
+                  <b class="text-[14px] text-[#444ce7] text-left">PASO 2</b>
+                  <div class="text-[14px] text-[#717680] text-left">
                     <span class="font-medium">Envíanos la constancia de transferencia o depósito a nuestro Whatsapp </span>
                     <b>993 531 820</b>
                   </div>
