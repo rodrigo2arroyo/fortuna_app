@@ -1,24 +1,23 @@
-<div class="w-full bg-white min-h-[900px] text-center text-[14px] text-black ">
-  <main>
-    <section class="w-full flex flex-col items-center gap-16 p-10">
-      <div class="w-full max-w-[1192px] h-10 flex items-center gap-[51px]">
-        <button
-          routerLink="/home"
-          class="rounded-full bg-white border border-[#e9eaeb] h-10 px-4 inline-flex items-center justify-center gap-2 cursor-pointer"
-        >
-          <img src="assets/icons/arrow-left.svg" alt="" class="w-6 h-6">
-          <span class="font-semibold text-[14px] leading-4">Atrás</span>
-        </button>
+<section class="hidden md:flex bg-white text-left text-black flex-col px-10">
+  <div class="flex flex-col items-center gap-16 px-10 py-10">
+    <div class="w-full max-w-[1200px] mx-auto flex items-center gap-[51px] h-10 mb-10">
+      <button
+        routerLink="/home"
+        class="rounded-full bg-white border border-[#e9eaeb] h-10 px-4 inline-flex items-center justify-center gap-2 cursor-pointer"
+      >
+        <img src="assets/icons/arrow-left.svg" alt="" class="w-6 h-6">
+        <span class="font-semibold text-[14px] leading-4">Atrás</span>
+      </button>
 
-        <nav class="flex items-center gap-[23px] text-left text-[#d5d7da]">
-          <span class="tracking-[0.03em] uppercase font-semibold">Productos</span>
-          <img src="assets/icons/ChevronRight.svg" class="w-6 h-6" alt="">
-          <span class="tracking-[0.03em] uppercase font-semibold text-[#414651]">RECARGAR PUNTOS</span>
-        </nav>
-      </div>
-
+      <nav class="flex items-center gap-[23px] text-left text-[#d5d7da]">
+        <span class="tracking-[0.03em] uppercase font-semibold">Productos</span>
+        <img src="assets/icons/ChevronRight.svg" alt="" class="w-6 h-6">
+        <span class="tracking-[0.03em] uppercase font-semibold text-[#414651]">RECARGAR PUNTOS</span>
+      </nav>
+    </div>
+    <div class="w-full flex justify-center items-stretch gap-[45px] text-[#fdfdfd]">
       @if (step() === 0) {
-        <div class="w-full max-w-[1192px] mx-auto flex justify-center items-stretch gap-[45px] text-[#fdfdfd]">
+        <div class="w-full flex justify-center items-stretch gap-[45px] text-[#fdfdfd]">
           <div class="w-[407px] rounded-2xl bg-[#f79009] overflow-hidden flex flex-col">
             <div class="w-full bg-[#f79009] rounded-t-[4px] py-2 px-4 flex items-center justify-center">
               <img class="w-[30px] h-auto object-cover" alt="">
@@ -122,7 +121,6 @@
         </div>
 
       }
-
       @if (step() === 1) {
         <app-step-card
           [currentStep]="1"
@@ -164,7 +162,7 @@
           <div step-footer>
             <button
               class="w-full rounded-full bg-black text-white py-4 px-6 text-[16px] sm:text-[18px] font-semibold cursor-pointer
-               disabled:opacity-50 disabled:cursor-not-allowed"
+             disabled:opacity-50 disabled:cursor-not-allowed"
               [disabled]="isLoading() || (monto() < 300) || (monto() > 3000)"
               (click)="confirmarRecarga()">
               {{ isLoading() ? 'Procesando…' : 'CONFIRMAR RECARGA' }}
@@ -247,6 +245,269 @@
           </div>
         </app-step-card>
       }
-    </section>
-  </main>
-</div>
+    </div>
+  </div>
+</section>
+
+<section class="md:hidden w-full flex flex-col items-center gap-6 px-4 py-4 text-black">
+  <div class="w-full h-10 flex items-center gap-3">
+    <button
+      routerLink="/home"
+      class="rounded-full bg-white border border-[#e9eaeb] h-9 px-3 inline-flex items-center justify-center gap-1">
+      <img src="assets/icons/arrow-left.svg" alt="" class="w-5 h-5">
+      <span class="font-semibold text-[12px] leading-4">Atrás</span>
+    </button>
+
+    <nav class="flex items-center gap-2 text-[11px] text-[#d5d7da] uppercase font-semibold">
+      <span>Productos</span>
+      <img src="assets/icons/ChevronRight.svg" class="w-4 h-4" alt="">
+      <span class="text-[#414651]">Recargar puntos</span>
+    </nav>
+  </div>
+  @if (step() === 0) {
+    <div class="w-full flex flex-col gap-6">
+      <div class="rounded-2xl overflow-hidden">
+        <div class="bg-[#f79009] text-white py-2 px-4 flex items-center justify-center">
+          <img class="w-6 h-6 object-contain" alt="" src="./assets/icons/star_shiny.png">
+          <div class="px-2 font-semibold leading-4">Préstamos sin evaluación</div>
+        </div>
+
+        <div class="shadow-[0_1px_2px_rgba(10,13,18,0.05)] rounded-2xl bg-white border-2 border-[#f79009] p-5 text-[#717680] flex flex-col gap-4">
+          <div class="text-center text-[#f79009]">
+            <b class="text-[24px] leading-8">Fortuna Opportunity</b>
+          </div>
+
+          <div class="leading-5 font-medium text-left">
+            ¿No calificas? Recarga puntos como garantía para un préstamo sin evaluación.
+          </div>
+
+          <div class="flex flex-col items-center gap-2 text-[#a4a7ae]">
+            <div class="leading-5 text-center">Desde S/.300.00 hasta S/.3,000.00</div>
+            <div class="w-full max-w-[260px] rounded-xl bg-[#f9fafb] border border-[#e5e7ea] px-3 py-3 flex items-center text-[22px] text-[#131927]">
+              <div class="w-full flex items-center justify-center gap-3">
+                <b class="leading-8">s/</b>
+                <input
+                  type="number"
+                  min="300"
+                  max="3000"
+                  step="1"
+                  placeholder="0.00"
+                  class="w-full bg-transparent border-none outline-none text-center leading-8 font-medium text-[#131927]"
+                  [ngModel]="monto()"
+                  (ngModelChange)="monto.set(+($event || 0))"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-3 text-left">
+            <div class="text-black font-semibold text-[20px] leading-7">Beneficios</div>
+
+            <div class="flex items-start gap-3">
+              <img class="w-5 h-5" alt="" src="assets/icons/checkbox-circle-fill.svg">
+              <div class="leading-5">Accede a préstamos sin evaluaciones.</div>
+            </div>
+            <div class="flex items-start gap-3">
+              <img class="w-5 h-5" alt="" src="assets/icons/checkbox-circle-fill.svg">
+              <div class="leading-5">Accede a préstamos sin evaluaciones.</div>
+            </div>
+            <div class="flex items-start gap-3">
+              <img class="w-5 h-5" alt="" src="assets/icons/checkbox-circle-fill.svg">
+              <div class="leading-5">Te prestamos sin mirar tu historial crediticio.</div>
+            </div>
+          </div>
+
+          <button
+            class="mt-2 w-full rounded-full bg-gradient-to-r from-[#ff5b00] to-[#ff9500] text-white py-4 px-6 text-[16px]"
+            (click)="goToStep(1)">
+            <span class="font-semibold leading-6 uppercase">Recarga puntos</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Card: Fortuna Plus -->
+      <div class="rounded-2xl overflow-hidden">
+        <div class="bg-[#2e90fa] text-white py-2 px-4 flex items-center justify-center">
+          <img class="w-6 h-6 object-contain" alt="" src="./assets/icons/star_shiny.png">
+          <div class="px-2 font-semibold leading-4">Ten el control de tus deudas</div>
+        </div>
+
+        <div class="shadow-[0_1px_2px_rgba(10,13,18,0.05)] rounded-2xl bg-white border-2 border-[#53b1fd] p-5 text-[#717680] flex flex-col gap-4">
+          <div class="text-center text-[#0ba5ec]">
+            <b class="text-[24px] leading-8">Fortuna Plus</b>
+          </div>
+
+          <div class="text-left text-[14px] leading-5 font-medium">
+            Acumula puntos cada mes y usalos cuando quieras para pagar tus préstamos
+          </div>
+
+          <div class="flex flex-col items-center text-black">
+            <b class="text-[24px] leading-8">S/19.90</b>
+            <div class="text-[12px] leading-5 text-[#9ea2ae]">Suscripción mensual</div>
+          </div>
+
+          <div class="flex flex-col gap-3 text-left">
+            <div class="text-black font-semibold text-[20px] leading-7">Beneficios</div>
+
+            <div class="flex items-start gap-3">
+              <img class="w-7 h-7 object-contain" alt="" src="assets/icons/Loan.png">
+              <div class="leading-5">Úsalo como pago mínimo de tu préstamo.</div>
+            </div>
+            <div class="flex items-start gap-3">
+              <img class="w-7 h-7 object-contain" alt="" src="assets/icons/Money.png">
+              <div class="leading-5">Úsalo para pagar tu préstamo en cualquier momento.</div>
+            </div>
+            <div class="flex items-start gap-3">
+              <img class="w-7 h-7 object-contain" alt="" src="assets/icons/Calendar.png">
+              <div class="leading-5">
+                Reprograma 1 mes de pago sin penalidad una vez al año, mínimo 3 meses seguido de suscripción.
+              </div>
+            </div>
+          </div>
+
+          <button class="mt-2 w-full rounded-full bg-[#0a0d12] text-white py-4 px-6 text-[16px]">
+            <span class="font-semibold leading-6">Actualizar a plus</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+  @if (step() === 1) {
+    <app-step-card
+      [currentStep]="1"
+      [totalSteps]="2"
+      [headerText]="'PASO 01'"
+      [title]="'Confirmar'"
+      [footerPlacement]="'inside'"
+      size="auto"
+      maxWidth="528px"
+      containerClass="px-4"
+      cardClass="rounded-2xl">
+    <div step-content class="flex flex-col gap-6">
+      <div class="rounded-xl bg-[#f9fafb] border border-[#e5e7ea] px-3 py-3 flex items-center gap-3">
+        <b class="leading-8">S/.</b>
+        <div class="flex-1 leading-8 font-medium text-[22px] sm:text-[24px] text-[#131927]">
+          {{ (monto() || 0) | number:'1.2-2' }}
+        </div>
+      </div>
+      <div class="text-[14px] text-[#a4a7ae] -mt-2">Desde S/.300.00 hasta S/.3,000.00</div>
+
+      <div class="shadow-[0_1px_2px_rgba(10,13,18,0.05)] rounded-2xl bg-white border-2 border-[#e9eaeb] p-6 flex flex-col gap-4">
+        <div class="text-center text-[20px] sm:text-[22px] font-semibold text-[#181d27]">Costos</div>
+
+        <div class="flex items-center justify-between text-[14px] text-[#717680]">
+          <div class="font-medium">Valor de recarga</div>
+          <b class="w-[131px] text-right text-[#181d27]">S/.{{ monto() | number:'1.2-2'}}</b>
+        </div>
+        <div class="flex items-center justify-between text-[14px] text-[#717680]">
+          <div class="font-medium">Comisión</div>
+          <b class="w-[131px] text-right text-[#181d27]">S/.{{ (monto() * 0.05) | number:'1.2-2'}}</b>
+        </div>
+        <div class="flex items-center justify-between text-[14px] text-[#717680]">
+          <div class="font-medium">Puntos a recargar</div>
+          <b class="w-[131px] text-right text-[#181d27]">Pts {{ (monto() - (monto() * 0.05)) | number:'1.2-2' }}</b>
+        </div>
+      </div>
+
+      <div class="w-full rounded-lg bg-[#eef4ff] border border-[#6172f3] p-2 flex text-left gap-2">
+        <img src="assets/icons/Step%20Details%20Icon.svg" alt="" class="w-5 h-5">
+        <p class="flex-1 text-[14px] leading-5 font-medium">1 punto equivale a S/ 1</p>
+      </div>
+      @if (errorMsg()) { <div class="text-red-600 text-sm">{{ errorMsg() }}</div> }
+    </div>
+
+    <div step-footer>
+      <button
+        class="w-full rounded-full bg-black text-white py-4 px-6 text-[16px] sm:text-[18px] font-semibold
+               disabled:opacity-50 disabled:cursor-not-allowed"
+        [disabled]="isLoading() || (monto() < 300) || (monto() > 3000)"
+        (click)="confirmarRecarga()">
+        {{ isLoading() ? 'Procesando…' : 'CONFIRMAR RECARGA' }}
+      </button>
+    </div>
+    </app-step-card>
+  }
+  @if (step() === 2) {
+    <app-step-card
+      [currentStep]="2"
+      [totalSteps]="2"
+      headerText="PASO 02"
+      title="¡Recarga!"
+      footerPlacement="inside"
+      size="auto"
+      maxWidth="528px"
+      containerClass="px-4"
+      cardClass="rounded-2xl">
+      <div step-content class="flex flex-col gap-6">
+        <div class="flex flex-col gap-1">
+          <div class="text-[14px] text-[#a4a7ae]">Monto a transferir</div>
+          <b class="text-[28px] leading-[36px] text-black">S/{{ (monto() || 0) | number:'1.2-2' }}</b>
+        </div>
+
+        <div class="w-full shadow-[0_1px_2px_rgba(10,13,18,0.05)] rounded-xl bg-white border-2 border-[#e9eaeb] p-5 flex flex-col gap-3">
+          <div class="text-left text-[20px] font-semibold text-black">Fortuna puntos</div>
+          <div class="flex items-center justify-between text-[14px]">
+            <div class="font-medium text-[#717680]">N° movimiento</div>
+            <b class="text-[#181d27]"></b>
+          </div>
+          <div class="flex items-center justify-between text-[14px]">
+            <div class="font-medium text-[#717680]">Fecha</div>
+            <b class="text-[#181d27]"></b>
+          </div>
+        </div>
+
+        <div class="w-full rounded-xl bg-[#f5f8ff] p-5 flex flex-col gap-4 text-[#444ce7]">
+          <b class="text-center text-[20px]">¿Cómo pagar tu recarga?</b>
+
+          <div class="flex flex-col gap-2">
+            <b class="text-[14px] text-left">PASO 1</b>
+            <div class="text-[14px] text-[#717680] text-left">
+              Transfiere o deposita a cualquiera de las siguientes cuentas bancarias
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-4 text-black">
+            <div class="flex items-start gap-4">
+              <img class="w-12 h-12" src="assets/icons/yape-seeklogo-yape.png" />
+              <div class="flex flex-col text-left">
+                <div class="text-[12px] text-[#717680] leading-[18px] font-semibold">AL CÓDIGO QR</div>
+                <img class="w-[160px] h-[160px] object-contain" src="assets/img/yape-qr.png" />
+                <div class="leading-6 font-bold text-[14px]">Titular: {{ titularCuentaInterbank }}</div>
+              </div>
+            </div>
+
+            <hr class="border-[#e9eaeb]">
+
+            <div class="flex items-start gap-4">
+              <img class="w-12 h-12" src="assets/icons/yape-seeklogo-interbank.png" />
+              <div class="flex flex-col text-left">
+                <div class="text-[12px] text-[#717680] leading-[18px] font-semibold">Cuenta corriente soles</div>
+                <div class="leading-6 font-bold text-[14px]">N° {{ numeroCuentaInterbank }}</div>
+                <div class="leading-6 font-bold text-[14px]">CCI: {{ numeroCuentaInterbancarioInterbank }}</div>
+                <div class="leading-6 font-bold text-[14px]">Titular: {{ titularCuentaInterbank }}</div>
+              </div>
+            </div>
+
+            <div class="flex flex-col gap-1">
+              <b class="text-[14px] text-left">PASO 2</b>
+              <div class="text-[14px] text-[#717680] text-left">
+                <span class="font-medium">Envíanos la constancia de transferencia o depósito a nuestro Whatsapp </span>
+                <b>993 531 820</b>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        @if (errorMsg()) { <div class="text-red-600 text-sm">{{ errorMsg() }}</div> }
+      </div>
+
+      <div step-footer class="px-6 py-6 bg-transparent">
+        <a href="https://api.whatsapp.com/send/?phone=51993531820&text=Hola%2C+necesito+informaci%C3%B3n&type=phone_number&app_absent=0" target="_blank">
+          <button class="w-full rounded-full bg-[#0a0d12] text-white py-4 px-6 text-[16px] font-semibold">
+            Enviar comprobante
+          </button>
+        </a>
+      </div>
+    </app-step-card>
+  }
+</section>
