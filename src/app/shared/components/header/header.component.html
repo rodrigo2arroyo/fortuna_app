@@ -1,7 +1,32 @@
-<header class="sticky top-0 z-20 bg-[#ffa101] h-20 overflow-hidden">
+<header class="md:hidden sticky top-0 z-20 bg-[#ffa101] h-36 overflow-hidden">
+  <div class="relative h-full px-5 pt-3">
+    <div class="absolute -top-7 -left-40 w-[520px] h-[420px] bg-[#fef0c7] rounded-[64px] -rotate-[48deg] opacity-80"></div>
+    <div class="absolute -top-10 -left-16 w-[360px] h-[360px] bg-[#fef0c7] rounded-[64px] rotate-[28deg] opacity-80"></div>
+
+    <div class="relative z-10 h-full flex items-start justify-between">
+      <div class="flex flex-col">
+        <a class="block h-7 w-40">
+          <img src="../../../../assets/text/FULL.png" alt="Fortuna" class="h-full w-full object-contain" />
+        </a>
+        <div class="mt-2 rounded-[28px] bg-[#fef0c7]/90 px-4 py-2 w-max">
+          <div class="text-[12px] leading-4 text-black/60">Bienvenido</div>
+          <div class="text-[16px] leading-5 font-semibold text-black">
+            {{ displayName() || 'Usuario' }}
+          </div>
+        </div>
+      </div>
+
+      <button type="button" class="mt-1 h-6 w-6 shrink-0">
+        <img src="../../../../assets/icons/menu-line.svg" alt="Menú" class="h-full w-full object-contain" />
+      </button>
+    </div>
+  </div>
+</header>
+
+<header class="hidden md:block sticky top-0 z-20 bg-[#ffa101] h-20 overflow-hidden">
   <div class="relative h-full flex items-center justify-center px-20">
     <div class="absolute top-[88px] -left-[197px] w-[655px] h-[680px] bg-[#fef0c7] rounded-[88px] -rotate-[48deg] opacity-80"></div>
-    <div class="absolute top-[88px] -left-[330px] w-[655px] h-[680px] bg-[#fef0c7] rounded-[88px] -rotate-[48deg] opacity-80"></div>
+    <div class="absolute top=[88px] -left-[330px] w-[655px] h-[680px] bg-[#fef0c7] rounded-[88px] -rotate-[48deg] opacity-80"></div>
 
     <div class="relative z-10 w-full max-w-[1192px] flex items-center justify-between">
       <div class="w-[561px] flex items-center gap-8">

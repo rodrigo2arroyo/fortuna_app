@@ -1,6 +1,109 @@
-<div class="w-full bg-white text-left text-[14px] text-black font-sans min-h-screen">
+<!-- MOBILE -->
+<div class="md:hidden w-full min-h-screen bg-white text-black font-sans">
+  <header class="md:hidden sticky top-0 z-20 bg-[#ffa101] h-36 overflow-hidden">
+    <div class="relative h-full flex items-center justify-center px-6">
+      <div class="absolute top-10 -left-32 w-[520px] h-[420px] bg-[#fef0c7] rounded-[56px] -rotate-[48deg] opacity-80"></div>
+      <div class="absolute top-6 -left-60 w-[520px] h-[420px] bg-[#fef0c7] rounded-[56px] -rotate-[48deg] opacity-80"></div>
+
+      <a class="relative z-10 block h-9 w-44">
+        <img
+          src="../../../assets/text/FULL.png"
+          alt="Fortuna"
+          class="h-full w-full object-contain"
+        />
+      </a>
+    </div>
+  </header>
+
+  <div class="relative z-10 mt-6 px-6 pb-12  flex flex-col gap-8">
+    <div class="flex flex-col gap-3">
+      <h1 class="text-[34px] leading-[40px] font-bold text-[#1a202c]">Iniciar Sesión</h1>
+      <p class="text-[16px] leading-6 text-[#2d3748]">
+        Por favor, ingrese sus datos y contraseña para continuar con la solicitud del préstamo. ¡Falta poco!
+      </p>
+    </div>
+
+    <div class="flex flex-col gap-6">
+      <div class="flex flex-col gap-2">
+        <label class="text-[16px] font-medium leading-6">Documentos de identidad (DNI)</label>
+        <div
+          class="w-full rounded-2xl bg-gray-50 border px-4 py-4 flex items-center"
+          [class.border-red-400]="dni() && !dniValid()"
+          [class.border-[#e5e7ea]]="!(dni() && !dniValid())"
+        >
+          <input
+            type="text"
+            inputmode="numeric"
+            placeholder="44444444"
+            class="w-full bg-transparent outline-none text-[16px] leading-6 placeholder:text-[#8a8f9c]"
+            maxlength="8"
+            [ngModel]="dni()"
+            (ngModelChange)="dni.set($event)"
+          />
+        </div>
+        @if (dni() && !dniValid()) {
+          <small class="text-red-500 text-sm">DNI inválido (8 dígitos).</small>
+        }
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <label class="text-[16px] font-medium leading-6">Contraseña</label>
+        <div
+          class="w-full rounded-2xl bg-gray-50 border px-4 py-4 flex items-center gap-3"
+          [class.border-red-400]="password() && !passValid()"
+          [class.border-[#e5e7ea]]="!(password() && !passValid())"
+        >
+          <input
+            [type]="showPass() ? 'text' : 'password'"
+            placeholder="*******"
+            class="w-full bg-transparent outline-none text-[16px] leading-6 placeholder:text-[#8a8f9c]"
+            [ngModel]="password()"
+            (ngModelChange)="password.set($event)"
+          />
+          <button
+            type="button"
+            class="w-6 h-6"
+            (click)="showPass.set(!showPass())"
+            aria-label="Mostrar/Ocultar"
+            title="Mostrar/Ocultar"
+          >👁️</button>
+        </div>
+        @if (password() && !passValid()) {
+          <small class="text-red-500 text-sm">Mínimo 6 caracteres.</small>
+        }
+      </div>
+
+      @if (errorMsg()) {
+        <div class="text-red-600 text-sm">
+          {{ errorMsg() }}
+        </div>
+      }
+
+      <button
+        type="button"
+        class="w-full h-14 rounded-full bg-[#0a0d12] text-white text-[18px] font-semibold flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+        [disabled]="!canSubmit()"
+        (click)="onLogin()"
+      >
+        {{ isLoading() ? 'Ingresando...' : 'Iniciar sesión' }}
+      </button>
+
+      <div class="w-full text-center">
+        <a href="#" class="underline text-[18px] font-semibold">Recuperar contraseña</a>
+      </div>
+    </div>
+
+    <div class="w-full text-center text-[16px]">
+      <span>¿No tienes cuenta?</span>
+      <a href="#" class="underline text-[#2e90fa]">Crea una cuenta ahora</a>
+    </div>
+  </div>
+</div>
+
+<!-- DESKTOP -->
+<div class="hidden md:block w-full bg-white text-left text-[14px] text-black font-sans min-h-screen">
   <div class="w-full grid grid-cols-1 md:grid-cols-2 min-h-screen items-stretch">
-    <div class="bg-[#ffbf51] min-h-[900px] hidden md:block"></div>
+    <div class="bg-[#ffbf51] min-h-[900px]"></div>
 
     <div class="flex flex-col items-center justify-center gap-20 py-20 px-8 md:px-30 min-h-[900px]">
       <div class="w-full flex flex-col items-start gap-4 text-[30px] text-[#1a202c]">
@@ -20,9 +123,9 @@
               <span class="flex-1 leading-6 font-medium">Documento de identidad (DNI)</span>
             </label>
             <div
-            class="w-full rounded-xl bg-gray-50 border px-3 py-3 flex items-center"
-            [class.border-red-400]="dni() && !dniValid()"
-            [class.border-[#e5e7ea]]="!(dni() && !dniValid())">
+              class="w-full rounded-xl bg-gray-50 border px-3 py-3 flex items-center"
+              [class.border-red-400]="dni() && !dniValid()"
+              [class.border-[#e5e7ea]]="!(dni() && !dniValid())">
               <input
                 type="text"
                 inputmode="numeric"
@@ -61,9 +164,7 @@
                 (click)="showPass.set(!showPass())"
                 aria-label="Mostrar/Ocultar"
                 title="Mostrar/Ocultar"
-              >
-                👁️
-              </button>
+              >👁️</button>
             </div>
 
             @if (password() && !passValid()) {

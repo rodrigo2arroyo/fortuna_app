@@ -1,4 +1,145 @@
-<main class="bg-white text-neutral-900 font-sans">
+<main class="md:hidden bg-white text-neutral-900 font-sans flex flex-col gap-8 px-4 pb-10">
+  <div class="w-full overflow-x-auto scrollbar-hide">
+    <div class="flex gap-3 min-w-max py-4">
+      @for (item of menu(); track item.label) {
+        @if (item.route) {
+          <a [routerLink]="item.route"
+             #rla="routerLinkActive"
+             routerLinkActive="text-neutral-900"
+             [routerLinkActiveOptions]="{ exact: true }"
+             class="flex flex-col items-center justify-center gap-2 px-4 py-3 rounded-2xl border border-gray-200 min-w-[110px] text-center transition-colors"
+             [class.bg-amber-50]="rla.isActive"
+             [class.bg-white]="!rla.isActive">
+            <img [src]="item.icon" [alt]="item.label" class="w-7 h-7 mx-auto" />
+            <div class="text-sm font-semibold leading-5">{{ item.label }}</div>
+          </a>
+        } @else {
+          <button (click)="onItemClick(item)"
+                  class="flex flex-col items-center justify-center gap-2 px-4 py-3 rounded-2xl border border-gray-200 min-w-[110px] text-center">
+            <img [src]="item.icon" [alt]="item.label" class="w-7 h-7 mx-auto" />
+            <div class="text-sm font-semibold leading-5">{{ item.label }}</div>
+          </button>
+        }
+      }
+    </div>
+  </div>
+
+  <div class="flex flex-col gap-8">
+    <section class="flex flex-col gap-4">
+      <div class="w-full shadow-sm border-b-2 border-amber-500 px-4 py-3 flex items-center">
+        <img class="w-6 h-6 mr-2" alt="" src="assets/img/Personal.png">
+        <div class="font-semibold leading-6 text-base">Mis préstamos</div>
+      </div>
+
+      <div class="shadow-sm rounded-lg bg-white border border-gray-300 px-4 py-5 flex flex-col gap-4">
+        <div class="flex items-center justify-between">
+          <div class="font-semibold text-base leading-6">Préstamo Oportunidad 2.0</div>
+
+          <button
+            type="button"
+            class="p-0 bg-transparent border-0"
+            (click)="goMisPrestamos()"
+            [disabled]="!canGoMisPrestamos()"
+            [class.cursor-pointer]="canGoMisPrestamos()"
+            [class.cursor-not-allowed]="!canGoMisPrestamos()"
+            [class.opacity-50]="!canGoMisPrestamos()">
+            <img class="w-5 h-5" alt="Ir a Mis Préstamos" src="assets/icons/ChevronRight.svg" />
+          </button>
+        </div>
+
+        <div class="flex flex-col gap-3 text-sm">
+          <div class="flex justify-between items-center">
+            <span>Estado:</span>
+            <div
+              class="rounded-full h-8 px-3 flex items-center text-xs text-white"
+              [class.bg-red-500]="dashboard() && (dashboard()!.prestamoEstado || '').toLowerCase() === 'no califica'"
+              [class.bg-green-600]="dashboard() && (dashboard()!.prestamoEstado || '').toLowerCase() !== 'no califica'"
+              [class.bg-gray-200]="isLoading()">
+              @if (isLoading()) {
+                <p-skeleton width="90px" height="20px" borderRadius="9999px"></p-skeleton>
+              } @else {
+                <span class="font-semibold leading-4 px-1">
+            {{ dashboard()?.prestamoEstado ?? '—' }}
+          </span>
+              }
+            </div>
+          </div>
+
+          <div class="flex justify-between items-center">
+            <span>Vencimiento:</span>
+            <div
+              class="rounded-md h-6 px-2.5 flex items-center text-xs"
+              [class.text-gray-400]="!isLoading()"
+              [class.bg-gray-200]="isLoading()">
+              @if (isLoading()) {
+                <p-skeleton width="110px" height="16px" borderRadius="6px"></p-skeleton>
+              } @else {
+                <span class="leading-4">
+            {{ dashboard()?.prestamoVencimiento ?? 'Ninguno' }}
+          </span>
+              }
+            </div>
+          </div>
+        </div>
+
+        <button
+          routerLink="/home/garantizar-puntos"
+          class="w-full rounded-full bg-neutral-900 h-12 flex items-center justify-center text-white font-semibold">
+          Garantizar con puntos
+        </button>
+      </div>
+
+    </section>
+
+    <section class="flex flex-col gap-4">
+      <div class="w-full shadow-sm border-b-2 border-amber-500 px-4 py-3 flex items-center">
+        <img class="w-6 h-6 mr-2" alt="" src="assets/icons/favorite-database.svg">
+        <div class="font-semibold leading-6 text-base">Mis puntos</div>
+      </div>
+
+      <div class="shadow-sm rounded-lg bg-white border border-gray-300 px-4 py-5 flex flex-col gap-3 text-sm">
+        <div class="flex justify-between">
+          <span>Puntos disponibles:</span>
+          <span class="font-medium">{{ dashboard()?.puntosDisponibles ?? 0 }} pts</span>
+        </div>
+        <div class="flex justify-between">
+          <span>Puntos en garantía:</span>
+          <span class="text-gray-400">{{ dashboard()?.puntosGarantia ?? 0 }} pts</span>
+        </div>
+        <div class="flex justify-between">
+          <span>Puntos por activar:</span>
+          <span class="text-gray-400">{{ dashboard()?.puntosActivar ?? 0 }} pts</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="shadow-sm rounded-2xl bg-[#ffa101] text-black px-6 py-6 flex flex-col gap-3 relative overflow-hidden">
+      <div class="absolute top-[140px] -left-[160px] w-[360px] h-[380px] bg-[#ffbf51] rounded-[160px] -rotate-[48deg]"></div>
+      <div class="absolute bottom-3 left-10 w-[150px] h-[20px] bg-[#ffb83f] rounded-full"></div>
+
+      <div class="z-10 flex flex-col gap-2">
+        <h3 class="font-semibold text-lg leading-6">Solicita tu crédito sin evaluaciones con Fortuna Puntos</h3>
+        <p class="text-sm text-black/60">
+          ¿No calificas? Recarga puntos como garantía para un préstamo sin evaluación.
+        </p>
+        <div class="flex gap-2 text-sm font-semibold">
+          <button
+            routerLink="/home/recargar-puntos"
+            class="flex-1 h-10 rounded-full bg-neutral-900 text-white">
+            Recargar
+          </button>
+          <button class="flex-1 h-10 rounded-full bg-white border border-gray-200 text-black">
+            Ver más
+          </button>
+        </div>
+      </div>
+
+      <img class="relative z-10 w-[320px] h-[250px] mx-auto object-cover" alt="" src="assets/img/freepik--Character--inject-106.svg">
+    </section>
+  </div>
+</main>
+
+<main class="hidden md:block bg-white text-neutral-900 font-sans">
   <div class="absolute top-20 left-0 w-full flex items-start gap-16 px-20 py-10">
     <aside class="w-[247px] flex flex-col">
       <div class="flex flex-col gap-4">

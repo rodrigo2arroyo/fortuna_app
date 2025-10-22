@@ -1,4 +1,118 @@
-<section class="w-full flex flex-col items-center text-black">
+<section class="md:hidden w-full flex flex-col items-center text-black">
+  <div class="w-full px-4 pt-4 pb-2 flex items-center gap-3">
+    <button
+      routerLink="/home"
+      type="button"
+      class="rounded-full bg-white border border-[#e9eaeb] h-9 px-3 inline-flex items-center justify-center gap-1">
+      <img src="assets/icons/arrow-left.svg" alt="" class="w-5 h-5">
+      <span class="font-semibold text-[12px] leading-4">Atrás</span>
+    </button>
+
+    <nav class="flex items-center gap-2 text-[11px] text-[#d5d7da] uppercase font-semibold">
+      <span>Productos</span>
+      <img src="assets/icons/ChevronRight.svg" class="w-4 h-4" alt="">
+      <span class="text-[#414651]">Mis préstamos</span>
+    </nav>
+  </div>
+
+  <div class="w-full px-4">
+    <div class="drop-shadow-sm border-b-2 border-[#f79009] flex items-center p-3 text-[16px] text-[#09090a]">
+      <img src="assets/img/Personal.png" alt="" class="w-6 h-6 object-contain mr-3">
+      <div class="font-semibold leading-6">Mis préstamos</div>
+    </div>
+  </div>
+
+  <div class="w-full px-4 py-4">
+    @if(!tienePrestamo()){
+      <div class="w-full shadow-sm rounded-xl bg-white border border-[#d5d7da] p-5 text-[#535862]">
+        <div class="text-center py-4">
+          <div class="text-[16px] font-semibold text-[#0a0d12]">No tienes préstamos activos</div>
+          <div class="text-[13px] text-[#717680] mt-1">Cuando contrates un préstamo, verás el detalle aquí.</div>
+        </div>
+      </div>
+    } @else {
+      <div class="w-full shadow-sm rounded-xl bg-white border border-[#d5d7da] p-5 flex flex-col gap-5 text-[#535862]">
+        <div class="grid grid-cols-2 gap-3">
+          <div class="flex flex-col">
+            <span class="text-[12px] leading-5">Capital por pagar</span>
+            <b class="text-[22px] leading-7 text-[#0a0d12]">{{ capitalPorPagar() }}</b>
+          </div>
+          <div class="flex flex-col text-right">
+            <span class="text-[12px] leading-5">Pagado</span>
+            <b class="text-[22px] leading-7 text-[#0a0d12]">{{ capitalPagado() }}</b>
+          </div>
+        </div>
+
+        <div class="w-full">
+          <div class="rounded-lg overflow-hidden h-2 bg-[#e0eaff]">
+            <div class="h-2 bg-[#444ce7]" [style.width.%]="progresoPct()"></div>
+          </div>
+        </div>
+
+        <div class="flex items-start justify-between text-[#252b37]">
+          <div class="flex flex-col">
+            <span class="text-[12px] font-medium leading-5">Cuotas pagadas</span>
+            <b class="text-[12px] leading-5">{{ cuotasTexto() }}</b>
+          </div>
+          <div class="text-right">
+            <span class="text-[12px] font-medium leading-5">Monto inicial</span>
+            <b class="block text-[12px] leading-5">{{ montoInicial() }}</b>
+          </div>
+        </div>
+
+        <div class="rounded-lg bg-[#eef4ff] p-3 text-[#0a0d12]">
+          <div class="flex items-center justify-between">
+            <div class="flex flex-col gap-0.5">
+              <span class="text-[12px] font-medium leading-5">Siguiente pago:</span>
+              <span class="text-[12px] font-medium leading-5 text-[#717680]">Vencimiento:</span>
+            </div>
+            <div class="text-right text-[#181d27]">
+              <b class="text-[12px] leading-5">{{ montoSgtePago() }}</b>
+              <span class="block text-[12px] font-semibold leading-5">{{ vencimientoSgtePago() }}</span>
+            </div>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          class="w-full flex items-center justify-between text-[#dc6803] select-none"
+          (click)="toggleDetails()"
+          [attr.aria-expanded]="showDetails()">
+          <span class="font-semibold leading-5">{{ label() }}</span>
+          <img src="assets/icons/ChevronRight.svg"
+               class="w-5 h-5 transition-transform duration-200"
+               [class.rotate-90]="showDetails()">
+        </button>
+
+        @if(showDetails()){
+          <div class="border-t border-[#e5e7ea] pt-4 text-[13px] leading-5 text-[#252b37]">
+            <div class="flex items-center justify-between py-1.5">
+              <span>Monto de préstamo</span><b>{{ montoPrestamo() }}</b>
+            </div>
+            <div class="flex items-center justify-between py-1.5">
+              <span>Plazo en cuotas</span><b>{{ plazoCuotas() }}</b>
+            </div>
+            <div class="flex items-center justify-between py-1.5">
+              <span>Monto a liquidar</span><b>{{ montoLiquidar() }}</b>
+            </div>
+            <div class="flex items-center justify-between py-1.5">
+              <span>Deuda total atrasada</span><b>{{ deudaAtrasada() }}</b>
+            </div>
+            <div class="flex items-center justify-between py-1.5">
+              <span>Interés - TEA</span><b>{{ tea() }}</b>
+            </div>
+            <div class="flex items-center justify-between py-1.5">
+              <span>Interés - TCEA</span><b>{{ tcea() }}</b>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</section>
+
+
+<section class="hidden md:flex w-full flex-col items-center text-black">
   <div class="w-full max-w-[1200px] px-20 py-10 flex items-center gap-[51px]">
     <button
       routerLink="/home"
