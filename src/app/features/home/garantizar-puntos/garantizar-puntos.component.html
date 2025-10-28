@@ -316,7 +316,7 @@
 
           <div class="w-[260px] h-14 rounded-xl bg-gray-50 border px-3 flex items-center gap-3"
                [class.border-[#47cd89]]="isMontoValid()"
-               [class.border-red-500]="!isMontoValid() && (monto() ?? 0) > 0">
+               [class.border-red-500]="!isMontoValid() && monto() > 0">
             <input
               type="number"
               class="w-full text-center flex-1 leading-8 font-medium text-[24px] bg-transparent outline-none"
