@@ -4,6 +4,7 @@ import { AuthService } from '../../auth/services/auth.service';
 import {DashboardService} from '../services/dashboard.service';
 import {DashboardData} from '../models/dashboard.models';
 import {Skeleton} from 'primeng/skeleton';
+import {NgClass} from '@angular/common';
 
 type MenuAction = 'logout' | null;
 type MenuItem = {
@@ -19,7 +20,8 @@ type MenuItem = {
   imports: [
     RouterLink,
     RouterLinkActive,
-    Skeleton
+    Skeleton,
+    NgClass
   ],
   templateUrl: './dashboard.component.html',
 })
@@ -40,6 +42,7 @@ export class DashboardComponent implements OnInit {
   dashboard = signal<DashboardData | null>(null);
   isLoading = signal<boolean>(false);
   errorMsg = signal<string | null>(null);
+  estado = computed(() => this.normalize(this.dashboard()?.prestamoEstado));
 
   canGoMisPrestamos = computed(() => this.dashboard()?.tienePrestamo === '1');
 
@@ -56,9 +59,56 @@ export class DashboardComponent implements OnInit {
     }
   }
 
+  private normalize = (s?: string) =>
+    (s ?? '')
+      .trim()
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/\p{Diacritic}/gu, '');
+
   goMisPrestamos() {
     if (this.canGoMisPrestamos()) this.router.navigate(['/home/mis-prestamos']);
   }
+
+  estadoMeta = computed(() => {
+    switch (this.estado()) {
+      case 'no califica':
+        return {
+          chip: 'bg-red-500 text-white',
+          showGuarantee: true
+        };
+      case 'en ratificacion':
+        return {
+          chip: 'bg-gray-600 text-white',
+          showGuarantee: false
+        };
+      case 'en desembolso':
+        return {
+          chip: 'bg-gray-400 text-white',
+          showGuarantee: false
+        };
+      case 'desembolsado':
+        return {
+          chip: 'bg-amber-500 text-white',
+          showGuarantee: false
+        };
+      case 'vigente':
+        return {
+          chip: 'bg-white text-emerald-600 border border-emerald-600',
+          showGuarantee: false
+        };
+      case 'vencido':
+        return {
+          chip: 'bg-white text-red-500 border border-red-500',
+          showGuarantee: false
+        };
+      default:
+        return {
+          chip: 'bg-gray-300 text-gray-700',
+          showGuarantee: false
+        };
+    }
+  });
 
   onItemClick(item: MenuItem) {
     if (item.action === 'logout') {

@@ -266,110 +266,115 @@
   </div>
   @if (step() === 0) {
     <div class="w-full flex flex-col gap-6">
-      <div class="rounded-2xl overflow-hidden">
-        <div class="bg-[#f79009] text-white py-2 px-4 flex items-center justify-center">
-          <img class="w-6 h-6 object-contain" alt="" src="./assets/icons/star_shiny.png">
-          <div class="px-2 font-semibold leading-4">Préstamos sin evaluación</div>
+      <div
+        class="relative overflow-hidden rounded-2xl bg-white border-2 border-[#f79009] shadow-[0_1px_2px_rgba(10,13,18,0.05)] p-5 pt-16 text-[#717680] flex flex-col gap-4">
+        <div
+          class="absolute top-0 left-0 right-0 h-12 bg-gradient-to-r from-[#ff5b00] to-[#ff9500] text-white
+           flex items-center justify-center gap-2 rounded-t-2xl">
+          <img class="w-5 h-5 object-contain" alt="" src="./assets/icons/star_shiny.png" />
+          <span class="text-sm font-semibold leading-4">Préstamos sin evaluación</span>
         </div>
 
-        <div class="shadow-[0_1px_2px_rgba(10,13,18,0.05)] rounded-2xl bg-white border-2 border-[#f79009] p-5 text-[#717680] flex flex-col gap-4">
-          <div class="text-center text-[#f79009]">
-            <b class="text-[24px] leading-8">Fortuna Opportunity</b>
-          </div>
-
-          <div class="leading-5 font-medium text-left">
-            ¿No calificas? Recarga puntos como garantía para un préstamo sin evaluación.
-          </div>
-
-          <div class="flex flex-col items-center gap-2 text-[#a4a7ae]">
-            <div class="leading-5 text-center">Desde S/.300.00 hasta S/.3,000.00</div>
-            <div class="w-full max-w-[260px] rounded-xl bg-[#f9fafb] border border-[#e5e7ea] px-3 py-3 flex items-center text-[22px] text-[#131927]">
-              <div class="w-full flex items-center justify-center gap-3">
-                <b class="leading-8">s/</b>
-                <input
-                  type="number"
-                  min="300"
-                  max="3000"
-                  step="1"
-                  placeholder="0.00"
-                  class="w-full bg-transparent border-none outline-none text-center leading-8 font-medium text-[#131927]"
-                  [ngModel]="monto()"
-                  (ngModelChange)="monto.set(+($event || 0))"
-                />
-              </div>
-            </div>
-          </div>
-
-          <div class="flex flex-col gap-3 text-left">
-            <div class="text-black font-semibold text-[20px] leading-7">Beneficios</div>
-
-            <div class="flex items-start gap-3">
-              <img class="w-5 h-5" alt="" src="assets/icons/checkbox-circle-fill.svg">
-              <div class="leading-5">Accede a préstamos sin evaluaciones.</div>
-            </div>
-            <div class="flex items-start gap-3">
-              <img class="w-5 h-5" alt="" src="assets/icons/checkbox-circle-fill.svg">
-              <div class="leading-5">Accede a préstamos sin evaluaciones.</div>
-            </div>
-            <div class="flex items-start gap-3">
-              <img class="w-5 h-5" alt="" src="assets/icons/checkbox-circle-fill.svg">
-              <div class="leading-5">Te prestamos sin mirar tu historial crediticio.</div>
-            </div>
-          </div>
-
-          <button
-            class="mt-2 w-full rounded-full bg-gradient-to-r from-[#ff5b00] to-[#ff9500] text-white py-4 px-6 text-[16px]"
-            (click)="goToStep(1)">
-            <span class="font-semibold leading-6 uppercase">Recarga puntos</span>
-          </button>
+        <div class="text-center text-[#f79009]">
+          <b class="text-[28px] leading-8">Fortuna Opportunity</b>
         </div>
+        <div class="leading-5 font-medium text-left">
+          ¿No calificas? Recarga puntos como garantía para un préstamo sin evaluación.
+        </div>
+        <div class="flex flex-col items-center gap-2 text-[#a4a7ae]">
+          <div class="leading-5 text-center">Desde S/.300.00 hasta S/.3,000.00</div>
+
+          <div class="w-full max-w-[260px] rounded-xl bg-[#f9fafb] border border-[#e5e7ea] px-3 py-3 flex items-center text-[22px] text-[#131927]">
+            <div class="w-full flex items-center justify-center gap-3">
+              <b class="leading-8">S/.</b>
+              <input
+                type="number"
+                min="300"
+                max="3000"
+                step="1"
+                placeholder="0.00"
+                class="w-full bg-transparent border-none outline-none text-center leading-8 font-medium text-[#131927]"
+                [ngModel]="monto()"
+                (ngModelChange)="monto.set(+($event || 0))"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col gap-3 text-left">
+          <div class="text-black font-semibold text-[20px] leading-7">Beneficios</div>
+          <div class="flex items-start gap-3">
+            <img class="w-5 h-5" alt="" src="assets/icons/checkbox-circle-fill.svg">
+            <div class="leading-5">Accede a préstamos sin evaluaciones.</div>
+          </div>
+          <div class="flex items-start gap-3">
+            <img class="w-5 h-5" alt="" src="assets/icons/checkbox-circle-fill.svg">
+            <div class="leading-5">Accede a préstamos sin evaluaciones.</div>
+          </div>
+          <div class="flex items-start gap-3">
+            <img class="w-5 h-5" alt="" src="assets/icons/checkbox-circle-fill.svg">
+            <div class="leading-5">Te prestamos sin mirar tu historial crediticio.</div>
+          </div>
+        </div>
+        <button
+          class="mt-2 w-full rounded-full bg-gradient-to-r from-[#ff5b00] to-[#ff9500] text-white py-4 px-6 text-[16px]"
+          (click)="goToStep(1)">
+          <span class="font-semibold leading-6 uppercase">Recarga puntos</span>
+        </button>
       </div>
 
-      <!-- Card: Fortuna Plus -->
-      <div class="rounded-2xl overflow-hidden">
-        <div class="bg-[#2e90fa] text-white py-2 px-4 flex items-center justify-center">
-          <img class="w-6 h-6 object-contain" alt="" src="./assets/icons/star_shiny.png">
-          <div class="px-2 font-semibold leading-4">Ten el control de tus deudas</div>
+
+      <div
+        class="relative overflow-hidden rounded-2xl bg-white border-2 border-[#53b1fd] shadow-[0_1px_2px_rgba(10,13,18,0.05)] p-5 pt-16 text-[#717680] flex flex-col gap-4">
+
+        <!-- BANDA SUPERIOR + ICONO -->
+        <div
+          class="absolute top-0 left-0 right-0 h-12 bg-[#2e90fa] text-white
+           flex items-center justify-center gap-2 rounded-t-2xl">
+          <img class="w-5 h-5 object-contain" alt="" src="./assets/icons/star_shiny.png">
+          <span class="text-sm font-semibold leading-4">Ten el control de tus deudas</span>
         </div>
 
-        <div class="shadow-[0_1px_2px_rgba(10,13,18,0.05)] rounded-2xl bg-white border-2 border-[#53b1fd] p-5 text-[#717680] flex flex-col gap-4">
-          <div class="text-center text-[#0ba5ec]">
-            <b class="text-[24px] leading-8">Fortuna Plus</b>
-          </div>
-
-          <div class="text-left text-[14px] leading-5 font-medium">
-            Acumula puntos cada mes y usalos cuando quieras para pagar tus préstamos
-          </div>
-
-          <div class="flex flex-col items-center text-black">
-            <b class="text-[24px] leading-8">S/19.90</b>
-            <div class="text-[12px] leading-5 text-[#9ea2ae]">Suscripción mensual</div>
-          </div>
-
-          <div class="flex flex-col gap-3 text-left">
-            <div class="text-black font-semibold text-[20px] leading-7">Beneficios</div>
-
-            <div class="flex items-start gap-3">
-              <img class="w-7 h-7 object-contain" alt="" src="assets/icons/Loan.png">
-              <div class="leading-5">Úsalo como pago mínimo de tu préstamo.</div>
-            </div>
-            <div class="flex items-start gap-3">
-              <img class="w-7 h-7 object-contain" alt="" src="assets/icons/Money.png">
-              <div class="leading-5">Úsalo para pagar tu préstamo en cualquier momento.</div>
-            </div>
-            <div class="flex items-start gap-3">
-              <img class="w-7 h-7 object-contain" alt="" src="assets/icons/Calendar.png">
-              <div class="leading-5">
-                Reprograma 1 mes de pago sin penalidad una vez al año, mínimo 3 meses seguido de suscripción.
-              </div>
-            </div>
-          </div>
-
-          <button class="mt-2 w-full rounded-full bg-[#0a0d12] text-white py-4 px-6 text-[16px]">
-            <span class="font-semibold leading-6">Actualizar a plus</span>
-          </button>
+        <div class="text-center text-[#0ba5ec]">
+          <b class="text-[28px] leading-8">Fortuna Plus</b>
         </div>
+
+        <div class="text-left text-[14px] leading-5 font-medium">
+          Acumula puntos cada mes y úsalos cuando quieras para pagar tus préstamos
+        </div>
+
+        <!-- Precio -->
+        <div class="flex flex-col items-center text-black">
+          <b class="text-[24px] leading-8">S/ 19.90</b>
+          <div class="text-[12px] leading-5 text-[#9ea2ae]">Suscripción mensual</div>
+        </div>
+
+        <!-- Beneficios -->
+        <div class="flex flex-col gap-3 text-left">
+          <div class="text-black font-semibold text-[20px] leading-7">Beneficios</div>
+
+          <div class="flex items-start gap-3">
+            <img class="w-7 h-7 object-contain" alt="" src="assets/icons/Loan.png">
+            <div class="leading-5">Úsalo como pago mínimo de tu préstamo.</div>
+          </div>
+
+          <div class="flex items-start gap-3">
+            <img class="w-7 h-7 object-contain" alt="" src="assets/icons/Money.png">
+            <div class="leading-5">Úsalo para pagar tu préstamo en cualquier momento.</div>
+          </div>
+
+          <div class="flex items-start gap-3">
+            <img class="w-7 h-7 object-contain" alt="" src="assets/icons/Calendar.png">
+            <div class="leading-5">
+              Reprograma 1 mes de pago sin penalidad una vez al año, mínimo 3 meses seguidos de suscripción.
+            </div>
+          </div>
+        </div>
+
+        <button class="mt-2 w-full rounded-full bg-[#0a0d12] text-white py-4 px-6 text-[16px]">
+          <span class="font-semibold leading-6">Actualizar a Plus</span>
+        </button>
       </div>
+
     </div>
   }
   @if (step() === 1) {

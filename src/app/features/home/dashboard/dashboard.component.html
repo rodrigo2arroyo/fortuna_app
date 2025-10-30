@@ -31,6 +31,7 @@
       </div>
 
       <div class="shadow-sm rounded-lg bg-white border border-gray-300 px-4 py-5 flex flex-col gap-4">
+
         <div class="flex items-center justify-between">
           <div class="font-semibold text-base leading-6">Préstamo Oportunidad 2.0</div>
 
@@ -47,13 +48,15 @@
         </div>
 
         <div class="flex flex-col gap-3 text-sm">
+
           <div class="flex justify-between items-center">
             <span>Estado:</span>
+
             <div
-              class="rounded-full h-8 px-3 flex items-center text-xs text-white"
-              [class.bg-red-500]="dashboard() && (dashboard()!.prestamoEstado || '').toLowerCase() === 'no califica'"
-              [class.bg-green-600]="dashboard() && (dashboard()!.prestamoEstado || '').toLowerCase() !== 'no califica'"
-              [class.bg-gray-200]="isLoading()">
+              class="rounded-full h-8 px-3 flex items-center text-xs"
+              [ngClass]="isLoading()
+          ? 'bg-gray-200 text-transparent'
+          : estadoMeta().chip">
               @if (isLoading()) {
                 <p-skeleton width="90px" height="20px" borderRadius="9999px"></p-skeleton>
               } @else {
@@ -68,8 +71,7 @@
             <span>Vencimiento:</span>
             <div
               class="rounded-md h-6 px-2.5 flex items-center text-xs"
-              [class.text-gray-400]="!isLoading()"
-              [class.bg-gray-200]="isLoading()">
+              [ngClass]="isLoading() ? 'bg-gray-200' : 'text-gray-400'">
               @if (isLoading()) {
                 <p-skeleton width="110px" height="16px" borderRadius="6px"></p-skeleton>
               } @else {
@@ -81,12 +83,15 @@
           </div>
         </div>
 
-        <button
-          routerLink="/home/garantizar-puntos"
-          class="w-full rounded-full bg-neutral-900 h-12 flex items-center justify-center text-white font-semibold">
-          Garantizar con puntos
-        </button>
+        @if (!isLoading() && estadoMeta().showGuarantee) {
+          <button
+            routerLink="/home/garantizar-puntos"
+            class="w-full rounded-full bg-neutral-900 h-12 flex items-center justify-center text-white font-semibold">
+            Garantizar con puntos
+          </button>
+        }
       </div>
+
 
     </section>
 
@@ -184,59 +189,63 @@
           <div class="w-[450px] flex flex-col">
             <div class="shadow-sm rounded-t-md bg-white border border-gray-300 px-6 py-6 flex items-center gap-2">
               <div class="flex-1 flex flex-col items-center gap-2">
-                <div class="w-full font-semibold leading-7">Préstamos Oportunidad 2.0</div>
+                <div class="w-full font-semibold leading-7">Préstamo Oportunidad 2.0</div>
                 <div class="w-[361px] flex flex-col gap-2 text-base text-black">
                   <div class="flex items-center justify-between">
                     <div class="leading-6">Estado:</div>
                     <div
-                      class="rounded-full h-10 px-3 flex items-center text-sm text-white"
-                      [class.bg-red-500]="dashboard() && (dashboard()!.prestamoEstado || '').toLowerCase() === 'no califica'"
-                      [class.bg-green-600]="dashboard() && (dashboard()!.prestamoEstado || '').toLowerCase() !== 'no califica'"
-                      [class.bg-gray-200]="isLoading()"
-                    >
+                      class="rounded-full h-10 px-3 flex items-center"
+                      [ngClass]="isLoading()
+                      ? 'bg-gray-200 text-transparent'
+                      : 'text-sm font-semibold ' + estadoMeta().chip">
                       @if (isLoading()) {
-                        <p-skeleton width="90px" height="20px" borderRadius="9999px"></p-skeleton>
+                        <p-skeleton width="110px" height="20px" borderRadius="9999px"></p-skeleton>
                       } @else {
-                        <span class="font-semibold leading-4 px-2">
-                          {{ dashboard()?.prestamoEstado ?? '—' }}
-                        </span>
+                        <span class="leading-4 px-2">
+                  {{ dashboard()?.prestamoEstado ?? '—' }}
+                </span>
                       }
                     </div>
                   </div>
+
                   <div class="h-10 flex items-center justify-between">
                     <div class="leading-6">Vencimiento:</div>
-                    <div class="rounded-md h-6 px-2.5 flex items-center text-xs"
-                         [class.text-gray-400]="!isLoading()"
-                         [class.bg-gray-200]="isLoading()">
+                    <div
+                      class="rounded-md h-6 px-2.5 flex items-center text-xs"
+                      [ngClass]="isLoading() ? 'bg-gray-200' : 'text-gray-400'">
                       @if (isLoading()) {
                         <p-skeleton width="110px" height="16px" borderRadius="6px"></p-skeleton>
                       } @else {
                         <span class="leading-4">
-                          {{ dashboard()?.prestamoVencimiento ?? 'Ninguno' }}
-                        </span>
+                  {{ dashboard()?.prestamoVencimiento ?? 'Ninguno' }}
+                </span>
                       }
                     </div>
                   </div>
                 </div>
               </div>
-              <button type="button"
-                      (click)="goMisPrestamos()"
-                      [disabled]="!canGoMisPrestamos()"
-                      [class.cursor-pointer]="canGoMisPrestamos()"
-                      [class.cursor-not-allowed]="!canGoMisPrestamos()"
-                      [class.opacity-50]="!canGoMisPrestamos()"
-                      class="p-0 bg-transparent border-0">
+
+              <button
+                type="button"
+                (click)="goMisPrestamos()"
+                [disabled]="!canGoMisPrestamos()"
+                [class.cursor-pointer]="canGoMisPrestamos()"
+                [class.cursor-not-allowed]="!canGoMisPrestamos()"
+                [class.opacity-50]="!canGoMisPrestamos()"
+                class="p-0 bg-transparent border-0">
                 <img class="w-6 h-6" alt="Ir a Mis Préstamos" src="assets/icons/ChevronRight.svg" />
               </button>
             </div>
 
-            <div class="shadow-sm rounded-b-md bg-white border border-t-0 border-gray-300 px-6 py-4 text-center">
-              <button
-                routerLink="/home/garantizar-puntos"
-                class="w-full rounded-full bg-neutral-900 h-12 flex items-center justify-center px-5 text-white cursor-pointer">
-                <span class="font-semibold leading-5">Garantizar con puntos</span>
-              </button>
-            </div>
+            @if (!isLoading() && estadoMeta().showGuarantee) {
+              <div class="shadow-sm rounded-b-md bg-white border border-t-0 border-gray-300 px-6 py-4 text-center">
+                <button
+                  routerLink="/home/garantizar-puntos"
+                  class="w-full rounded-full bg-neutral-900 h-12 flex items-center justify-center px-5 text-white">
+                  <span class="font-semibold leading-5">Garantizar con puntos</span>
+                </button>
+              </div>
+            }
           </div>
         </div>
 
