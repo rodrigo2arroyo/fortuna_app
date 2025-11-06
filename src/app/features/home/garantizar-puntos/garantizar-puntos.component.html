@@ -47,9 +47,9 @@
               <input
                 type="number"
                 class="flex-1 leading-8 font-medium text-[24px] bg-transparent outline-none"
-                [ngModel]="monto()"
+                [(ngModel)]="montoView"
                 (ngModelChange)="onInputMonto($event)"
-                min="0" />
+                placeholder="0"/>
               <b class="leading-8">pts</b>
             </div>
 

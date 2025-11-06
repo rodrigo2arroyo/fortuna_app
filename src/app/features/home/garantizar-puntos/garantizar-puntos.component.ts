@@ -40,6 +40,7 @@ export class GarantizarPuntosComponent implements OnInit {
   });
 
   monto  = signal<number>(0);
+  montoView: number | '' = '';
   cuotas = signal<number>(1);
   maxDisponibles = computed(() => Number(this.puntosDisponibles() || 0));
   isMontoValid   = computed(() => this.monto() > 0 && this.monto() <= this.maxDisponibles());
@@ -59,9 +60,14 @@ export class GarantizarPuntosComponent implements OnInit {
     if (this.step === 2) this.evaluar();
   }
 
-  onInputMonto(value: string | number) {
+  onInputMonto(value: string | number | null) {
+    if (value === '' || value === null) {
+      this.montoView = '';
+      return;
+    }
     const n = Number(String(value).replace(/[, ]/g, ''));
     const clamped = Number.isFinite(n) ? Math.max(0, n) : 0;
+    this.montoView = clamped;
     this.monto.set(clamped);
     if (this.step >= 2) this.evaluar();
   }
