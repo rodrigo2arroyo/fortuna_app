@@ -319,10 +319,10 @@
                [class.border-red-500]="!isMontoValid() && monto() > 0">
             <input
               type="number"
-              class="w-full text-center flex-1 leading-8 font-medium text-[24px] bg-transparent outline-none"
-              [ngModel]="monto()"
+              class="flex-1 leading-8 font-medium text-[24px] bg-transparent outline-none"
+              [(ngModel)]="montoView"
               (ngModelChange)="onInputMonto($event)"
-              min="0" />
+              placeholder="0"/>
             <b class="leading-8">pts</b>
           </div>
 

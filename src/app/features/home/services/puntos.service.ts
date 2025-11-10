@@ -7,6 +7,8 @@ import { ApiResponse } from '../../../shared/models/api-response.model';
 
 export interface PuntosRecargaResponse {
   puntosConfirmados: string;
+  nroMovimiento: string;
+  fecha: string;
 }
 
 export interface GarantizarResponse {

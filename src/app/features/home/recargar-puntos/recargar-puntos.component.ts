@@ -14,11 +14,12 @@ import { DecimalPipe } from '@angular/common';
 })
 export class RecargarPuntosComponent {
   step = signal(0);
-
   monto = signal<number>(500);
-
   isLoading = signal(false);
   errorMsg  = signal<string | null>(null);
+
+  nroMovimiento = signal<string | null>(null);
+  fechaMovimiento = signal<string | null>(null);
 
   numeroCuentaInterbank = environment.numeroCuentaInterbank;
   numeroCuentaInterbancarioInterbank = environment.numeroCuentaInterbancarioInterbank;
@@ -33,9 +34,14 @@ export class RecargarPuntosComponent {
   async confirmarRecarga() {
     this.errorMsg.set(null);
     this.isLoading.set(true);
+
     try {
       const m = Math.max(300, Math.min(3000, Number(this.monto()) || 0));
-      await this.puntosSvc.recargarPuntos(m);
+
+      const resp = await this.puntosSvc.recargarPuntos(m);
+      this.nroMovimiento.set(resp.nroMovimiento);
+      this.fechaMovimiento.set(resp.fecha);
+
       this.step.set(2);
     } catch (e: any) {
       this.errorMsg.set(e?.message ?? 'No se pudo recargar puntos');
