@@ -1,0 +1,185 @@
+<div class="md:hidden">
+  <div class="relative z-10 mt-6 px-6 pb-12  flex flex-col gap-8">
+    <div class="flex flex-col gap-3">
+      <h1 class="text-[34px] leading-[40px] font-bold text-[#1a202c]">Iniciar Sesión</h1>
+      <p class="text-[16px] leading-6 text-[#2d3748]">
+        Por favor, ingrese sus datos y contraseña para continuar con la solicitud del préstamo. ¡Falta poco!
+      </p>
+    </div>
+
+    <div class="flex flex-col gap-6">
+      <div class="flex flex-col gap-2">
+        <label class="text-[16px] font-medium leading-6">Documentos de identidad (DNI)</label>
+        <div
+          class="w-full rounded-2xl bg-gray-50 border px-4 py-4 flex items-center"
+          [class.border-red-400]="dni() && !dniValid()"
+          [class.border-[#e5e7ea]]="!(dni() && !dniValid())"
+        >
+          <input
+            type="text"
+            inputmode="numeric"
+            placeholder="44444444"
+            class="w-full bg-transparent outline-none text-[16px] leading-6 placeholder:text-[#8a8f9c]"
+            maxlength="8"
+            [ngModel]="dni()"
+            (ngModelChange)="dni.set($event)"
+          />
+        </div>
+        @if (dni() && !dniValid()) {
+          <small class="text-red-500 text-sm">DNI inválido (8 dígitos).</small>
+        }
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <label class="text-[16px] font-medium leading-6">Contraseña</label>
+        <div
+          class="w-full rounded-2xl bg-gray-50 border px-4 py-4 flex items-center gap-3"
+          [class.border-red-400]="password() && !passValid()"
+          [class.border-[#e5e7ea]]="!(password() && !passValid())"
+        >
+          <input
+            [type]="showPass() ? 'text' : 'password'"
+            placeholder="*******"
+            class="w-full bg-transparent outline-none text-[16px] leading-6 placeholder:text-[#8a8f9c]"
+            [ngModel]="password()"
+            (ngModelChange)="password.set($event)"
+          />
+          <button
+            type="button"
+            class="w-6 h-6"
+            (click)="showPass.set(!showPass())"
+            aria-label="Mostrar/Ocultar"
+            title="Mostrar/Ocultar"
+          >👁️</button>
+        </div>
+        @if (password() && !passValid()) {
+          <small class="text-red-500 text-sm">Mínimo 6 caracteres.</small>
+        }
+      </div>
+
+      @if (errorMsg()) {
+        <div class="text-red-600 text-sm">
+          {{ errorMsg() }}
+        </div>
+      }
+
+      <button
+        type="button"
+        class="w-full h-14 rounded-full bg-[#0a0d12] text-white text-[18px] font-semibold flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+        [disabled]="!canSubmit()"
+        (click)="onLogin()"
+      >
+        {{ isLoading() ? 'Ingresando...' : 'Iniciar sesión' }}
+      </button>
+
+      <div class="w-full text-center">
+        <a [routerLink]="['/auth/recover']" class="underline leading-6 font-semibold">Recuperar contraseña</a>
+      </div>
+    </div>
+
+    <div class="w-full text-center text-[16px]">
+      <span>¿No tienes cuenta?</span>
+      <a [routerLink]="['/auth/register']" class="underline leading-6 text-[#2e90fa]">Crea una cuenta ahora</a>
+    </div>
+  </div>
+</div>
+
+<div class="hidden md:block">
+  <div class="w-full flex flex-col items-start gap-4 text-[30px] text-[#1a202c]">
+    <div class="flex flex-col gap-4">
+      <b class="leading-[38px]">Iniciar Sesión</b>
+      <p class="text-[14px] leading-5 text-[#2d3748]">
+        Doy mi consentimiento para el procesamiento de mis datos personales de acuerdo con la
+        <a class="underline text-inherit" href="https://fortuna.com.pe/politica-de-privacidad" target="_blank">Política de Privacidad</a>
+        y
+        <a class="underline text-inherit" href="https://fortuna.com.pe/terminos-y-condiciones" target="_blank">Términos y Condiciones</a>.
+      </p>
+    </div>
+
+    <div class="w-full flex flex-col gap-6 text-[16px] text-[#131927] mt-4">
+      <div class="flex flex-col gap-2">
+        <label class="flex items-center">
+          <span class="flex-1 leading-6 font-medium">Documento de identidad (DNI)</span>
+        </label>
+
+        <div
+          class="w-full rounded-xl bg-gray-50 border px-3 py-3 flex items-center"
+          [class.border-red-400]="dni() && !dniValid()"
+          [class.border-[#e5e7ea]]="!(dni() && !dniValid())">
+          <input
+            type="text"
+            inputmode="numeric"
+            placeholder="44444444"
+            class="w-full bg-transparent outline-none leading-6 placeholder:text-[#8a8f9c]"
+            maxlength="8"
+            [ngModel]="dni()"
+            (ngModelChange)="dni.set($event)"
+          />
+        </div>
+
+        @if (dni() && !dniValid()) {
+          <small class="text-red-500">DNI inválido (8 dígitos).</small>
+        }
+      </div>
+      <div class="flex flex-col gap-2">
+        <label class="flex items-center">
+          <span class="flex-1 leading-6 font-medium">Contraseña</span>
+        </label>
+
+        <div
+          class="w-full rounded-xl bg-gray-50 border px-3 py-3 flex items-center gap-3"
+          [class.border-red-400]="password() && !passValid()"
+          [class.border-[#e5e7ea]]="!(password() && !passValid())"
+        >
+          <input
+            [type]="showPass() ? 'text' : 'password'"
+            placeholder="*******"
+            class="w-full bg-transparent outline-none leading-6 placeholder:text-[#8a8f9c]"
+            [ngModel]="password()"
+            (ngModelChange)="password.set($event)"
+          />
+          <button
+            type="button"
+            class="w-6 h-6"
+            (click)="showPass.set(!showPass())"
+            aria-label="Mostrar/Ocultar"
+            title="Mostrar/Ocultar"
+          >👁️</button>
+        </div>
+
+        @if (password() && !passValid()) {
+          <small class="text-red-500">Mínimo 6 caracteres.</small>
+        }
+      </div>
+      @if (errorMsg()) {
+        <div class="text-red-600 text-sm">
+          {{ errorMsg() }}
+        </div>
+      }
+
+      <div class="flex items-center gap-2 text-center text-[18px] text-white">
+        <button
+          type="button"
+          class="inline-flex items-center justify-center rounded-full px-6 py-4
+               disabled:opacity-50 disabled:cursor-not-allowed bg-[#0a0d12] cursor-pointer"
+          [disabled]="!canSubmit()"
+          (click)="onLogin()"
+        >
+        <span class="leading-6 font-semibold">
+          {{ isLoading() ? 'Ingresando...' : 'Iniciar sesión' }}
+        </span>
+        </button>
+
+        <div class="px-2 text-black">
+          <a [routerLink]="['/auth/recover']" class="underline leading-6 font-semibold">Recuperar contraseña</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex items-center gap-2 text-[16px] mt-20">
+    <span class="leading-6">¿No tienes cuenta?</span>
+    <a [routerLink]="['/auth/register']" class="underline leading-6 text-[#2e90fa]">Crea una cuenta ahora</a>
+  </div>
+</div>
+

@@ -15,6 +15,8 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./features/home/home.routes').then(m => m.HOME_ROUTES),
   },
-  { path: '', redirectTo: 'auth/login', pathMatch: 'full' },
-  { path: '**', redirectTo: 'auth/login' },
+  // 🔹 Redirección raíz: envía directamente al login dentro del módulo Auth
+  { path: '', redirectTo: '/auth/login', pathMatch: 'full' },
+  // 🔹 Redirección por defecto ante rutas desconocidas
+  { path: '**', redirectTo: '/auth/login' },
 ];

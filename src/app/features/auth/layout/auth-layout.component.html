@@ -1,0 +1,28 @@
+<div class="md:hidden w-full min-h-screen bg-white text-black font-sans">
+  <header class="md:hidden sticky top-0 z-20 bg-[#ffa101] h-36 overflow-hidden">
+    <div class="relative h-full flex items-center justify-center px-6">
+      <div class="absolute top-10 -left-32 w-[520px] h-[420px] bg-[#fef0c7] rounded-[56px] -rotate-[48deg] opacity-80"></div>
+      <div class="absolute top-6 -left-60 w-[520px] h-[420px] bg-[#fef0c7] rounded-[56px] -rotate-[48deg] opacity-80"></div>
+
+      <a class="relative z-10 block h-9 w-44">
+        <img
+          src="../../../assets/text/FULL.png"
+          alt="Fortuna"
+          class="h-full w-full object-contain"
+        />
+      </a>
+    </div>
+  </header>
+  <div class="relative z-10 mt-6 px-6 pb-12  flex flex-col gap-8">
+    <router-outlet />
+  </div>
+</div>
+
+<div class="hidden md:block w-full bg-white text-left text-[14px] text-black font-sans min-h-screen">
+  <div class="grid grid-cols-1 md:grid-cols-2 min-h-screen items-stretch">
+    <div class="bg-[#ffbf51] min-h-[900px] md:min-h-screen"></div>
+    <div class="flex flex-col items-center justify-center py-20 px-8 md:px-30 min-h-[900px] md:min-h-screen">
+      <router-outlet />
+    </div>
+  </div>
+</div>

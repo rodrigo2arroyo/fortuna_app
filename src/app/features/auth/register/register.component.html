@@ -1,0 +1,42 @@
+<div class="w-full max-w-xl">
+  <h1 class="text-[30px] text-[#1a202c] font-bold leading-[38px] mb-6">Crear cuenta</h1>
+
+  <!-- Progreso simple -->
+  <div class="mb-6 text-sm text-gray-600">Paso {{ stepIndex() + 1 }} de 4</div>
+
+  @switch (step()) {
+    @case ('identidad') {
+      <!-- DNI -->
+        <!-- ... -->
+      <div class="mt-6 flex gap-2">
+        <button class="rounded-full px-6 py-3 bg-[#0a0d12] text-white" (click)="next()">Continuar</button>
+      </div>
+    }
+    @case ('datos') {
+      <!-- Formulario -->
+      <div class="mt-6 flex gap-2">
+        <button class="rounded-full px-6 py-3 border" (click)="prev()">Atrás</button>
+        <button class="rounded-full px-6 py-3 bg-[#0a0d12] text-white" (click)="next()">Continuar</button>
+      </div>
+    }
+    @case ('verificacion') {
+      <!-- Código -->
+      <div class="mt-6 flex gap-2">
+        <button class="rounded-full px-6 py-3 border" (click)="prev()">Atrás</button>
+        <button class="rounded-full px-6 py-3 bg-[#0a0d12] text-white" (click)="next()">Continuar</button>
+      </div>
+    }
+    @case ('credenciales') {
+      <!-- Password -->
+      <div class="mt-6 flex gap-2">
+        <button class="rounded-full px-6 py-3 border" (click)="prev()">Atrás</button>
+        <button class="rounded-full px-6 py-3 bg-[#0a0d12] text-white" (click)="finish()">Crear cuenta</button>
+      </div>
+    }
+  }
+
+  <div class="mt-10 text-[16px]">
+    <span>¿Ya tienes cuenta?</span>
+    <a [routerLink]="['/auth/login']" class="underline text-[#2e90fa] ml-1">Inicia sesión</a>
+  </div>
+</div>
