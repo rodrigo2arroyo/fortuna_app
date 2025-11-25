@@ -12,6 +12,8 @@ import { formatCountdown } from './utils/time-format.utils';
 import { buildOtpForm, getOtpCode } from './utils/otp.util';
 import { CELULAR_REGEX, DNI_REGEX } from './utils/validators.const';
 import { passwordsMatchValidator } from '../../../shared/form-validators';
+import {AuthService} from '../services/auth.service';
+import {LoginRequest} from '../models/auth.model';
 
 type Step = 'identidad' | 'datos' | 'verificacion' | 'credenciales';
 const steps: Step[] = ['identidad', 'datos', 'verificacion', 'credenciales'];
@@ -28,10 +30,13 @@ const steps: Step[] = ['identidad', 'datos', 'verificacion', 'credenciales'];
 export class RegisterComponent implements OnInit, OnDestroy {
   private readonly router = inject(Router);
   private readonly fb = inject(FormBuilder);
+  private readonly auth   = inject(AuthService);
 
   step = signal<Step>('identidad');
   dni = signal<string>('');
   accepted = signal<boolean>(false);
+  isLoading = signal(false);
+  errorMsg = signal<string | null>(null);
 
   showPassword = signal(false);
   showPasswordConfirm = signal(false);
@@ -55,7 +60,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       passwordConfirm: ['', [Validators.required]],
     },
     {
-      validators: passwordsMatchValidator('password', 'passwordConfirm'),
+      validators: passwordsMatchValidator(),
     }
   );
 
@@ -168,25 +173,39 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.next();
   }
 
-  finish() {
-    const passwordCtrl = this.credencialesForm.get('password');
-    const confirmCtrl = this.credencialesForm.get('passwordConfirm');
+  async finish() {
+    this.credencialesForm.markAllAsTouched();
 
-    if (!passwordCtrl || !confirmCtrl) return;
+    // if (!this.credencialesValid()) return;
 
-    passwordCtrl.markAsTouched();
-    confirmCtrl.markAsTouched();
+    const password = this.credencialesForm.get('password')?.value;
 
-    if (!this.credencialesValid()) return;
-
-    const payload = {
-      dni: this.dni(),
+    const registroPayload = {
+      dni: this.dni().trim(),
       ...this.datosForm.value,
-      ...this.credencialesForm.value,
+      password,
     };
 
-    console.log('Registro completo', payload);
+    this.isLoading.set(true);
+    this.errorMsg.set(null);
 
-    this.router.navigate(['/auth/login']);
+    try {
+      // TODO:
+      // await this.auth.register(registroPayload);
+
+      const loginPayload: LoginRequest = {
+        usuario: '11111111', // temporal
+        password: '12345678', // temporal
+      };
+      await this.auth.login(loginPayload);
+
+      localStorage.setItem('fortuna_show_welcome', '1');
+
+      await this.router.navigate(['/home']);
+    } catch (e: any) {
+      this.errorMsg.set(e?.message ?? 'No se pudo completar el registro');
+    } finally {
+      this.isLoading.set(false);
+    }
   }
 }

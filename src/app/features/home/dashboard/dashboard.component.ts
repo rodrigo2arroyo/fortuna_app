@@ -1,10 +1,11 @@
 import {Component, computed, inject, OnInit, signal} from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../auth/services/auth.service';
-import {DashboardService} from '../services/dashboard.service';
-import {DashboardData} from '../models/dashboard.models';
-import {Skeleton} from 'primeng/skeleton';
-import {NgClass} from '@angular/common';
+import { DashboardService } from '../services/dashboard.service';
+import { DashboardData } from '../models/dashboard.models';
+import { Skeleton } from 'primeng/skeleton';
+import { NgClass } from '@angular/common';
+import { UserStore } from '../../../shared/stores/user.store';
 
 type MenuAction = 'logout' | null;
 type MenuItem = {
@@ -21,7 +22,7 @@ type MenuItem = {
     RouterLink,
     RouterLinkActive,
     Skeleton,
-    NgClass
+    NgClass,
   ],
   templateUrl: './dashboard.component.html',
 })
@@ -29,7 +30,9 @@ export class DashboardComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly authService = inject(AuthService);
   private readonly dashboardSvc = inject(DashboardService);
+  private readonly userStore   = inject(UserStore);
 
+  readonly user   = this.userStore.user;
   readonly menu = signal<MenuItem[]>([
     { label: 'Inicio', icon: 'assets/icons/Home.svg', route: '/home', chevron: true },
     { label: 'Solicitar préstamo', icon: 'assets/icons/Handshake.svg', route: '/home/solicitar', chevron: true },
@@ -43,21 +46,32 @@ export class DashboardComponent implements OnInit {
   isLoading = signal<boolean>(false);
   errorMsg = signal<string | null>(null);
   estado = computed(() => this.normalize(this.dashboard()?.prestamoEstado));
-
+  showWelcomeModal = signal(false);
   canGoMisPrestamos = computed(() => this.dashboard()?.tienePrestamo === '1');
 
   async ngOnInit() {
     this.isLoading.set(true);
     this.errorMsg.set(null);
+
     try {
       const data = await this.dashboardSvc.loadMyDashboard();
       this.dashboard.set(data);
+
+      const shouldShowWelcome = localStorage.getItem('fortuna_show_welcome') === '1';
+      console.warn(shouldShowWelcome);
+
+      if (shouldShowWelcome) {
+        this.showWelcomeModal.set(true);
+
+        localStorage.setItem('fortuna_show_welcome', '0');
+      }
     } catch (e: any) {
       this.errorMsg.set(e?.message ?? 'No se pudo cargar el dashboard');
     } finally {
       this.isLoading.set(false);
     }
   }
+
 
   private normalize = (s?: string) =>
     (s ?? '')
@@ -68,6 +82,10 @@ export class DashboardComponent implements OnInit {
 
   goMisPrestamos() {
     if (this.canGoMisPrestamos()) this.router.navigate(['/home/mis-prestamos']);
+  }
+
+  onWelcomeStart() {
+    this.showWelcomeModal.set(false);
   }
 
   estadoMeta = computed(() => {
