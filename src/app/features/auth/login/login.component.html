@@ -138,13 +138,20 @@
             [ngModel]="password()"
             (ngModelChange)="password.set($event)"
           />
+
           <button
             type="button"
-            class="w-6 h-6"
+            class="w-6 h-6 flex items-center justify-center"
             (click)="showPass.set(!showPass())"
-            aria-label="Mostrar/Ocultar"
-            title="Mostrar/Ocultar"
-          >👁️</button>
+            aria-label="Mostrar/Ocultar contraseña"
+            title="Mostrar/Ocultar contraseña"
+          >
+            @if (showPass()) {
+              <img src="assets/icons/eye-off-line.svg" class="w-6 h-6" alt="Ocultar" />
+            } @else {
+              <img src="assets/icons/eye-off-line.svg" class="w-6 h-6" alt="Mostrar" />
+            }
+          </button>
         </div>
 
         @if (password() && !passValid()) {

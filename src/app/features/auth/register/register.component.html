@@ -96,29 +96,118 @@
               class="w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-2.5 text-[15px] text-gray-500 outline-none"
             />
           </div>
-
           <div>
             <label class="block text-sm font-medium mb-1">Nombres</label>
             <input
               type="text"
               formControlName="nombres"
               placeholder="Martha María"
+              readonly
               class="w-full rounded-xl border px-4 py-2.5 text-[15px] outline-none
                  bg-gray-50 border-gray-300 focus:ring-2 focus:ring-[#ffa101]"
             />
           </div>
-
           <div>
             <label class="block text-sm font-medium mb-1">Apellidos</label>
             <input
               type="text"
               formControlName="apellidos"
+              readonly
               placeholder="López Gutiérrez"
               class="w-full rounded-xl border px-4 py-2.5 text-[15px] outline-none
                  bg-gray-50 border-gray-300 focus:ring-2 focus:ring-[#ffa101]"
             />
           </div>
-
+          <div>
+            <label class="block text-sm font-medium mb-1">
+              Empresa o institución donde trabaja actualmente
+            </label>
+            <input
+              type="text"
+              formControlName="empresaTrabajo"
+              placeholder="Empresa o institución donde trabaja actualmente"
+              class="w-full rounded-xl border px-4 py-2.5 text-[15px] outline-none
+           bg-gray-50 border-gray-300 focus:ring-2 focus:ring-[#ffa101]"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Ingreso mensual</label>
+            <input
+              type="number"
+              formControlName="ingresoMensual"
+              min="1300"
+              placeholder="Desde S/1300"
+              class="w-full rounded-xl border px-4 py-2.5 text-[15px] outline-none
+                 bg-gray-50 border-gray-300 focus:ring-2 focus:ring-[#ffa101]"
+            />
+            <p class="text-xs text-[#2563eb] mt-1">
+              Monto sujeto a verificación mediante boletas o recibo por honorarios.
+            </p>
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Ocupación</label>
+            <input
+              type="text"
+              formControlName="ocupacion"
+              placeholder="Escribir ocupación"
+              class="w-full rounded-xl border px-4 py-2.5 text-[15px] outline-none
+           bg-gray-50 border-gray-300 focus:ring-2 focus:ring-[#ffa101]"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Estado civil</label>
+            <select
+              formControlName="estadoCivil"
+              class="w-full rounded-xl border px-4 py-2.5 text-[15px] outline-none
+           bg-gray-50 border-gray-300 focus:ring-2 focus:ring-[#ffa101]"
+            >
+              <option value="">Seleccionar</option>
+              <option value="1">Soltero</option>
+              <option value="2">Casado</option>
+              <option value="3">Conviviente</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Grado de instrucción</label>
+            <select
+              formControlName="gradoInstruccion"
+              class="w-full rounded-xl border px-4 py-2.5 text-[15px] outline-none
+           bg-gray-50 border-gray-300 focus:ring-2 focus:ring-[#ffa101]"
+            >
+              <option value="">Seleccionar</option>
+              <option value="3">Primaria</option>
+              <option value="4">Secundaria</option>
+              <option value="5">Técnico profesional</option>
+              <option value="10">Superior completo</option>
+              <option value="11">Superior incompleto</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">
+              ¿Qué día del mes le gustaría pagar su cuota?
+            </label>
+            <select
+              formControlName="diaPago"
+              class="w-full rounded-xl border px-4 py-2.5 text-[15px] outline-none
+                 bg-gray-50 border-gray-300 focus:ring-2 focus:ring-[#ffa101]"
+            >
+              <option value="">Seleccione</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="10">10</option>
+              <option value="11">11</option>
+              <option value="15">15</option>
+              <option value="16">16</option>
+              <option value="25">25</option>
+              <option value="26">26</option>
+              <option value="27">27</option>
+              <option value="28">28</option>
+              <option value="29">29</option>
+              <option value="30">30</option>
+            </select>
+          </div>
           <div>
             <label class="block text-sm font-medium mb-1">Celular</label>
             <input
@@ -131,7 +220,7 @@
           </div>
 
           <div>
-            <label class="block text-sm font-medium mb-1">Correo electrónico</label>
+            <label class="block text-sm font-medium mb-1">Correo</label>
             <input
               type="email"
               formControlName="correo"
@@ -140,53 +229,61 @@
                  bg-gray-50 border-gray-300 focus:ring-2 focus:ring-[#ffa101]"
             />
           </div>
-
-          <div>
-            <label class="block text-sm font-medium mb-1">Ingreso mensual</label>
-            <input
-              type="number"
-              formControlName="ingresoMensual"
-              min="300"
-              placeholder="Desde S/300"
-              class="w-full rounded-xl border px-4 py-2.5 text-[15px] outline-none
-                 bg-gray-50 border-gray-300 focus:ring-2 focus:ring-[#ffa101]"
-            />
-            <p class="text-xs text-[#2563eb] mt-1">
-              Monto sujeto a verificación mediante boletas o registro de ventas.
-            </p>
-          </div>
-
-          <div>
-            <label class="block text-sm font-medium mb-1">
-              ¿Qué día del mes le gustaría pagar su cuota?
-            </label>
-            <select
-              formControlName="diaPago"
-              class="w-full rounded-xl border px-4 py-2.5 text-[15px] outline-none
-                 bg-gray-50 border-gray-300 focus:ring-2 focus:ring-[#ffa101]"
-            >
-              <option value="">Seleccione</option>
-              <option value="5">5</option>
-              <option value="10">10</option>
-              <option value="15">15</option>
-              <option value="20">20</option>
-              <option value="25">25</option>
-            </select>
-          </div>
-
           <div>
             <label class="block text-sm font-medium mb-1">¿Cómo nos conociste?</label>
             <select
               formControlName="comoConociste"
               class="w-full rounded-xl border px-4 py-2.5 text-[15px] outline-none
-                 bg-gray-50 border-gray-300 focus:ring-2 focus:ring-[#ffa101]"
+           bg-gray-50 border-gray-300 focus:ring-2 focus:ring-[#ffa101]"
             >
-              <option value="">Seleccione</option>
-              <option value="redes">Redes sociales</option>
-              <option value="referido">Referido</option>
-              <option value="web">Página web</option>
-              <option value="otro">Otro</option>
+              <option value="">Seleccionar</option>
+              <option value="15">Web de Fortuna</option>
+              <option value="16">Recomendación</option>
+              <option value="25">Letrero de Fortuna</option>
+              <option value="26">Facebook</option>
+              <option value="27">Instagram</option>
+              <option value="28">Google</option>
+              <option value="29">LinkedIn</option>
+              <option value="30">Correo electrónico</option>
+              <option value="31">Televisión y Radio</option>
+              <option value="32">Periódicos y Revistas</option>
             </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Departamento según DNI</label>
+            <input
+              formControlName="departamentoDni"
+              type="text"
+              class="w-full rounded-xl border px-4 py-2.5 bg-gray-50 border-gray-300 text-[15px]"
+              placeholder="Departamento según DNI"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Provincia según DNI</label>
+            <input
+              formControlName="provinciaDni"
+              type="text"
+              class="w-full rounded-xl border px-4 py-2.5 bg-gray-50 border-gray-300 text-[15px]"
+              placeholder="Provincia según DNI"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Distrito según DNI</label>
+            <input
+              formControlName="distritoDni"
+              type="text"
+              class="w-full rounded-xl border px-4 py-2.5 bg-gray-50 border-gray-300 text-[15px]"
+              placeholder="Distrito según DNI"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Domicilio según DNI</label>
+            <input
+              formControlName="domicilioDni"
+              type="text"
+              class="w-full rounded-xl border px-4 py-2.5 bg-gray-50 border-gray-300 text-[15px]"
+              placeholder="Domicilio según DNI"
+            />
           </div>
         </div>
         <div class="mt-8 flex items-end justify-end">
@@ -318,23 +415,27 @@
         <div class="flex flex-col gap-4">
           <div>
             <label class="block text-sm font-medium mb-1">Ingresa tu contraseña</label>
+
             <div class="relative">
               <input
                 [type]="showPassword() ? 'text' : 'password'"
                 formControlName="password"
                 placeholder="Contraseña"
                 class="w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-2.5 text-[15px]
-                   outline-none focus:ring-2 focus:ring-[#ffa101]"
+             outline-none focus:ring-2 focus:ring-[#ffa101]"
               />
+
               <button
                 type="button"
-                class="absolute inset-y-0 right-3 flex items-center text-gray-400 text-sm"
+                class="absolute inset-y-0 right-3 flex items-center justify-center"
                 (click)="showPassword.set(!showPassword())"
+                aria-label="Mostrar/Ocultar contraseña"
+                title="Mostrar/Ocultar contraseña"
               >
                 @if (showPassword()) {
-                  👁️‍🗨️
+                  <img src="assets/icons/eye-off-line.svg" class="w-5 h-5" alt="Ocultar contraseña" />
                 } @else {
-                  👁️
+                  <img src="assets/icons/eye-line.svg" class="w-5 h-5" alt="Mostrar contraseña" />
                 }
               </button>
             </div>

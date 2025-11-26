@@ -49,9 +49,22 @@ export class RegisterComponent implements OnInit, OnDestroy {
     apellidos: ['', [Validators.required, Validators.maxLength(80)]],
     celular: ['', [Validators.required, Validators.pattern(CELULAR_REGEX)]],
     correo: ['', [Validators.required, Validators.email]],
-    ingresoMensual: [null, [Validators.required, Validators.min(300)]],
+    ingresoMensual: [null, [Validators.required, Validators.min(1300)]],
+
+    empresaTrabajo: ['', Validators.required],
+    ocupacion: ['', Validators.required],
+
+    estadoCivil: ['', Validators.required],
+    gradoInstruccion: ['', Validators.required],
+
     diaPago: ['', Validators.required],
+
     comoConociste: ['', Validators.required],
+
+    departamentoDni: ['', Validators.required],
+    provinciaDni: ['', Validators.required],
+    distritoDni: ['', Validators.required],
+    domicilioDni: ['', Validators.required],
   });
 
   credencialesForm: FormGroup = this.fb.group(
