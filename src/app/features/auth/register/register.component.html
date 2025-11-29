@@ -78,10 +78,16 @@
           Para acceder a nuestro préstamo, por favor, ingresa la información necesaria para continuar con tu solicitud.
         </p>
 
-        <div class="border border-[#cbd5e0] rounded-md bg-[#f8fafc] px-3 py-2 mb-6 text-[13px] leading-5 text-gray-700">
-          <b>Monto a solicitar:</b>
-          300 – Pagando con 6 cuotas – Tipo:
-          <span class="font-semibold">PRÉSTAMO NEGOCIO FAMILIAR</span>
+        <div class="w-full mb-6 rounded-xl border border-[#c6d7ff] bg-[#f5f7ff] px-4 py-2.5 text-[13px] leading-5 text-gray-800">
+          <div class="font-semibold">
+            Monto a solicitar:
+          </div>
+          <div>
+            300 – Pagando con 6 cuotas – Tipo:
+            <span class="font-semibold">
+              PRÉSTAMO NEGOCIO FAMILIAR
+            </span>
+          </div>
         </div>
 
         <div class="flex flex-col gap-4">
@@ -249,6 +255,9 @@
               <option value="32">Periódicos y Revistas</option>
             </select>
           </div>
+          <h2 class="text-[22px] font-bold leading-[30px] mb-1">
+            Domicilio según DNI
+          </h2>
           <div>
             <label class="block text-sm font-medium mb-1">Departamento según DNI</label>
             <input
@@ -435,7 +444,7 @@
                 @if (showPassword()) {
                   <img src="assets/icons/eye-off-line.svg" class="w-5 h-5" alt="Ocultar contraseña" />
                 } @else {
-                  <img src="assets/icons/eye-line.svg" class="w-5 h-5" alt="Mostrar contraseña" />
+                  👁️
                 }
               </button>
             </div>
@@ -457,7 +466,7 @@
                 (click)="showPasswordConfirm.set(!showPasswordConfirm())"
               >
                 @if (showPasswordConfirm()) {
-                  👁️‍🗨️
+                  <img src="assets/icons/eye-off-line.svg" class="w-5 h-5" alt="Ocultar contraseña" />
                 } @else {
                   👁️
                 }

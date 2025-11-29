@@ -119,9 +119,15 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
     if (current === 'identidad') {
       if (!this.dniValid() || !this.accepted()) return;
+
+      this.datosForm.patchValue({
+        nombres: 'Nombre Test',
+        apellidos: 'Apellido Test'
+      });
     }
 
     if (current === 'datos') {
+      console.warn(this.datosForm)
       if (this.datosForm.invalid) {
         this.datosForm.markAllAsTouched();
         return;
