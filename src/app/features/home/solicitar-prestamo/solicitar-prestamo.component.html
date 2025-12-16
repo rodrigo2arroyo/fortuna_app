@@ -1,0 +1,335 @@
+<section class="hidden md:flex w-full flex-col text-black">
+  <div class="flex flex-col items-center gap-16 px-10 py-10">
+    <div class="w-full max-w-[1200px] flex items-center gap-[51px] h-10">
+      <button
+        routerLink="/home"
+        class="rounded-full bg-white border border-[#e9eaeb] h-10 px-4 inline-flex items-center justify-center gap-2 cursor-pointer"
+      >
+        <img src="assets/icons/arrow-left.svg" alt="" class="w-6 h-6">
+        <span class="font-semibold text-[14px] leading-4">Atrás</span>
+      </button>
+
+      <nav class="flex items-center gap-[23px] text-left text-[#d5d7da]">
+        <span class="tracking-[0.03em] uppercase font-semibold">Productos</span>
+        <img src="assets/icons/ChevronRight.svg" alt="" class="w-6 h-6">
+        <span class="tracking-[0.03em] uppercase font-semibold text-[#414651]">
+          GARANTIZAR CON PUNTOS
+        </span>
+      </nav>
+    </div>
+  </div>
+
+  <div class="w-full flex justify-center pb-10 px-4">
+    @if (step() === 1) {
+      <div class="w-full max-w-[420px] rounded-xl border border-[#e5e7eb] bg-white overflow-hidden">
+        <div class="w-full h-[60px] bg-[#eef4ff] flex items-center justify-center">
+          <span class="text-[14px] font-semibold tracking-[0.05em] text-[#6172f3] uppercase">
+            SOLICITAR PRÉSTAMO
+          </span>
+        </div>
+        <div class="p-6 flex flex-col items-center gap-6">
+          <h2 class="text-[16px] font-semibold tracking-[0.06em] uppercase">
+            CANTIDAD A SOLICITAR
+          </h2>
+
+          <div class="flex items-center gap-2">
+            <button
+              type="button"
+              class="w-10 h-10 rounded-lg bg-[#e5e7eb] flex items-center justify-center text-[20px] font-semibold text-[#6b7280]"
+              (click)="decreaseAmount()">
+              –
+            </button>
+            <div class="h-10 px-3 rounded-lg border border-[#e5e7eb] bg-white flex items-center gap-2">
+              <span class="text-[14px] font-medium text-[#6b7280]">S/</span>
+              <input
+                type="number"
+                class="w-20 text-center bg-transparent outline-none text-[16px] font-medium text-[#111827]"
+                [ngModel]="amount()"
+                (ngModelChange)="onAmountInput($event)"
+                min="0"
+              />
+            </div>
+            <button
+              type="button"
+              class="w-10 h-10 rounded-lg bg-[#0a0d12] flex items-center justify-center text-[20px] font-semibold text-white"
+              (click)="increaseAmount()">
+              +
+            </button>
+          </div>
+
+          <div class="w-full flex items-center gap-3 pt-2">
+            <button
+              routerLink="/home"
+              class="flex-1 h-11 rounded-full bg-white border border-[#e5e7eb] text-[14px] font-semibold">
+              Atrás
+            </button>
+            <button
+              class="flex-1 h-11 rounded-full text-[14px] font-semibold
+                     disabled:bg-[#e5e7eb] disabled:text-[#9ca3af]
+                     bg-[#0a0d12] text-white"
+              [disabled]="amount() <= 0"
+              (click)="goToStep(2)">
+              Solicitar préstamo
+            </button>
+          </div>
+        </div>
+      </div>
+    } @else if (step() === 2) {
+      <div class="w-full max-w-[420px] flex flex-col items-center gap-6">
+        <h2 class="text-[18px] font-semibold text-[#111827] text-center">
+          Préstamo para ti
+        </h2>
+
+        <div class="w-full rounded-2xl border border-[#e5e7eb] bg-white overflow-hidden flex flex-col items-center">
+          <div class="w-full h-[140px] bg-[#fff5d6] flex items-center justify-center">
+            <img src="./assets/icons/pago.png" alt="Fortuna" class="h-full w-full object-contain" />
+          </div>
+
+          <div class="w-full px-6 py-5 flex flex-col items-center gap-3">
+            <span class="text-[16px] font-semibold text-[#111827]">
+              Préstamo Personal
+            </span>
+
+            <div class="w-full flex flex-col gap-1 text-[13px] text-[#4b5563]">
+              <div class="flex items-center gap-2">
+                <span class="inline-block w-4 h-4 rounded-full bg-[#22c55e]"></span>
+                <span>Con historial</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="inline-block w-4 h-4 rounded-full bg-[#22c55e]"></span>
+                <span>Sin aval</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          class="w-full h-11 rounded-full bg-[#0a0d12] text-white text-[14px] font-semibold"
+          (click)="goToStep(3)">
+          Solicitar
+        </button>
+      </div>
+    } @else if (step() === 3) {
+      <app-step-card
+        [currentStep]="1"
+        [totalSteps]="2"
+        headerText="PASO 01"
+        title="Préstamo Primer Paso"
+        size="sm"
+        [showProgress]="true">
+
+        <div step-content class="flex flex-col gap-6 items-center text-[#0a0d12]">
+          <div class="flex flex-col items-center gap-2">
+      <span class="text-[16px] font-semibold text-[#f97316]">
+        Préstamo Primer Paso
+      </span>
+            <span
+              class="mt-1 inline-flex items-center justify-center px-4 py-1 rounded-full border border-[#f97316] bg-white text-[13px] font-medium text-[#111827]"
+            >
+        Solicita desde s/40 hasta s/80
+      </span>
+            <div class="mt-2 flex items-center justify-center">
+              <img
+                src="./assets/icons/source_motivation.png"
+                alt="Fortuna"
+                class="h-16 w-auto object-contain"
+              />
+            </div>
+          </div>
+
+          <div class="flex flex-col items-center gap-3">
+            <p class="text-[14px] text-[#4b5563] text-center">
+              Elije el monto, cuotas y día de pago
+            </p>
+
+            <div class="flex flex-col items-center gap-2 mt-1">
+        <span class="text-[13px] font-medium text-[#4b5563]">
+          Monto a solicitar
+        </span>
+
+              <div class="flex items-center gap-2">
+                <button
+                  type="button"
+                  class="w-10 h-10 rounded-lg bg-[#e5e7eb] flex items-center justify-center text-[20px] font-semibold text-[#6b7280]"
+                  (click)="decreaseAmount()">
+                  –
+                </button>
+
+                <div class="h-10 px-3 rounded-lg border border-[#e5e7eb] bg-white flex items-center gap-2 w-[140px]">
+                  <span class="text-[14px] font-medium text-[#6b7280]">S/</span>
+                  <input
+                    type="number"
+                    class="w-full text-center bg-transparent outline-none text-[16px] font-medium text-[#111827]"
+                    [ngModel]="amount()"
+                    (ngModelChange)="onAmountInput($event)"
+                    min="0"
+                  />
+                </div>
+
+                <button
+                  type="button"
+                  class="w-10 h-10 rounded-lg bg-[#0a0d12] flex items-center justify-center text-[20px] font-semibold text-white"
+                  (click)="increaseAmount()">
+                  +
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="w-full flex flex-col gap-4 mt-4">
+            <div class="flex flex-col gap-2">
+              <label class="text-[13px] font-medium text-[#4b5563]">
+                Pagado con
+              </label>
+              <select
+                class="h-10 w-full rounded-lg border border-[#e5e7eb] bg-white px-3 text-[14px] outline-none"
+                [ngModel]="cuotas()"
+                (ngModelChange)="updateCuotas($event)">
+                <option value="1 cuota">1 cuota</option>
+                <option value="2 cuotas">2 cuotas</option>
+                <option value="3 cuotas">3 cuotas</option>
+              </select>
+            </div>
+
+            <div class="flex flex-col gap-2">
+              <label class="text-[13px] font-medium text-[#4b5563]">
+                Día de pago
+              </label>
+              <select
+                class="h-10 w-full rounded-lg border border-[#e5e7eb] bg-white px-3 text-[14px] outline-none"
+                [ngModel]="diaPago()"
+                (ngModelChange)="updateDiaPago($event)">
+                <option value="" disabled>Seleccionar</option>
+                <option value="1">Día 1</option>
+                <option value="15">Día 15</option>
+                <option value="30">Día 30</option>
+              </select>
+            </div>
+
+            <div class="flex flex-col gap-2">
+              <label class="text-[13px] font-medium text-[#4b5563]">
+                Tipo de cuota
+              </label>
+              <select
+                class="h-10 w-full rounded-lg border border-[#e5e7eb] bg-white px-3 text-[14px] outline-none"
+                [ngModel]="tipoCuota()"
+                (ngModelChange)="updateTipoCuota($event)">
+                <option value="Quincenal">Quincenal</option>
+                <option value="Mensual">Mensual</option>
+              </select>
+            </div>
+
+            <div class="flex flex-col gap-1">
+        <span class="text-[13px] font-medium text-[#4b5563]">
+          Fecha pago primera cuota
+        </span>
+              <span class="text-[14px] text-[#111827]">
+          {{ fechaPrimeraCuota() }}
+        </span>
+            </div>
+          </div>
+        </div>
+
+        <div step-footer class="bg-[#f5f8ff] px-6 py-6">
+          <div class="max-w-[420px] mx-auto flex flex-col gap-4 text-[#717680] text-[14px]">
+
+            <div class="flex items-center justify-between">
+              <span class="font-medium text-[#09090a]">Mi cuota mensual sería</span>
+              <span class="text-[16px] font-semibold text-[#0a0d12]">s/41.16</span>
+            </div>
+
+            <div class="flex items-center justify-between">
+              <span class="font-medium text-[#09090a]">Tasa efectiva anual (TEA)</span>
+              <span class="text-[16px] font-semibold text-[#0a0d12]">35%</span>
+            </div>
+
+            <div class="flex items-center justify-between">
+              <span class="font-medium text-[#09090a]">Tasa de costo efectiva anual (TCEA)</span>
+              <span class="text-[16px] font-semibold text-[#0a0d12]">41190.35%</span>
+            </div>
+
+            <div class="flex items-center justify-between">
+              <span class="font-medium text-[#09090a]">Comisión por uso de plataforma</span>
+              <span class="text-[16px] font-semibold text-[#0a0d12]">s/40.08</span>
+            </div>
+
+            <div class="flex items-center justify-between pt-2 border-t border-[#e0e4ef]">
+              <span class="font-semibold text-[#09090a]">Total a pagar</span>
+              <span class="text-[16px] font-semibold text-[#0a0d12]">s/82.32</span>
+            </div>
+
+            <div class="mt-4 flex items-center gap-4 text-[18px]">
+              <button
+                type="button"
+                class="flex-1 rounded-full bg-white border border-[#e5e7eb] text-[14px] font-semibold h-11"
+                (click)="goToStep(2)">
+                Atrás
+              </button>
+
+              <button
+                type="button"
+                (click)="goToStep(4)"
+                class="flex-1 rounded-full bg-[#0a0d12] text-white text-[14px] font-semibold h-11">
+                Solicitar Préstamo
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </app-step-card>
+    } @else if (step()===4) {
+      <app-step-card
+        [currentStep]="2"
+        [totalSteps]="2"
+        size="md"
+        [showHeader]="true"
+        footerPlacement="inside"
+        headerText="PASO 02"
+        title="Tu solicitud ha sido ingresada con éxito">
+        <div step-content class="px-6 pt-8 pb-8 w-full shadow-[0_1px_2px_rgba(10,13,18,0.05)] bg-white flex flex-col items-center gap-6">
+          <div class="relative w-[280px] h-[280px] md:w-[320px] md:h-[320px]">
+            <img
+              src="assets/animation/circle-loader-icon.gif"
+              alt="Confeti"
+              class="absolute inset-0 w-full h-full object-contain pointer-events-none select-none"
+            />
+            <img
+              src="assets/icons/checkbox-circle-fill.svg"
+              alt="Éxito"
+              class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[96px] h-[96px] md:w-[110px] md:h-[110px]"
+            />
+          </div>
+          <b class="text-[24px] leading-[30px] md:text-[28px] md:leading-[36px] text-black text-center">
+            Tu solicitud ha sido ingresada con éxito
+          </b>
+        </div>
+
+        <div step-footer class="bg-[#f5f8ff] px-6 py-6 flex flex-col gap-4 text-[#717680] text-[14px]">
+          <div class="flex items-center gap-2 text-[24px] text-black">
+            <img src="assets/icons/Step%20Details%20Icon.svg" alt="" class="w-6 h-6">
+            <b class="flex-1">En ratificación</b>
+          </div>
+          <p class="leading-5 font-medium text-black">
+            Uno de nuestros asesors de créditos se contactará vía Whatsapp 993 521 820 para la ratificación y aceptación del crédito, en un plazo mínimo de 30 minutos y no mayor a 24 horas, en el sigueinte horario:
+          </p>
+          <div class="flex flex-col gap-1">
+            <div class="flex items-center justify-between">
+              <span class="font-medium leading-5 text-[#09090a]">Lunes a Viernes</span>
+              <span class="text-[16px] leading-6 font-medium text-[#0a0d12]">8:30am a 6:00pm</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="font-medium leading-5 text-[#09090a]">Sábados</span>
+              <span class="text-[16px] leading-6 font-medium text-[#0a0d12]">8:30am a 1:00pm</span>
+            </div>
+          </div>
+          <div class="mt-2 flex items-center text-[18px]">
+            <button class="flex-1 rounded-full bg-[#0a0d12] text-white px-6 py-4 cursor-pointer" (click)="goHome()">
+              <span class="font-semibold leading-6">Ir a Inicio</span>
+            </button>
+          </div>
+        </div>
+      </app-step-card>
+    }
+  </div>
+</section>

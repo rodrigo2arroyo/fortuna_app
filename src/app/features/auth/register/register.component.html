@@ -59,12 +59,11 @@
         <div class="mt-8">
           <button
             type="button"
-            class="w-full flex items-center justify-center gap-2 rounded-full px-6 py-3 bg-[#0a0d12] text-white font-semibold
-               disabled:opacity-40 disabled:cursor-not-allowed"
-            [disabled]="!dniValid() || !accepted()"
+            class="w-full ... disabled:opacity-40 disabled:cursor-not-allowed"
+            [disabled]="!dniValid() || !accepted() || loadingDni()"
             (click)="next()"
           >
-            Siguiente →
+            {{ loadingDni() ? 'Validando...' : 'Siguiente →' }}
           </button>
         </div>
       </div>
@@ -260,30 +259,60 @@
           </h2>
           <div>
             <label class="block text-sm font-medium mb-1">Departamento según DNI</label>
-            <input
-              formControlName="departamentoDni"
-              type="text"
+
+            <select
               class="w-full rounded-xl border px-4 py-2.5 bg-gray-50 border-gray-300 text-[15px]"
-              placeholder="Departamento según DNI"
-            />
+              [value]="datosForm.get('departamentoDni')?.value || ''"
+              (change)="onDepartamentoChange(($any($event.target).value))"
+            >
+              <option value="" disabled>
+                @if (loadingDep()) { Cargando... } @else { Selecciona un departamento }
+              </option>
+
+              @for (dep of departamentos(); track dep) {
+                <option [value]="dep">{{ dep }}</option>
+              }
+            </select>
           </div>
           <div>
             <label class="block text-sm font-medium mb-1">Provincia según DNI</label>
-            <input
-              formControlName="provinciaDni"
-              type="text"
+
+            <select
               class="w-full rounded-xl border px-4 py-2.5 bg-gray-50 border-gray-300 text-[15px]"
-              placeholder="Provincia según DNI"
-            />
+              [disabled]="!datosForm.get('departamentoDni')?.value || loadingProv()"
+              [value]="datosForm.get('provinciaDni')?.value || ''"
+              (change)="onProvinciaChange(($any($event.target).value))"
+            >
+              <option value="" disabled>
+                @if (!datosForm.get('departamentoDni')?.value) { Primero elige un departamento }
+                @else if (loadingProv()) { Cargando... }
+                @else { Selecciona una provincia }
+              </option>
+
+              @for (prov of provincias(); track prov) {
+                <option [value]="prov">{{ prov }}</option>
+              }
+            </select>
           </div>
           <div>
             <label class="block text-sm font-medium mb-1">Distrito según DNI</label>
-            <input
-              formControlName="distritoDni"
-              type="text"
+
+            <select
               class="w-full rounded-xl border px-4 py-2.5 bg-gray-50 border-gray-300 text-[15px]"
-              placeholder="Distrito según DNI"
-            />
+              [disabled]="!datosForm.get('provinciaDni')?.value || loadingDist()"
+              [value]="datosForm.get('distritoDni')?.value || ''"
+              (change)="onDistritoChange(($any($event.target).value))"
+            >
+              <option value="" disabled>
+                @if (!datosForm.get('provinciaDni')?.value) { Primero elige una provincia }
+                @else if (loadingDist()) { Cargando... }
+                @else { Selecciona un distrito }
+              </option>
+
+              @for (dist of distritos(); track dist) {
+                <option [value]="dist">{{ dist }}</option>
+              }
+            </select>
           </div>
           <div>
             <label class="block text-sm font-medium mb-1">Domicilio según DNI</label>
@@ -300,11 +329,15 @@
             <button
               type="button"
               class="rounded-full px-8 py-3 bg-[#0a0d12] text-white font-semibold flex disabled:opacity-40 disabled:cursor-not-allowed"
-              [disabled]="datosForm.invalid"
+              [disabled]="datosForm.invalid || loadingSms()"
               (click)="next()"
             >
-              Siguiente →
+              @if (loadingSms()) { Enviando código... } @else { Siguiente → }
             </button>
+
+            @if (smsError()) {
+              <p class="mt-2 text-sm text-red-600 text-right">{{ smsError() }}</p>
+            }
           </div>
         </div>
       </div>
@@ -380,25 +413,23 @@
 
         <button
           type="button"
-          class="w-full mb-4 rounded-full px-6 py-3 font-semibold
-         disabled:opacity-100 disabled:cursor-not-allowed"
-          [disabled]="!otpValid"
-          [ngClass]="otpValid
-          ? 'bg-[#0a0d12] text-white cursor-pointer'
-          : 'bg-gray-200 text-gray-500 cursor-not-allowed'"
+          class="w-full mb-4 rounded-full px-6 py-3 font-semibold disabled:opacity-40 disabled:cursor-not-allowed"
+          [disabled]="!otpValid || verifyingOtp()"
           (click)="verifyAndCreate()"
         >
-          Verificar y crear cuenta
+          @if (verifyingOtp()) { Verificando... } @else { Verificar y crear cuenta }
         </button>
 
         <button
           type="button"
           class="w-full rounded-full px-6 py-3 border border-gray-300 text-sm font-medium
          disabled:text-gray-400 disabled:border-gray-200 disabled:cursor-not-allowed"
-          [disabled]="countdown() > 0"
+          [disabled]="countdown() > 0 || resendingOtp()"
           (click)="resendCode()"
         >
-          @if (countdown() > 0) {
+          @if (resendingOtp()) {
+            Reenviando...
+          } @else if (countdown() > 0) {
             Reenviar código {{ countdownText() }}
           } @else {
             Reenviar código
@@ -484,10 +515,11 @@
         <div class="mt-8">
           <button
             type="button"
-            class="w-full rounded-full px-6 py-3 bg-[#0a0d12] text-white font-semibold"
+            class="w-full rounded-full px-6 py-3 bg-[#0a0d12] text-white font-semibold disabled:opacity-40 disabled:cursor-not-allowed"
+            [disabled]="isLoading() || datosForm.invalid || credencialesForm.invalid"
             (click)="finish()"
           >
-            Confirmar
+            @if (isLoading()) { Registrando... } @else { Confirmar }
           </button>
         </div>
       </div>

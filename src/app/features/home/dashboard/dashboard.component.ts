@@ -4,7 +4,6 @@ import { AuthService } from '../../auth/services/auth.service';
 import { DashboardService } from '../services/dashboard.service';
 import { DashboardData } from '../models/dashboard.models';
 import { Skeleton } from 'primeng/skeleton';
-import { NgClass } from '@angular/common';
 import { UserStore } from '../../../shared/stores/user.store';
 
 type MenuAction = 'logout' | null;
@@ -22,7 +21,6 @@ type MenuItem = {
     RouterLink,
     RouterLinkActive,
     Skeleton,
-    NgClass,
   ],
   templateUrl: './dashboard.component.html',
 })
@@ -35,7 +33,7 @@ export class DashboardComponent implements OnInit {
   readonly user   = this.userStore.user;
   readonly menu = signal<MenuItem[]>([
     { label: 'Inicio', icon: 'assets/icons/Home.svg', route: '/home', chevron: true },
-    { label: 'Solicitar préstamo', icon: 'assets/icons/Handshake.svg', route: '/home/solicitar', chevron: true },
+    { label: 'Solicitar préstamo', icon: 'assets/icons/Handshake.svg', route: '/home/solicitar-prestamo', chevron: true },
     { label: 'Fortuna Puntos', icon: 'assets/icons/favorite-database.svg', route: '/home/recargar-puntos', chevron: true },
     { label: 'Pagar', icon: 'assets/icons/HandCoins.svg', route: '/home/pagar', chevron: true },
     { label: 'Reporte de deudas', icon: 'assets/icons/FileLineChart.svg', route: '/home/reportes', chevron: true },

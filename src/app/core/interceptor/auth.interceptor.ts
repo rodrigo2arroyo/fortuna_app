@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, catchError, filter, finalize, from, switchMap, take, throwError } from 'rxjs';
 import { AuthStore } from '../../shared/stores/auth.store';
 import { AuthService } from '../../features/auth/services/auth.service';
+import {AuthStoreService} from '../../features/auth/services/auth.store.service';
 
 const isAuthRoute = (url: string) => /\/(login|refresh)(\?|$)/.test(url);
 
@@ -17,24 +18,64 @@ const ensureBearer = (t: string | null | undefined) =>
   t ? (t.startsWith('Bearer ') ? t : `Bearer ${t}`) : null;
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  const store  = inject(AuthStore);
-  const auth   = inject(AuthService);
-  const router = inject(Router);
+  const userStore    = inject(AuthStore);
+  const serviceStore = inject(AuthStoreService);
+  const auth         = inject(AuthService);
+  const router       = inject(Router);
 
-  const bearer = ensureBearer(store.token());
+  const isService = req.headers.get('X-Auth-Mode') === 'service';
+
+  const cleanReq = req.headers.has('X-Auth-Mode')
+    ? req.clone({ headers: req.headers.delete('X-Auth-Mode') })
+    : req;
+
+  const token  = isService ? serviceStore.token() : userStore.token();
+  const bearer = ensureBearer(token);
+
   const authReq =
-    bearer && !isAuthRoute(req.url)
-      ? req.clone({ setHeaders: { Authorization: bearer } })
-      : req;
+    bearer && !isAuthRoute(cleanReq.url)
+      ? cleanReq.clone({ setHeaders: { Authorization: bearer } })
+      : cleanReq;
+
+  if (isService && !bearer && !isAuthRoute(cleanReq.url)) {
+    return from(auth.getServiceToken()).pipe(
+      switchMap((t) =>
+        next(cleanReq.clone({ setHeaders: { Authorization: ensureBearer(t)! } }))
+      ),
+      catchError((e) => throwError(() => e))
+    );
+  }
 
   return next(authReq).pipe(
     catchError((err: unknown) => {
+      if (isService && err instanceof HttpErrorResponse && shouldTryRefresh(authReq, err)) {
+        if (authReq.headers.has('X-Refresh-Retry')) {
+          serviceStore.clear();
+          return throwError(() => err);
+        }
+
+        serviceStore.clear();
+
+        return from((async () => {serviceStore.clear();return await auth.getServiceToken();})()).pipe(
+          switchMap((t) => {
+            const retry = authReq.clone({
+              setHeaders: {
+                Authorization: ensureBearer(t)!,
+                'X-Refresh-Retry': '1',
+              },
+            });
+            return next(retry);
+          }),
+          catchError((e2) => throwError(() => e2))
+        );
+      }
+
       if (!(err instanceof HttpErrorResponse) || !shouldTryRefresh(authReq, err)) {
         return throwError(() => err);
       }
 
       if (isAuthRoute(authReq.url)) {
-        store.clear();
+        userStore.clear();
         router.navigate(['/auth/login']);
         return throwError(() => err);
       }
@@ -52,7 +93,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
             return next(retry).pipe(
               catchError((e2: HttpErrorResponse) => {
                 if (e2.status === 401) {
-                  store.clear();
+                  userStore.clear();
                   router.navigate(['/auth/login']);
                 }
                 return throwError(() => e2);
@@ -67,8 +108,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
       return from(auth.refreshFromStore()).pipe(
         switchMap(() => {
-          const refreshed = ensureBearer(store.token());
-
+          const refreshed = ensureBearer(userStore.token());
           refreshSubject.next(refreshed ?? null);
 
           const retry = refreshed
@@ -78,7 +118,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
           return next(retry).pipe(
             catchError((e2: HttpErrorResponse) => {
               if (e2.status === 401) {
-                store.clear();
+                userStore.clear();
                 router.navigate(['/auth/login']);
               }
               return throwError(() => e2);
@@ -86,7 +126,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
           );
         }),
         catchError((e) => {
-          store.clear();
+          userStore.clear();
           router.navigate(['/auth/login']);
           return throwError(() => e);
         }),

@@ -30,6 +30,12 @@ export const HOME_ROUTES: Routes = [
         loadComponent: () =>
           import('./mis-prestamos/mis-prestamos.component').then(c => c.MisPrestamosComponent),
       },
+      {
+        path: 'solicitar-prestamo',
+        pathMatch: 'full',
+        loadComponent: () =>
+          import('./solicitar-prestamo/solicitar-prestamo.component').then(c => c.SolicitarPrestamoComponent),
+      },
     ],
   },
 ];
