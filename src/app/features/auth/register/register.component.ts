@@ -11,9 +11,9 @@ import { formatCountdown } from './utils/time-format.utils';
 import { buildOtpForm, getOtpCode } from './utils/otp.util';
 import { CELULAR_REGEX, DNI_REGEX } from './utils/validators.const';
 import { passwordsMatchValidator } from '../../../shared/form-validators';
-import {AuthService} from '../services/auth.service';
-import {LoginRequest} from '../models/auth.model';
-import {UserService} from '../services/user.service';
+import { AuthService } from '../services/auth.service';
+import { LoginRequest } from '../models/auth.model';
+import { UserService } from '../services/user.service';
 
 type Step = 'identidad' | 'datos' | 'verificacion' | 'credenciales';
 const steps: Step[] = ['identidad', 'datos', 'verificacion', 'credenciales'];
@@ -74,6 +74,15 @@ export class RegisterComponent implements OnInit, OnDestroy {
     distritoDni: ['', Validators.required],
     domicilioDni: ['', Validators.required],
   });
+
+  get celularMasked(): string {
+    const celular = String(this.datosForm.get('celular')?.value || '');
+
+    if (celular.length < 2) return '***';
+
+    const last2 = celular.slice(-2);
+    return `***${last2}`;
+  }
 
   credencialesForm: FormGroup = this.fb.group(
     {

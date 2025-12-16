@@ -59,7 +59,7 @@
         <div class="mt-8">
           <button
             type="button"
-            class="w-full ... disabled:opacity-40 disabled:cursor-not-allowed"
+            class="w-full flex items-center justify-center gap-2 rounded-full px-6 py-3 bg-[#0a0d12] text-white font-semibold disabled:opacity-40 disabled:cursor-not-allowed"
             [disabled]="!dniValid() || !accepted() || loadingDni()"
             (click)="next()"
           >
@@ -109,7 +109,7 @@
               placeholder="Martha María"
               readonly
               class="w-full rounded-xl border px-4 py-2.5 text-[15px] outline-none
-                 bg-gray-50 border-gray-300 focus:ring-2 focus:ring-[#ffa101]"
+                 bg-gray-50 border-gray-300 focus:ring-2 focus:ring-[#ffa101] text-gray-500"
             />
           </div>
           <div>
@@ -120,7 +120,7 @@
               readonly
               placeholder="López Gutiérrez"
               class="w-full rounded-xl border px-4 py-2.5 text-[15px] outline-none
-                 bg-gray-50 border-gray-300 focus:ring-2 focus:ring-[#ffa101]"
+                 bg-gray-50 border-gray-300 focus:ring-2 focus:ring-[#ffa101] text-gray-500"
             />
           </div>
           <div>
@@ -357,7 +357,7 @@
           Verificación de tu celular
         </h2>
         <p class="text-sm text-gray-600 mb-8">
-          Se ha enviado un código a su celular ***79
+          Se ha enviado un código a su celular {{ celularMasked }}
         </p>
 
         <div class="flex items-center justify-between gap-3 mb-8">
@@ -413,11 +413,17 @@
 
         <button
           type="button"
-          class="w-full mb-4 rounded-full px-6 py-3 font-semibold disabled:opacity-40 disabled:cursor-not-allowed"
+          class="w-full flex items-center justify-center gap-2 rounded-full px-6 py-3
+         bg-[#0a0d12] text-white font-semibold
+         disabled:opacity-40 disabled:cursor-not-allowed mb-2"
           [disabled]="!otpValid || verifyingOtp()"
           (click)="verifyAndCreate()"
         >
-          @if (verifyingOtp()) { Verificando... } @else { Verificar y crear cuenta }
+          @if (verifyingOtp()) {
+            Verificando...
+          } @else {
+            Verificar y crear cuenta →
+          }
         </button>
 
         <button
