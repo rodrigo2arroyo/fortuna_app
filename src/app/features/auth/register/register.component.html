@@ -1,534 +1,1092 @@
-<div class="w-full max-w-xl">
-  @switch (step()) {
-    @case ('identidad') {
-      <div class="w-full max-w-md text-[#1a202c]">
-        <button
-          type="button"
-          class="flex items-center gap-2 mb-6 text-sm font-medium text-gray-700 hover:text-black"
-          (click)="goBackToLogin()"
-        >
-          <span class="text-lg">←</span>
-          Atrás
-        </button>
-
-        <div class="mb-6">
-          <img
-            src="./assets/text/FULL.png"
-            alt="Fortuna"
-            class="h-10 object-contain"
-          />
-        </div>
-
-        <h2 class="text-[22px] font-bold leading-[30px] mb-1">
-          ¿Es tu primera vez?
-        </h2>
-        <h3 class="text-[22px] font-bold leading-[30px] mb-6">
-          Vamos a crear tu cuenta Fortuna
-        </h3>
-
-        <label class="block text-[14px] font-medium mb-2">Documento de identidad (DNI)</label>
-        <input
-          type="text"
-          maxlength="8"
-          inputmode="numeric"
-          placeholder="00000000"
-          class="w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-[16px] outline-none focus:ring-2 focus:ring-[#ffa101]"
-          [ngModel]="dni()"
-          (ngModelChange)="dni.set($event)"
-        />
-
-        <div class="flex items-start gap-3 mt-4">
-          <input
-            type="checkbox"
-            class="mt-1 accent-[#ffa101] w-5 h-5"
-            [checked]="accepted()"
-            (change)="accepted.set(($any($event.target).checked))"
-          />
-          <label for="terms" class="text-sm text-gray-700 leading-5">
-            Doy mi consentimiento para el procesamiento de mis datos personales de acuerdo con la
-            <a href="https://fortuna.com.pe/politica-de-privacidad" target="_blank" class="underline font-medium">
-              Política de Privacidad
-            </a>
-            y los
-            <a href="https://fortuna.com.pe/terminos-y-condiciones" target="_blank" class="underline font-medium">
-              Términos y Condiciones
-            </a>.
-          </label>
-        </div>
-
-        <div class="mt-8">
+<div class="md:hidden">
+  <div class="relative z-10 mt-6 px-6 pb-12">
+    @switch (step()) {
+      @case ('identidad') {
+        <div class="w-full text-[#1a202c]">
           <button
             type="button"
-            class="w-full flex items-center justify-center gap-2 rounded-full px-6 py-3 bg-[#0a0d12] text-white font-semibold disabled:opacity-40 disabled:cursor-not-allowed"
-            [disabled]="!dniValid() || !accepted() || loadingDni()"
-            (click)="next()"
+            class="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full border border-gray-200 text-sm font-medium text-gray-700 hover:bg-gray-50"
+            (click)="goBackToLogin()"
           >
-            {{ loadingDni() ? 'Validando...' : 'Siguiente →' }}
+            <span class="text-lg leading-none">←</span>
+            Atrás
           </button>
-        </div>
-      </div>
-    }
-    @case ('datos') {
-      <div class="w-full max-w-md mx-auto text-[#1a202c]" [formGroup]="datosForm">
-        <h2 class="text-[22px] font-bold leading-[30px] mb-1">
-          Completa tus datos
-        </h2>
-        <p class="text-sm text-gray-600 mb-6">
-          Para acceder a nuestro préstamo, por favor, ingresa la información necesaria para continuar con tu solicitud.
-        </p>
 
-        <div class="w-full mb-6 rounded-xl border border-[#c6d7ff] bg-[#f5f7ff] px-4 py-2.5 text-[13px] leading-5 text-gray-800">
-          <div class="font-semibold">
-            Monto a solicitar:
+          <div class="mb-6">
+            <img
+              src="./assets/text/FULL.png"
+              alt="Fortuna"
+              class="h-10 object-contain"
+            />
           </div>
-          <div>
-            300 – Pagando con 6 cuotas – Tipo:
-            <span class="font-semibold">
-              PRÉSTAMO NEGOCIO FAMILIAR
-            </span>
-          </div>
-        </div>
 
-        <div class="flex flex-col gap-4">
-          <div>
-            <label class="block text-sm font-medium mb-1">
+          <h2 class="text-[22px] font-bold leading-[28px] max-w-[260px]">
+            ¿Es tu primera vez?<br />
+            Vamos a crear tu cuenta Fortuna
+          </h2>
+
+          <div class="mt-6">
+            <label class="block text-[13px] font-medium text-gray-600 mb-2">
               Documentos de identidad (DNI)
             </label>
+
             <input
               type="text"
-              [value]="dni()"
-              readonly
-              class="w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-2.5 text-[15px] text-gray-500 outline-none"
+              maxlength="8"
+              inputmode="numeric"
+              placeholder="00000000"
+              class="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-[16px] outline-none focus:ring-2 focus:ring-[#ffa101]"
+              [ngModel]="dni()"
+              (ngModelChange)="dni.set($event)"
             />
           </div>
-          <div>
-            <label class="block text-sm font-medium mb-1">Nombres</label>
+
+          <div class="flex items-start gap-3 mt-5">
             <input
-              type="text"
-              formControlName="nombres"
-              placeholder="Martha María"
-              readonly
-              class="w-full rounded-xl border px-4 py-2.5 text-[15px] outline-none
-                 bg-gray-50 border-gray-300 focus:ring-2 focus:ring-[#ffa101] text-gray-500"
+              type="checkbox"
+              class="mt-1 w-5 h-5 accent-[#ffa101]"
+              [checked]="accepted()"
+              (change)="accepted.set(($any($event.target).checked))"
             />
-          </div>
-          <div>
-            <label class="block text-sm font-medium mb-1">Apellidos</label>
-            <input
-              type="text"
-              formControlName="apellidos"
-              readonly
-              placeholder="López Gutiérrez"
-              class="w-full rounded-xl border px-4 py-2.5 text-[15px] outline-none
-                 bg-gray-50 border-gray-300 focus:ring-2 focus:ring-[#ffa101] text-gray-500"
-            />
-          </div>
-          <div>
-            <label class="block text-sm font-medium mb-1">
-              Empresa o institución donde trabaja actualmente
-            </label>
-            <input
-              type="text"
-              formControlName="empresaTrabajo"
-              placeholder="Empresa o institución donde trabaja actualmente"
-              class="w-full rounded-xl border px-4 py-2.5 text-[15px] outline-none
-           bg-gray-50 border-gray-300 focus:ring-2 focus:ring-[#ffa101]"
-            />
-          </div>
-          <div>
-            <label class="block text-sm font-medium mb-1">Ingreso mensual</label>
-            <input
-              type="number"
-              formControlName="ingresoMensual"
-              min="1300"
-              placeholder="Desde S/1300"
-              class="w-full rounded-xl border px-4 py-2.5 text-[15px] outline-none
-                 bg-gray-50 border-gray-300 focus:ring-2 focus:ring-[#ffa101]"
-            />
-            <p class="text-xs text-[#2563eb] mt-1">
-              Monto sujeto a verificación mediante boletas o recibo por honorarios.
+            <p class="text-[12px] text-gray-500 leading-5">
+              Doy mi consentimiento para el procesamiento de mis datos personales de acuerdo con la
+              <a href="https://fortuna.com.pe/politica-de-privacidad" target="_blank" class="underline font-semibold text-gray-700">
+                Política de Privacidad
+              </a>
+              y los
+              <a href="https://fortuna.com.pe/terminos-y-condiciones" target="_blank" class="underline font-semibold text-gray-700">
+                Términos y Condiciones
+              </a>.
             </p>
           </div>
-          <div>
-            <label class="block text-sm font-medium mb-1">Ocupación</label>
-            <input
-              type="text"
-              formControlName="ocupacion"
-              placeholder="Escribir ocupación"
-              class="w-full rounded-xl border px-4 py-2.5 text-[15px] outline-none
-           bg-gray-50 border-gray-300 focus:ring-2 focus:ring-[#ffa101]"
-            />
-          </div>
-          <div>
-            <label class="block text-sm font-medium mb-1">Estado civil</label>
-            <select
-              formControlName="estadoCivil"
-              class="w-full rounded-xl border px-4 py-2.5 text-[15px] outline-none
-           bg-gray-50 border-gray-300 focus:ring-2 focus:ring-[#ffa101]"
-            >
-              <option value="">Seleccionar</option>
-              <option value="1">Soltero</option>
-              <option value="2">Casado</option>
-              <option value="3">Conviviente</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-sm font-medium mb-1">Grado de instrucción</label>
-            <select
-              formControlName="gradoInstruccion"
-              class="w-full rounded-xl border px-4 py-2.5 text-[15px] outline-none
-           bg-gray-50 border-gray-300 focus:ring-2 focus:ring-[#ffa101]"
-            >
-              <option value="">Seleccionar</option>
-              <option value="3">Primaria</option>
-              <option value="4">Secundaria</option>
-              <option value="5">Técnico profesional</option>
-              <option value="10">Superior completo</option>
-              <option value="11">Superior incompleto</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-sm font-medium mb-1">
-              ¿Qué día del mes le gustaría pagar su cuota?
-            </label>
-            <select
-              formControlName="diaPago"
-              class="w-full rounded-xl border px-4 py-2.5 text-[15px] outline-none
-                 bg-gray-50 border-gray-300 focus:ring-2 focus:ring-[#ffa101]"
-            >
-              <option value="">Seleccione</option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="10">10</option>
-              <option value="11">11</option>
-              <option value="15">15</option>
-              <option value="16">16</option>
-              <option value="25">25</option>
-              <option value="26">26</option>
-              <option value="27">27</option>
-              <option value="28">28</option>
-              <option value="29">29</option>
-              <option value="30">30</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-sm font-medium mb-1">Celular</label>
-            <input
-              type="tel"
-              formControlName="celular"
-              placeholder="Escribe tu número"
-              class="w-full rounded-xl border px-4 py-2.5 text-[15px] outline-none
-                 bg-gray-50 border-gray-300 focus:ring-2 focus:ring-[#ffa101]"
-            />
-          </div>
 
-          <div>
-            <label class="block text-sm font-medium mb-1">Correo</label>
-            <input
-              type="email"
-              formControlName="correo"
-              placeholder="Escribe tu correo electrónico"
-              class="w-full rounded-xl border px-4 py-2.5 text-[15px] outline-none
-                 bg-gray-50 border-gray-300 focus:ring-2 focus:ring-[#ffa101]"
-            />
-          </div>
-          <div>
-            <label class="block text-sm font-medium mb-1">¿Cómo nos conociste?</label>
-            <select
-              formControlName="comoConociste"
-              class="w-full rounded-xl border px-4 py-2.5 text-[15px] outline-none
-           bg-gray-50 border-gray-300 focus:ring-2 focus:ring-[#ffa101]"
-            >
-              <option value="">Seleccionar</option>
-              <option value="15">Web de Fortuna</option>
-              <option value="16">Recomendación</option>
-              <option value="25">Letrero de Fortuna</option>
-              <option value="26">Facebook</option>
-              <option value="27">Instagram</option>
-              <option value="28">Google</option>
-              <option value="29">LinkedIn</option>
-              <option value="30">Correo electrónico</option>
-              <option value="31">Televisión y Radio</option>
-              <option value="32">Periódicos y Revistas</option>
-            </select>
-          </div>
-          <h2 class="text-[22px] font-bold leading-[30px] mb-1">
-            Domicilio según DNI
-          </h2>
-          <div>
-            <label class="block text-sm font-medium mb-1">Departamento según DNI</label>
-
-            <select
-              class="w-full rounded-xl border px-4 py-2.5 bg-gray-50 border-gray-300 text-[15px]"
-              [value]="datosForm.get('departamentoDni')?.value || ''"
-              (change)="onDepartamentoChange(($any($event.target).value))"
-            >
-              <option value="" disabled>
-                @if (loadingDep()) { Cargando... } @else { Selecciona un departamento }
-              </option>
-
-              @for (dep of departamentos(); track dep) {
-                <option [value]="dep">{{ dep }}</option>
-              }
-            </select>
-          </div>
-          <div>
-            <label class="block text-sm font-medium mb-1">Provincia según DNI</label>
-
-            <select
-              class="w-full rounded-xl border px-4 py-2.5 bg-gray-50 border-gray-300 text-[15px]"
-              [disabled]="!datosForm.get('departamentoDni')?.value || loadingProv()"
-              [value]="datosForm.get('provinciaDni')?.value || ''"
-              (change)="onProvinciaChange(($any($event.target).value))"
-            >
-              <option value="" disabled>
-                @if (!datosForm.get('departamentoDni')?.value) { Primero elige un departamento }
-                @else if (loadingProv()) { Cargando... }
-                @else { Selecciona una provincia }
-              </option>
-
-              @for (prov of provincias(); track prov) {
-                <option [value]="prov">{{ prov }}</option>
-              }
-            </select>
-          </div>
-          <div>
-            <label class="block text-sm font-medium mb-1">Distrito según DNI</label>
-
-            <select
-              class="w-full rounded-xl border px-4 py-2.5 bg-gray-50 border-gray-300 text-[15px]"
-              [disabled]="!datosForm.get('provinciaDni')?.value || loadingDist()"
-              [value]="datosForm.get('distritoDni')?.value || ''"
-              (change)="onDistritoChange(($any($event.target).value))"
-            >
-              <option value="" disabled>
-                @if (!datosForm.get('provinciaDni')?.value) { Primero elige una provincia }
-                @else if (loadingDist()) { Cargando... }
-                @else { Selecciona un distrito }
-              </option>
-
-              @for (dist of distritos(); track dist) {
-                <option [value]="dist">{{ dist }}</option>
-              }
-            </select>
-          </div>
-          <div>
-            <label class="block text-sm font-medium mb-1">Domicilio según DNI</label>
-            <input
-              formControlName="domicilioDni"
-              type="text"
-              class="w-full rounded-xl border px-4 py-2.5 bg-gray-50 border-gray-300 text-[15px]"
-              placeholder="Domicilio según DNI"
-            />
-          </div>
-        </div>
-        <div class="mt-8 flex items-end justify-end">
-          <div class="mt-8 flex items-end justify-end">
+          <!-- CTA disabled like mock -->
+          <div class="mt-8">
             <button
               type="button"
-              class="rounded-full px-8 py-3 bg-[#0a0d12] text-white font-semibold flex disabled:opacity-40 disabled:cursor-not-allowed"
-              [disabled]="datosForm.invalid || loadingSms()"
+              class="w-full h-12 rounded-full font-semibold flex items-center justify-center gap-2
+               disabled:cursor-not-allowed"
+              [disabled]="!dniValid() || !accepted() || loadingDni()"
+              [class.bg-[#0a0d12]]="dniValid() && accepted() && !loadingDni()"
+              [class.text-white]="dniValid() && accepted() && !loadingDni()"
+              [class.bg-gray-200]="!(dniValid() && accepted() && !loadingDni())"
+              [class.text-gray-400]="!(dniValid() && accepted() && !loadingDni())"
               (click)="next()"
             >
-              @if (loadingSms()) { Enviando código... } @else { Siguiente → }
+              {{ loadingDni() ? 'Validando...' : 'Siguiente' }}
+              <span class="text-lg leading-none">→</span>
             </button>
-
-            @if (smsError()) {
-              <p class="mt-2 text-sm text-red-600 text-right">{{ smsError() }}</p>
-            }
           </div>
+
         </div>
-      </div>
-    }
-    @case ('verificacion') {
-      <div class="w-full max-w-md mx-auto text-[#1a202c]" [formGroup]="otpForm">
+      }
+      @case ('datos') {
         <button
           type="button"
-          class="inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full border border-gray-200 text-sm hover:bg-gray-50"
-          (click)="prev()"
+          class="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full border border-gray-200 text-sm font-medium text-gray-700 hover:bg-gray-50"
+          (click)="goBackToLogin()"
         >
-          <span class="text-lg">←</span>
-          <span class="font-medium">Atrás</span>
+          <span class="text-lg leading-none">←</span>
+          Atrás
         </button>
+        <div class="w-full max-w-md mx-auto text-[#1a202c]" [formGroup]="datosForm">
+          <h2 class="text-[22px] font-bold leading-[30px] mb-1">
+            Completa tus datos
+          </h2>
+          <p class="text-sm text-gray-600 mb-6">
+            Para acceder a nuestro préstamo, por favor, ingresa la información necesaria para continuar con tu solicitud.
+          </p>
 
-        <h2 class="text-[22px] font-bold leading-[30px] mb-2">
-          Verificación de tu celular
-        </h2>
-        <p class="text-sm text-gray-600 mb-8">
-          Se ha enviado un código a su celular {{ celularMasked }}
-        </p>
-
-        <div class="flex items-center justify-between gap-3 mb-8">
-          <input
-            type="text"
-            maxlength="1"
-            formControlName="d1"
-            class="w-12 h-14 rounded-xl border border-gray-300 bg-gray-50 text-center text-xl font-medium outline-none focus:ring-2 focus:ring-[#ffa101]"
-            (input)="onOtpInput($event, d2, null)"
-            #d1
-          />
-          <input
-            type="text"
-            maxlength="1"
-            formControlName="d2"
-            class="w-12 h-14 rounded-xl border border-gray-300 bg-gray-50 text-center text-xl font-medium outline-none focus:ring-2 focus:ring-[#ffa101]"
-            (input)="onOtpInput($event, d3, d1)"
-            #d2
-          />
-          <input
-            type="text"
-            maxlength="1"
-            formControlName="d3"
-            class="w-12 h-14 rounded-xl border border-gray-300 bg-gray-50 text-center text-xl font-medium outline-none focus:ring-2 focus:ring-[#ffa101]"
-            (input)="onOtpInput($event, d4, d2)"
-            #d3
-          />
-          <input
-            type="text"
-            maxlength="1"
-            formControlName="d4"
-            class="w-12 h-14 rounded-xl border border-gray-300 bg-gray-50 text-center text-xl font-medium outline-none focus:ring-2 focus:ring-[#ffa101]"
-            (input)="onOtpInput($event, d5, d3)"
-            #d4
-          />
-          <input
-            type="text"
-            maxlength="1"
-            formControlName="d5"
-            class="w-12 h-14 rounded-xl border border-gray-300 bg-gray-50 text-center text-xl font-medium outline-none focus:ring-2 focus:ring-[#ffa101]"
-            (input)="onOtpInput($event, d6, d4)"
-            #d5
-          />
-          <input
-            type="text"
-            maxlength="1"
-            formControlName="d6"
-            class="w-12 h-14 rounded-xl border border-gray-300 bg-gray-50 text-center text-xl font-medium outline-none focus:ring-2 focus:ring-[#ffa101]"
-            (input)="onOtpInput($event, null, d5)"
-            #d6
-          />
-        </div>
-
-        <button
-          type="button"
-          class="w-full flex items-center justify-center gap-2 rounded-full px-6 py-3
-         bg-[#0a0d12] text-white font-semibold
-         disabled:opacity-40 disabled:cursor-not-allowed mb-2"
-          [disabled]="!otpValid || verifyingOtp()"
-          (click)="verifyAndCreate()"
-        >
-          @if (verifyingOtp()) {
-            Verificando...
-          } @else {
-            Verificar y crear cuenta →
-          }
-        </button>
-
-        <button
-          type="button"
-          class="w-full rounded-full px-6 py-3 border border-gray-300 text-sm font-medium
-         disabled:text-gray-400 disabled:border-gray-200 disabled:cursor-not-allowed"
-          [disabled]="countdown() > 0 || resendingOtp()"
-          (click)="resendCode()"
-        >
-          @if (resendingOtp()) {
-            Reenviando...
-          } @else if (countdown() > 0) {
-            Reenviar código {{ countdownText() }}
-          } @else {
-            Reenviar código
-          }
-        </button>
-      </div>
-    }
-    @case ('credenciales') {
-      <div class="w-full max-w-md mx-auto text-[#1a202c]" [formGroup]="credencialesForm">
-        <button
-          type="button"
-          class="inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full border border-gray-200 text-sm hover:bg-gray-50"
-          (click)="prev()"
-        >
-          <span class="text-lg">←</span>
-          <span class="font-medium">Atrás</span>
-        </button>
-
-        <h2 class="text-[22px] font-bold leading-[30px] mb-6">
-          Crea una contraseña
-        </h2>
-
-        <div class="flex flex-col gap-4">
-          <div>
-            <label class="block text-sm font-medium mb-1">Ingresa tu contraseña</label>
-
-            <div class="relative">
-              <input
-                [type]="showPassword() ? 'text' : 'password'"
-                formControlName="password"
-                placeholder="Contraseña"
-                class="w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-2.5 text-[15px]
-             outline-none focus:ring-2 focus:ring-[#ffa101]"
-              />
-
-              <button
-                type="button"
-                class="absolute inset-y-0 right-3 flex items-center justify-center"
-                (click)="showPassword.set(!showPassword())"
-                aria-label="Mostrar/Ocultar contraseña"
-                title="Mostrar/Ocultar contraseña"
-              >
-                @if (showPassword()) {
-                  <img src="assets/icons/eye-off-line.svg" class="w-5 h-5" alt="Ocultar contraseña" />
-                } @else {
-                  👁️
-                }
-              </button>
+          <div class="w-full mb-6 rounded-xl border border-[#c6d7ff] bg-[#f5f7ff] px-4 py-2.5 text-[13px] leading-5 text-gray-800">
+            <div class="font-semibold">
+              Monto a solicitar:
+            </div>
+            <div>
+              300 – Pagando con 6 cuotas – Tipo:
+              <span class="font-semibold">
+              PRÉSTAMO NEGOCIO FAMILIAR
+            </span>
             </div>
           </div>
 
-          <div>
-            <label class="block text-sm font-medium mb-1">Confirma tu contraseña</label>
-            <div class="relative">
+          <div class="flex flex-col gap-4">
+            <div>
+              <label class="block text-sm font-medium mb-1">
+                Documentos de identidad (DNI)
+              </label>
               <input
-                [type]="showPasswordConfirm() ? 'text' : 'password'"
-                formControlName="passwordConfirm"
-                placeholder="Contraseña"
-                class="w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-2.5 text-[15px]
-                   outline-none focus:ring-2 focus:ring-[#ffa101]"
+                type="text"
+                [value]="dni()"
+                readonly
+                class="w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-2.5 text-[15px] text-gray-500 outline-none"
               />
-              <button
-                type="button"
-                class="absolute inset-y-0 right-3 flex items-center text-gray-400 text-sm"
-                (click)="showPasswordConfirm.set(!showPasswordConfirm())"
-              >
-                @if (showPasswordConfirm()) {
-                  <img src="assets/icons/eye-off-line.svg" class="w-5 h-5" alt="Ocultar contraseña" />
-                } @else {
-                  👁️
-                }
-              </button>
             </div>
-
-            @if (passwordMismatch()) {
-              <p class="mt-1 text-xs text-red-500">
-                Las contraseñas no coinciden.
+            <div>
+              <label class="block text-sm font-medium mb-1">Nombres</label>
+              <input
+                type="text"
+                formControlName="nombres"
+                placeholder="Martha María"
+                readonly
+                class="w-full rounded-xl border px-4 py-2.5 text-[15px] outline-none
+                 bg-gray-50 border-gray-300 focus:ring-2 focus:ring-[#ffa101] text-gray-500"
+              />
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Apellidos</label>
+              <input
+                type="text"
+                formControlName="apellidos"
+                readonly
+                placeholder="López Gutiérrez"
+                class="w-full rounded-xl border px-4 py-2.5 text-[15px] outline-none
+                 bg-gray-50 border-gray-300 focus:ring-2 focus:ring-[#ffa101] text-gray-500"
+              />
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">
+                Empresa o institución donde trabaja actualmente
+              </label>
+              <input
+                type="text"
+                formControlName="empresaTrabajo"
+                placeholder="Empresa o institución donde trabaja actualmente"
+                class="w-full rounded-xl border px-4 py-2.5 text-[15px] outline-none
+           bg-gray-50 border-gray-300 focus:ring-2 focus:ring-[#ffa101]"
+              />
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Ingreso mensual</label>
+              <input
+                type="number"
+                formControlName="ingresoMensual"
+                min="1300"
+                placeholder="Desde S/1300"
+                class="w-full rounded-xl border px-4 py-2.5 text-[15px] outline-none
+                 bg-gray-50 border-gray-300 focus:ring-2 focus:ring-[#ffa101]"
+              />
+              <p class="text-xs text-[#2563eb] mt-1">
+                Monto sujeto a verificación mediante boletas o recibo por honorarios.
               </p>
-            }
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Ocupación</label>
+              <input
+                type="text"
+                formControlName="ocupacion"
+                placeholder="Escribir ocupación"
+                class="w-full rounded-xl border px-4 py-2.5 text-[15px] outline-none
+           bg-gray-50 border-gray-300 focus:ring-2 focus:ring-[#ffa101]"
+              />
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Estado civil</label>
+              <select
+                formControlName="estadoCivil"
+                class="w-full rounded-xl border px-4 py-2.5 text-[15px] outline-none
+           bg-gray-50 border-gray-300 focus:ring-2 focus:ring-[#ffa101]"
+              >
+                <option value="">Seleccionar</option>
+                <option value="1">Soltero</option>
+                <option value="2">Casado</option>
+                <option value="3">Conviviente</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Grado de instrucción</label>
+              <select
+                formControlName="gradoInstruccion"
+                class="w-full rounded-xl border px-4 py-2.5 text-[15px] outline-none
+           bg-gray-50 border-gray-300 focus:ring-2 focus:ring-[#ffa101]"
+              >
+                <option value="">Seleccionar</option>
+                <option value="3">Primaria</option>
+                <option value="4">Secundaria</option>
+                <option value="5">Técnico profesional</option>
+                <option value="10">Superior completo</option>
+                <option value="11">Superior incompleto</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">
+                ¿Qué día del mes le gustaría pagar su cuota?
+              </label>
+              <select
+                formControlName="diaPago"
+                class="w-full rounded-xl border px-4 py-2.5 text-[15px] outline-none
+                 bg-gray-50 border-gray-300 focus:ring-2 focus:ring-[#ffa101]"
+              >
+                <option value="">Seleccione</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="25">25</option>
+                <option value="26">26</option>
+                <option value="27">27</option>
+                <option value="28">28</option>
+                <option value="29">29</option>
+                <option value="30">30</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Celular</label>
+              <input
+                type="tel"
+                formControlName="celular"
+                placeholder="Escribe tu número"
+                class="w-full rounded-xl border px-4 py-2.5 text-[15px] outline-none
+                 bg-gray-50 border-gray-300 focus:ring-2 focus:ring-[#ffa101]"
+              />
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium mb-1">Correo</label>
+              <input
+                type="email"
+                formControlName="correo"
+                placeholder="Escribe tu correo electrónico"
+                class="w-full rounded-xl border px-4 py-2.5 text-[15px] outline-none
+                 bg-gray-50 border-gray-300 focus:ring-2 focus:ring-[#ffa101]"
+              />
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">¿Cómo nos conociste?</label>
+              <select
+                formControlName="comoConociste"
+                class="w-full rounded-xl border px-4 py-2.5 text-[15px] outline-none
+           bg-gray-50 border-gray-300 focus:ring-2 focus:ring-[#ffa101]"
+              >
+                <option value="">Seleccionar</option>
+                <option value="15">Web de Fortuna</option>
+                <option value="16">Recomendación</option>
+                <option value="25">Letrero de Fortuna</option>
+                <option value="26">Facebook</option>
+                <option value="27">Instagram</option>
+                <option value="28">Google</option>
+                <option value="29">LinkedIn</option>
+                <option value="30">Correo electrónico</option>
+                <option value="31">Televisión y Radio</option>
+                <option value="32">Periódicos y Revistas</option>
+              </select>
+            </div>
+            <h2 class="text-[22px] font-bold leading-[30px] mb-1">
+              Domicilio según DNI
+            </h2>
+            <div>
+              <label class="block text-sm font-medium mb-1">Departamento según DNI</label>
+
+              <select
+                class="w-full rounded-xl border px-4 py-2.5 bg-gray-50 border-gray-300 text-[15px]"
+                [value]="datosForm.get('departamentoDni')?.value || ''"
+                (change)="onDepartamentoChange(($any($event.target).value))"
+              >
+                <option value="" disabled>
+                  @if (loadingDep()) { Cargando... } @else { Selecciona un departamento }
+                </option>
+
+                @for (dep of departamentos(); track dep) {
+                  <option [value]="dep">{{ dep }}</option>
+                }
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Provincia según DNI</label>
+
+              <select
+                class="w-full rounded-xl border px-4 py-2.5 bg-gray-50 border-gray-300 text-[15px]"
+                [disabled]="!datosForm.get('departamentoDni')?.value || loadingProv()"
+                [value]="datosForm.get('provinciaDni')?.value || ''"
+                (change)="onProvinciaChange(($any($event.target).value))"
+              >
+                <option value="" disabled>
+                  @if (!datosForm.get('departamentoDni')?.value) { Primero elige un departamento }
+                  @else if (loadingProv()) { Cargando... }
+                  @else { Selecciona una provincia }
+                </option>
+
+                @for (prov of provincias(); track prov) {
+                  <option [value]="prov">{{ prov }}</option>
+                }
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Distrito según DNI</label>
+
+              <select
+                class="w-full rounded-xl border px-4 py-2.5 bg-gray-50 border-gray-300 text-[15px]"
+                [disabled]="!datosForm.get('provinciaDni')?.value || loadingDist()"
+                [value]="datosForm.get('distritoDni')?.value || ''"
+                (change)="onDistritoChange(($any($event.target).value))"
+              >
+                <option value="" disabled>
+                  @if (!datosForm.get('provinciaDni')?.value) { Primero elige una provincia }
+                  @else if (loadingDist()) { Cargando... }
+                  @else { Selecciona un distrito }
+                </option>
+
+                @for (dist of distritos(); track dist) {
+                  <option [value]="dist">{{ dist }}</option>
+                }
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Domicilio según DNI</label>
+              <input
+                formControlName="domicilioDni"
+                type="text"
+                class="w-full rounded-xl border px-4 py-2.5 bg-gray-50 border-gray-300 text-[15px]"
+                placeholder="Domicilio según DNI"
+              />
+            </div>
+          </div>
+          <div class="mt-8 flex items-end justify-end">
+            <div class="mt-8 flex items-end justify-end">
+              <button
+                type="button"
+                class="rounded-full px-8 py-3 bg-[#0a0d12] text-white font-semibold flex disabled:opacity-40 disabled:cursor-not-allowed"
+                [disabled]="datosForm.invalid || loadingSms()"
+                (click)="next()"
+              >
+                @if (loadingSms()) { Enviando código... } @else { Siguiente → }
+              </button>
+
+              @if (smsError()) {
+                <p class="mt-2 text-sm text-red-600 text-right">{{ smsError() }}</p>
+              }
+            </div>
           </div>
         </div>
-
-        <div class="mt-8">
+      }
+      @case ('verificacion') {
+        <div class="w-full max-w-md mx-auto text-[#1a202c]" [formGroup]="otpForm">
           <button
             type="button"
-            class="w-full rounded-full px-6 py-3 bg-[#0a0d12] text-white font-semibold disabled:opacity-40 disabled:cursor-not-allowed"
-            [disabled]="isLoading() || datosForm.invalid || credencialesForm.invalid"
-            (click)="finish()"
+            class="inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full border border-gray-200 text-sm hover:bg-gray-50"
+            (click)="prev()"
           >
-            @if (isLoading()) { Registrando... } @else { Confirmar }
+            <span class="text-lg">←</span>
+            <span class="font-medium">Atrás</span>
+          </button>
+
+          <h2 class="text-[22px] font-bold leading-[30px] mb-2">
+            Verificación de tu celular
+          </h2>
+          <p class="text-sm text-gray-600 mb-8">
+            Se ha enviado un código a su celular {{ celularMasked }}
+          </p>
+
+          <div class="flex items-center justify-between gap-3 mb-8">
+            <input
+              type="text"
+              maxlength="1"
+              formControlName="d1"
+              class="w-12 h-14 rounded-xl border border-gray-300 bg-gray-50 text-center text-xl font-medium outline-none focus:ring-2 focus:ring-[#ffa101]"
+              (input)="onOtpInput($event, d2, null)"
+              #d1
+            />
+            <input
+              type="text"
+              maxlength="1"
+              formControlName="d2"
+              class="w-12 h-14 rounded-xl border border-gray-300 bg-gray-50 text-center text-xl font-medium outline-none focus:ring-2 focus:ring-[#ffa101]"
+              (input)="onOtpInput($event, d3, d1)"
+              #d2
+            />
+            <input
+              type="text"
+              maxlength="1"
+              formControlName="d3"
+              class="w-12 h-14 rounded-xl border border-gray-300 bg-gray-50 text-center text-xl font-medium outline-none focus:ring-2 focus:ring-[#ffa101]"
+              (input)="onOtpInput($event, d4, d2)"
+              #d3
+            />
+            <input
+              type="text"
+              maxlength="1"
+              formControlName="d4"
+              class="w-12 h-14 rounded-xl border border-gray-300 bg-gray-50 text-center text-xl font-medium outline-none focus:ring-2 focus:ring-[#ffa101]"
+              (input)="onOtpInput($event, d5, d3)"
+              #d4
+            />
+            <input
+              type="text"
+              maxlength="1"
+              formControlName="d5"
+              class="w-12 h-14 rounded-xl border border-gray-300 bg-gray-50 text-center text-xl font-medium outline-none focus:ring-2 focus:ring-[#ffa101]"
+              (input)="onOtpInput($event, d6, d4)"
+              #d5
+            />
+            <input
+              type="text"
+              maxlength="1"
+              formControlName="d6"
+              class="w-12 h-14 rounded-xl border border-gray-300 bg-gray-50 text-center text-xl font-medium outline-none focus:ring-2 focus:ring-[#ffa101]"
+              (input)="onOtpInput($event, null, d5)"
+              #d6
+            />
+          </div>
+
+          <button
+            type="button"
+            class="w-full flex items-center justify-center gap-2 rounded-full px-6 py-3
+         bg-[#0a0d12] text-white font-semibold
+         disabled:opacity-40 disabled:cursor-not-allowed mb-2"
+            [disabled]="!otpValid || verifyingOtp()"
+            (click)="verifyAndCreate()"
+          >
+            @if (verifyingOtp()) {
+              Verificando...
+            } @else {
+              Verificar y crear cuenta →
+            }
+          </button>
+
+          <button
+            type="button"
+            class="w-full rounded-full px-6 py-3 border border-gray-300 text-sm font-medium
+         disabled:text-gray-400 disabled:border-gray-200 disabled:cursor-not-allowed"
+            [disabled]="countdown() > 0 || resendingOtp()"
+            (click)="resendCode()"
+          >
+            @if (resendingOtp()) {
+              Reenviando...
+            } @else if (countdown() > 0) {
+              Reenviar código {{ countdownText() }}
+            } @else {
+              Reenviar código
+            }
           </button>
         </div>
-      </div>
+      }
+      @case ('credenciales') {
+        <div class="w-full max-w-md mx-auto text-[#1a202c]" [formGroup]="credencialesForm">
+          <button
+            type="button"
+            class="inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full border border-gray-200 text-sm hover:bg-gray-50"
+            (click)="prev()"
+          >
+            <span class="text-lg">←</span>
+            <span class="font-medium">Atrás</span>
+          </button>
+
+          <h2 class="text-[22px] font-bold leading-[30px] mb-6">
+            Crea una contraseña
+          </h2>
+
+          <div class="flex flex-col gap-4">
+            <div>
+              <label class="block text-sm font-medium mb-1">Ingresa tu contraseña</label>
+
+              <div class="relative">
+                <input
+                  [type]="showPassword() ? 'text' : 'password'"
+                  formControlName="password"
+                  placeholder="Contraseña"
+                  class="w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-2.5 text-[15px]
+             outline-none focus:ring-2 focus:ring-[#ffa101]"
+                />
+
+                <button
+                  type="button"
+                  class="absolute inset-y-0 right-3 flex items-center justify-center"
+                  (click)="showPassword.set(!showPassword())"
+                  aria-label="Mostrar/Ocultar contraseña"
+                  title="Mostrar/Ocultar contraseña"
+                >
+                  @if (showPassword()) {
+                    <img src="assets/icons/eye-off-line.svg" class="w-5 h-5" alt="Ocultar contraseña" />
+                  } @else {
+                    👁️
+                  }
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium mb-1">Confirma tu contraseña</label>
+              <div class="relative">
+                <input
+                  [type]="showPasswordConfirm() ? 'text' : 'password'"
+                  formControlName="passwordConfirm"
+                  placeholder="Contraseña"
+                  class="w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-2.5 text-[15px]
+                   outline-none focus:ring-2 focus:ring-[#ffa101]"
+                />
+                <button
+                  type="button"
+                  class="absolute inset-y-0 right-3 flex items-center text-gray-400 text-sm"
+                  (click)="showPasswordConfirm.set(!showPasswordConfirm())"
+                >
+                  @if (showPasswordConfirm()) {
+                    <img src="assets/icons/eye-off-line.svg" class="w-5 h-5" alt="Ocultar contraseña" />
+                  } @else {
+                    👁️
+                  }
+                </button>
+              </div>
+
+              @if (passwordMismatch()) {
+                <p class="mt-1 text-xs text-red-500">
+                  Las contraseñas no coinciden.
+                </p>
+              }
+            </div>
+          </div>
+
+          <div class="mt-8">
+            <button
+              type="button"
+              class="w-full rounded-full px-6 py-3 bg-[#0a0d12] text-white font-semibold disabled:opacity-40 disabled:cursor-not-allowed"
+              [disabled]="isLoading() || datosForm.invalid || credencialesForm.invalid"
+              (click)="finish()"
+            >
+              @if (isLoading()) { Registrando... } @else { Confirmar }
+            </button>
+          </div>
+        </div>
+      }
     }
-  }
+  </div>
+</div>
+
+<div class="hidden md:block">
+  <div class="w-full max-w-xl">
+    @switch (step()) {
+      @case ('identidad') {
+        <div class="w-full max-w-md text-[#1a202c]">
+          <button
+            type="button"
+            class="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full border border-gray-200 text-sm font-medium text-gray-700 hover:bg-gray-50"
+            (click)="goBackToLogin()"
+          >
+            <span class="text-lg leading-none">←</span>
+            Atrás
+          </button>
+
+          <div class="mb-6">
+            <img
+              src="./assets/text/FULL.png"
+              alt="Fortuna"
+              class="h-10 object-contain"
+            />
+          </div>
+
+          <h2 class="text-[22px] font-bold leading-[30px] mb-1">
+            ¿Es tu primera vez?
+          </h2>
+          <h3 class="text-[22px] font-bold leading-[30px] mb-6">
+            Vamos a crear tu cuenta Fortuna
+          </h3>
+
+          <label class="block text-[14px] font-medium mb-2">Documento de identidad (DNI)</label>
+          <input
+            type="text"
+            maxlength="8"
+            inputmode="numeric"
+            placeholder="00000000"
+            class="w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-[16px] outline-none focus:ring-2 focus:ring-[#ffa101]"
+            [ngModel]="dni()"
+            (ngModelChange)="dni.set($event)"
+          />
+
+          <div class="flex items-start gap-3 mt-4">
+            <input
+              type="checkbox"
+              class="mt-1 accent-[#ffa101] w-5 h-5"
+              [checked]="accepted()"
+              (change)="accepted.set(($any($event.target).checked))"
+            />
+            <label for="terms" class="text-sm text-gray-700 leading-5">
+              Doy mi consentimiento para el procesamiento de mis datos personales de acuerdo con la
+              <a href="https://fortuna.com.pe/politica-de-privacidad" target="_blank" class="underline font-medium">
+                Política de Privacidad
+              </a>
+              y los
+              <a href="https://fortuna.com.pe/terminos-y-condiciones" target="_blank" class="underline font-medium">
+                Términos y Condiciones
+              </a>.
+            </label>
+          </div>
+
+          <div class="mt-8">
+            <button
+              type="button"
+              class="w-full flex items-center justify-center gap-2 rounded-full px-6 py-3 bg-[#0a0d12] text-white font-semibold disabled:opacity-40 disabled:cursor-not-allowed"
+              [disabled]="!dniValid() || !accepted() || loadingDni()"
+              (click)="next()"
+            >
+              {{ loadingDni() ? 'Validando...' : 'Siguiente →' }}
+            </button>
+          </div>
+        </div>
+      }
+      @case ('datos') {
+        <div class="w-full max-w-md mx-auto text-[#1a202c]" [formGroup]="datosForm">
+          <h2 class="text-[22px] font-bold leading-[30px] mb-1">
+            Completa tus datos
+          </h2>
+          <p class="text-sm text-gray-600 mb-6">
+            Para acceder a nuestro préstamo, por favor, ingresa la información necesaria para continuar con tu solicitud.
+          </p>
+
+          <div class="w-full mb-6 rounded-xl border border-[#c6d7ff] bg-[#f5f7ff] px-4 py-2.5 text-[13px] leading-5 text-gray-800">
+            <div class="font-semibold">
+              Monto a solicitar:
+            </div>
+            <div>
+              300 – Pagando con 6 cuotas – Tipo:
+              <span class="font-semibold">
+              PRÉSTAMO NEGOCIO FAMILIAR
+            </span>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-4">
+            <div>
+              <label class="block text-sm font-medium mb-1">
+                Documentos de identidad (DNI)
+              </label>
+              <input
+                type="text"
+                [value]="dni()"
+                readonly
+                class="w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-2.5 text-[15px] text-gray-500 outline-none"
+              />
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Nombres</label>
+              <input
+                type="text"
+                formControlName="nombres"
+                placeholder="Martha María"
+                readonly
+                class="w-full rounded-xl border px-4 py-2.5 text-[15px] outline-none
+                 bg-gray-50 border-gray-300 focus:ring-2 focus:ring-[#ffa101] text-gray-500"
+              />
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Apellidos</label>
+              <input
+                type="text"
+                formControlName="apellidos"
+                readonly
+                placeholder="López Gutiérrez"
+                class="w-full rounded-xl border px-4 py-2.5 text-[15px] outline-none
+                 bg-gray-50 border-gray-300 focus:ring-2 focus:ring-[#ffa101] text-gray-500"
+              />
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">
+                Empresa o institución donde trabaja actualmente
+              </label>
+              <input
+                type="text"
+                formControlName="empresaTrabajo"
+                placeholder="Empresa o institución donde trabaja actualmente"
+                class="w-full rounded-xl border px-4 py-2.5 text-[15px] outline-none
+           bg-gray-50 border-gray-300 focus:ring-2 focus:ring-[#ffa101]"
+              />
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Ingreso mensual</label>
+              <input
+                type="number"
+                formControlName="ingresoMensual"
+                min="1300"
+                placeholder="Desde S/1300"
+                class="w-full rounded-xl border px-4 py-2.5 text-[15px] outline-none
+                 bg-gray-50 border-gray-300 focus:ring-2 focus:ring-[#ffa101]"
+              />
+              <p class="text-xs text-[#2563eb] mt-1">
+                Monto sujeto a verificación mediante boletas o recibo por honorarios.
+              </p>
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Ocupación</label>
+              <input
+                type="text"
+                formControlName="ocupacion"
+                placeholder="Escribir ocupación"
+                class="w-full rounded-xl border px-4 py-2.5 text-[15px] outline-none
+           bg-gray-50 border-gray-300 focus:ring-2 focus:ring-[#ffa101]"
+              />
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Estado civil</label>
+              <select
+                formControlName="estadoCivil"
+                class="w-full rounded-xl border px-4 py-2.5 text-[15px] outline-none
+           bg-gray-50 border-gray-300 focus:ring-2 focus:ring-[#ffa101]"
+              >
+                <option value="">Seleccionar</option>
+                <option value="1">Soltero</option>
+                <option value="2">Casado</option>
+                <option value="3">Conviviente</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Grado de instrucción</label>
+              <select
+                formControlName="gradoInstruccion"
+                class="w-full rounded-xl border px-4 py-2.5 text-[15px] outline-none
+           bg-gray-50 border-gray-300 focus:ring-2 focus:ring-[#ffa101]"
+              >
+                <option value="">Seleccionar</option>
+                <option value="3">Primaria</option>
+                <option value="4">Secundaria</option>
+                <option value="5">Técnico profesional</option>
+                <option value="10">Superior completo</option>
+                <option value="11">Superior incompleto</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">
+                ¿Qué día del mes le gustaría pagar su cuota?
+              </label>
+              <select
+                formControlName="diaPago"
+                class="w-full rounded-xl border px-4 py-2.5 text-[15px] outline-none
+                 bg-gray-50 border-gray-300 focus:ring-2 focus:ring-[#ffa101]"
+              >
+                <option value="">Seleccione</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="25">25</option>
+                <option value="26">26</option>
+                <option value="27">27</option>
+                <option value="28">28</option>
+                <option value="29">29</option>
+                <option value="30">30</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Celular</label>
+              <input
+                type="tel"
+                formControlName="celular"
+                placeholder="Escribe tu número"
+                class="w-full rounded-xl border px-4 py-2.5 text-[15px] outline-none
+                 bg-gray-50 border-gray-300 focus:ring-2 focus:ring-[#ffa101]"
+              />
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium mb-1">Correo</label>
+              <input
+                type="email"
+                formControlName="correo"
+                placeholder="Escribe tu correo electrónico"
+                class="w-full rounded-xl border px-4 py-2.5 text-[15px] outline-none
+                 bg-gray-50 border-gray-300 focus:ring-2 focus:ring-[#ffa101]"
+              />
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">¿Cómo nos conociste?</label>
+              <select
+                formControlName="comoConociste"
+                class="w-full rounded-xl border px-4 py-2.5 text-[15px] outline-none
+           bg-gray-50 border-gray-300 focus:ring-2 focus:ring-[#ffa101]"
+              >
+                <option value="">Seleccionar</option>
+                <option value="15">Web de Fortuna</option>
+                <option value="16">Recomendación</option>
+                <option value="25">Letrero de Fortuna</option>
+                <option value="26">Facebook</option>
+                <option value="27">Instagram</option>
+                <option value="28">Google</option>
+                <option value="29">LinkedIn</option>
+                <option value="30">Correo electrónico</option>
+                <option value="31">Televisión y Radio</option>
+                <option value="32">Periódicos y Revistas</option>
+              </select>
+            </div>
+            <h2 class="text-[22px] font-bold leading-[30px] mb-1">
+              Domicilio según DNI
+            </h2>
+            <div>
+              <label class="block text-sm font-medium mb-1">Departamento según DNI</label>
+
+              <select
+                class="w-full rounded-xl border px-4 py-2.5 bg-gray-50 border-gray-300 text-[15px]"
+                [value]="datosForm.get('departamentoDni')?.value || ''"
+                (change)="onDepartamentoChange(($any($event.target).value))"
+              >
+                <option value="" disabled>
+                  @if (loadingDep()) { Cargando... } @else { Selecciona un departamento }
+                </option>
+
+                @for (dep of departamentos(); track dep) {
+                  <option [value]="dep">{{ dep }}</option>
+                }
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Provincia según DNI</label>
+
+              <select
+                class="w-full rounded-xl border px-4 py-2.5 bg-gray-50 border-gray-300 text-[15px]"
+                [disabled]="!datosForm.get('departamentoDni')?.value || loadingProv()"
+                [value]="datosForm.get('provinciaDni')?.value || ''"
+                (change)="onProvinciaChange(($any($event.target).value))"
+              >
+                <option value="" disabled>
+                  @if (!datosForm.get('departamentoDni')?.value) { Primero elige un departamento }
+                  @else if (loadingProv()) { Cargando... }
+                  @else { Selecciona una provincia }
+                </option>
+
+                @for (prov of provincias(); track prov) {
+                  <option [value]="prov">{{ prov }}</option>
+                }
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Distrito según DNI</label>
+
+              <select
+                class="w-full rounded-xl border px-4 py-2.5 bg-gray-50 border-gray-300 text-[15px]"
+                [disabled]="!datosForm.get('provinciaDni')?.value || loadingDist()"
+                [value]="datosForm.get('distritoDni')?.value || ''"
+                (change)="onDistritoChange(($any($event.target).value))"
+              >
+                <option value="" disabled>
+                  @if (!datosForm.get('provinciaDni')?.value) { Primero elige una provincia }
+                  @else if (loadingDist()) { Cargando... }
+                  @else { Selecciona un distrito }
+                </option>
+
+                @for (dist of distritos(); track dist) {
+                  <option [value]="dist">{{ dist }}</option>
+                }
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">Domicilio según DNI</label>
+              <input
+                formControlName="domicilioDni"
+                type="text"
+                class="w-full rounded-xl border px-4 py-2.5 bg-gray-50 border-gray-300 text-[15px]"
+                placeholder="Domicilio según DNI"
+              />
+            </div>
+          </div>
+          <div class="mt-8 flex items-end justify-end">
+            <div class="mt-8 flex items-end justify-end">
+              <button
+                type="button"
+                class="rounded-full px-8 py-3 bg-[#0a0d12] text-white font-semibold flex disabled:opacity-40 disabled:cursor-not-allowed"
+                [disabled]="datosForm.invalid || loadingSms()"
+                (click)="next()"
+              >
+                @if (loadingSms()) { Enviando código... } @else { Siguiente → }
+              </button>
+
+              @if (smsError()) {
+                <p class="mt-2 text-sm text-red-600 text-right">{{ smsError() }}</p>
+              }
+            </div>
+          </div>
+        </div>
+      }
+      @case ('verificacion') {
+        <div class="w-full max-w-md mx-auto text-[#1a202c]" [formGroup]="otpForm">
+          <button
+            type="button"
+            class="inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full border border-gray-200 text-sm hover:bg-gray-50"
+            (click)="prev()"
+          >
+            <span class="text-lg">←</span>
+            <span class="font-medium">Atrás</span>
+          </button>
+
+          <h2 class="text-[22px] font-bold leading-[30px] mb-2">
+            Verificación de tu celular
+          </h2>
+          <p class="text-sm text-gray-600 mb-8">
+            Se ha enviado un código a su celular {{ celularMasked }}
+          </p>
+
+          <div class="flex items-center justify-between gap-3 mb-8">
+            <input
+              type="text"
+              maxlength="1"
+              formControlName="d1"
+              class="w-12 h-14 rounded-xl border border-gray-300 bg-gray-50 text-center text-xl font-medium outline-none focus:ring-2 focus:ring-[#ffa101]"
+              (input)="onOtpInput($event, d2, null)"
+              #d1
+            />
+            <input
+              type="text"
+              maxlength="1"
+              formControlName="d2"
+              class="w-12 h-14 rounded-xl border border-gray-300 bg-gray-50 text-center text-xl font-medium outline-none focus:ring-2 focus:ring-[#ffa101]"
+              (input)="onOtpInput($event, d3, d1)"
+              #d2
+            />
+            <input
+              type="text"
+              maxlength="1"
+              formControlName="d3"
+              class="w-12 h-14 rounded-xl border border-gray-300 bg-gray-50 text-center text-xl font-medium outline-none focus:ring-2 focus:ring-[#ffa101]"
+              (input)="onOtpInput($event, d4, d2)"
+              #d3
+            />
+            <input
+              type="text"
+              maxlength="1"
+              formControlName="d4"
+              class="w-12 h-14 rounded-xl border border-gray-300 bg-gray-50 text-center text-xl font-medium outline-none focus:ring-2 focus:ring-[#ffa101]"
+              (input)="onOtpInput($event, d5, d3)"
+              #d4
+            />
+            <input
+              type="text"
+              maxlength="1"
+              formControlName="d5"
+              class="w-12 h-14 rounded-xl border border-gray-300 bg-gray-50 text-center text-xl font-medium outline-none focus:ring-2 focus:ring-[#ffa101]"
+              (input)="onOtpInput($event, d6, d4)"
+              #d5
+            />
+            <input
+              type="text"
+              maxlength="1"
+              formControlName="d6"
+              class="w-12 h-14 rounded-xl border border-gray-300 bg-gray-50 text-center text-xl font-medium outline-none focus:ring-2 focus:ring-[#ffa101]"
+              (input)="onOtpInput($event, null, d5)"
+              #d6
+            />
+          </div>
+
+          <button
+            type="button"
+            class="w-full flex items-center justify-center gap-2 rounded-full px-6 py-3
+         bg-[#0a0d12] text-white font-semibold
+         disabled:opacity-40 disabled:cursor-not-allowed mb-2"
+            [disabled]="!otpValid || verifyingOtp()"
+            (click)="verifyAndCreate()"
+          >
+            @if (verifyingOtp()) {
+              Verificando...
+            } @else {
+              Verificar y crear cuenta →
+            }
+          </button>
+
+          <button
+            type="button"
+            class="w-full rounded-full px-6 py-3 border border-gray-300 text-sm font-medium
+         disabled:text-gray-400 disabled:border-gray-200 disabled:cursor-not-allowed"
+            [disabled]="countdown() > 0 || resendingOtp()"
+            (click)="resendCode()"
+          >
+            @if (resendingOtp()) {
+              Reenviando...
+            } @else if (countdown() > 0) {
+              Reenviar código {{ countdownText() }}
+            } @else {
+              Reenviar código
+            }
+          </button>
+        </div>
+      }
+      @case ('credenciales') {
+        <div class="w-full max-w-md mx-auto text-[#1a202c]" [formGroup]="credencialesForm">
+          <button
+            type="button"
+            class="inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full border border-gray-200 text-sm hover:bg-gray-50"
+            (click)="prev()"
+          >
+            <span class="text-lg">←</span>
+            <span class="font-medium">Atrás</span>
+          </button>
+
+          <h2 class="text-[22px] font-bold leading-[30px] mb-6">
+            Crea una contraseña
+          </h2>
+
+          <div class="flex flex-col gap-4">
+            <div>
+              <label class="block text-sm font-medium mb-1">Ingresa tu contraseña</label>
+
+              <div class="relative">
+                <input
+                  [type]="showPassword() ? 'text' : 'password'"
+                  formControlName="password"
+                  placeholder="Contraseña"
+                  class="w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-2.5 text-[15px]
+             outline-none focus:ring-2 focus:ring-[#ffa101]"
+                />
+
+                <button
+                  type="button"
+                  class="absolute inset-y-0 right-3 flex items-center justify-center"
+                  (click)="showPassword.set(!showPassword())"
+                  aria-label="Mostrar/Ocultar contraseña"
+                  title="Mostrar/Ocultar contraseña"
+                >
+                  @if (showPassword()) {
+                    <img src="assets/icons/eye-off-line.svg" class="w-5 h-5" alt="Ocultar contraseña" />
+                  } @else {
+                    👁️
+                  }
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium mb-1">Confirma tu contraseña</label>
+              <div class="relative">
+                <input
+                  [type]="showPasswordConfirm() ? 'text' : 'password'"
+                  formControlName="passwordConfirm"
+                  placeholder="Contraseña"
+                  class="w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-2.5 text-[15px]
+                   outline-none focus:ring-2 focus:ring-[#ffa101]"
+                />
+                <button
+                  type="button"
+                  class="absolute inset-y-0 right-3 flex items-center text-gray-400 text-sm"
+                  (click)="showPasswordConfirm.set(!showPasswordConfirm())"
+                >
+                  @if (showPasswordConfirm()) {
+                    <img src="assets/icons/eye-off-line.svg" class="w-5 h-5" alt="Ocultar contraseña" />
+                  } @else {
+                    👁️
+                  }
+                </button>
+              </div>
+
+              @if (passwordMismatch()) {
+                <p class="mt-1 text-xs text-red-500">
+                  Las contraseñas no coinciden.
+                </p>
+              }
+            </div>
+          </div>
+
+          <div class="mt-8">
+            <button
+              type="button"
+              class="w-full rounded-full px-6 py-3 bg-[#0a0d12] text-white font-semibold disabled:opacity-40 disabled:cursor-not-allowed"
+              [disabled]="isLoading() || datosForm.invalid || credencialesForm.invalid"
+              (click)="finish()"
+            >
+              @if (isLoading()) { Registrando... } @else { Confirmar }
+            </button>
+          </div>
+        </div>
+      }
+    }
+  </div>
 </div>
