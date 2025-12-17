@@ -655,7 +655,7 @@
                 type="text"
                 [value]="dni()"
                 readonly
-                class="w-full rounded-xl border border-gray-300 bg-gray-50 px-4 py-2.5 text-[15px] text-gray-500 outline-none"
+                class="w-full rounded-xl border border-gray-300 bg-gray-300 px-4 py-2.5 text-[15px] text-gray-500 outline-none"
               />
             </div>
             <div>
@@ -666,7 +666,7 @@
                 placeholder="Martha María"
                 readonly
                 class="w-full rounded-xl border px-4 py-2.5 text-[15px] outline-none
-                 bg-gray-50 border-gray-300 focus:ring-2 focus:ring-[#ffa101] text-gray-500"
+                 bg-gray-300 border-gray-300 focus:ring-2 focus:ring-[#ffa101] text-gray-500"
               />
             </div>
             <div>
@@ -677,7 +677,7 @@
                 readonly
                 placeholder="López Gutiérrez"
                 class="w-full rounded-xl border px-4 py-2.5 text-[15px] outline-none
-                 bg-gray-50 border-gray-300 focus:ring-2 focus:ring-[#ffa101] text-gray-500"
+                 bg-gray-300 border-gray-300 focus:ring-2 focus:ring-[#ffa101] text-gray-500"
               />
             </div>
             <div>
@@ -816,10 +816,9 @@
             </h2>
             <div>
               <label class="block text-sm font-medium mb-1">Departamento según DNI</label>
-
               <select
+                formControlName="departamentoDni"
                 class="w-full rounded-xl border px-4 py-2.5 bg-gray-50 border-gray-300 text-[15px]"
-                [value]="datosForm.get('departamentoDni')?.value || ''"
                 (change)="onDepartamentoChange(($any($event.target).value))"
               >
                 <option value="" disabled>
@@ -833,11 +832,10 @@
             </div>
             <div>
               <label class="block text-sm font-medium mb-1">Provincia según DNI</label>
-
               <select
+                formControlName="provinciaDni"
                 class="w-full rounded-xl border px-4 py-2.5 bg-gray-50 border-gray-300 text-[15px]"
                 [disabled]="!datosForm.get('departamentoDni')?.value || loadingProv()"
-                [value]="datosForm.get('provinciaDni')?.value || ''"
                 (change)="onProvinciaChange(($any($event.target).value))"
               >
                 <option value="" disabled>
@@ -853,11 +851,10 @@
             </div>
             <div>
               <label class="block text-sm font-medium mb-1">Distrito según DNI</label>
-
               <select
+                formControlName="distritoDni"
                 class="w-full rounded-xl border px-4 py-2.5 bg-gray-50 border-gray-300 text-[15px]"
                 [disabled]="!datosForm.get('provinciaDni')?.value || loadingDist()"
-                [value]="datosForm.get('distritoDni')?.value || ''"
                 (change)="onDistritoChange(($any($event.target).value))"
               >
                 <option value="" disabled>
