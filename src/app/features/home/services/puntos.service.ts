@@ -51,34 +51,51 @@ export class PuntosService {
     }
   }
 
-  async garantizarPuntos(puntos: number, cuotas: number): Promise<GarantizarResponse> {
+  async garantizarPuntos(puntos: number, cuotas: number, diaPago: number): Promise<GarantizarResponse> {
     const id = this.authStore.userId();
     if (!id) throw new Error('No hay usuario logeado');
 
     const url = `${this.BASE}/garantizar`;
-    const body = { idUsuario: Number(id), puntos, cuotas };
+    const body = {
+      idUsuario: Number(id),
+      puntos,
+      cuotas,
+      diaPago
+    };
 
     try {
       const resp = await firstValueFrom(
-        this.http.post<ApiResponse<GarantizarResponse>>(url, body) // JSON
+        this.http.post<ApiResponse<GarantizarResponse>>(url, body)
       );
 
       if (!resp?.data || resp.code !== '0') {
         throw new Error(resp?.message || 'No se pudo garantizar puntos');
       }
+
       return resp.data;
     } catch (err: any) {
-      const backendMsg = err?.error?.message || err?.error?.Message || err?.message;
-      throw new Error(backendMsg || 'Error desconocido al garantizar puntos');
+      const backendMsg =
+        err?.error?.message ||
+        err?.error?.Message ||
+        err?.message;
+
+      throw new Error(
+        backendMsg || 'Error desconocido al garantizar puntos'
+      );
     }
   }
 
-  async evaluarPuntos(puntos: number, cuotas: number): Promise<EvaluarResponse> {
+  async evaluarPuntos(puntos: number, cuotas: number, diaPago: number): Promise<EvaluarResponse> {
     const id = this.authStore.userId();
     if (!id) throw new Error('No hay usuario logeado');
 
     const url = `${this.BASE}/evaluar`;
-    const body = { idUsuario: Number(id), puntos, cuotas };
+    const body = {
+      idUsuario: Number(id),
+      puntos,
+      cuotas,
+      diaPago
+    };
 
     try {
       const resp = await firstValueFrom(
@@ -88,10 +105,17 @@ export class PuntosService {
       if (!resp?.data || resp.code !== '0') {
         throw new Error(resp?.message || 'No se pudo evaluar el préstamo');
       }
+
       return resp.data;
     } catch (err: any) {
-      const backendMsg = err?.error?.message || err?.error?.Message || err?.message;
-      throw new Error(backendMsg || 'Error desconocido al evaluar puntos');
+      const backendMsg =
+        err?.error?.message ||
+        err?.error?.Message ||
+        err?.message;
+
+      throw new Error(
+        backendMsg || 'Error desconocido al evaluar puntos'
+      );
     }
   }
 }

@@ -21,7 +21,7 @@ function intFmt(n: number) {
     Skeleton
   ]
 })
-export class GarantizarPuntosComponent implements OnInit {
+export class GarantizarPuntosComponent {
   private readonly router = inject(Router);
   private readonly userStore = inject(UserStore);
   private readonly puntosStore = inject(PuntosStore);
@@ -44,6 +44,7 @@ export class GarantizarPuntosComponent implements OnInit {
   cuotas = signal<number>(1);
   maxDisponibles = computed(() => Number(this.puntosDisponibles() || 0));
   isMontoValid   = computed(() => this.monto() > 0 && this.monto() <= this.maxDisponibles());
+  diaPago = signal<number | null>(null);
 
   isEvalLoading = signal(false);
   isConfLoading = signal(false);
@@ -55,10 +56,7 @@ export class GarantizarPuntosComponent implements OnInit {
   readonly activarFmt = computed(() => intFmt(this.puntosActivar() || 0));
   readonly montoFmtSoles = computed(() => intFmt(this.monto()));
   readonly montoFmtPts   = computed(() => intFmt(this.monto()));
-
-  ngOnInit() {
-    if (this.step === 2) this.evaluar();
-  }
+  readonly diasPago = [1, 2, 3, 4, 5, 10, 11, 15, 16, 25, 26, 27, 28, 29, 30];
 
   onInputMonto(value: string | number | null) {
     if (value === '' || value === null) {
@@ -74,16 +72,37 @@ export class GarantizarPuntosComponent implements OnInit {
 
   onCuotasChange(v: number) {
     this.cuotas.set(v);
-    this.evaluar();
+    if (this.diaPago()) {
+      this.evaluar();
+    }
+  }
+
+  onDiaPagoChange(v: number | null) {
+    this.diaPago.set(v);
+
+    if (v) {
+      this.evaluar();
+    } else {
+      this.evalData.set(null);
+    }
   }
 
   async evaluar() {
+    if (!this.diaPago()) {
+      this.evalData.set(null);
+      return;
+    }
+
     this.errorMsg.set(null);
     this.isEvalLoading.set(true);
+
     try {
       const puntos = this.monto();
       const cuotas = this.cuotas();
-      const data = await this.puntosSvc.evaluarPuntos(puntos, cuotas);
+      const diaPago = this.diaPago()!;
+
+      const data = await this.puntosSvc.evaluarPuntos(puntos, cuotas, diaPago);
+
       this.evalData.set(data);
     } catch (e: any) {
       this.evalData.set(null);
@@ -94,10 +113,14 @@ export class GarantizarPuntosComponent implements OnInit {
   }
 
   async confirmar() {
+    if (!this.diaPago()) return;
+
     this.errorMsg.set(null);
     this.isConfLoading.set(true);
+
     try {
-      await this.puntosSvc.garantizarPuntos(this.monto(), this.cuotas());
+      await this.puntosSvc.garantizarPuntos(this.monto(), this.cuotas(), this.diaPago()!);
+
       this.nextStep();
     } catch (e: any) {
       this.errorMsg.set(e?.message ?? 'No se pudo confirmar la garantía');
@@ -109,7 +132,6 @@ export class GarantizarPuntosComponent implements OnInit {
   nextStep() {
     if (this.step < 3) {
       this.step++;
-      if (this.step === 2) this.evaluar();
     }
   }
   prevStep() { if (this.step > 1) this.step--; }

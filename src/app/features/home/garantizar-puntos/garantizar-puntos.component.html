@@ -147,6 +147,30 @@
               <img src="assets/icons/ChevronDown.svg" alt="" class="w-6 h-6 pointer-events-none">
             </div>
           </div>
+
+          <div class="mt-4 w-[454px] mx-auto text-left">
+            <div class="text-[16px] font-medium mb-2">Día de pago</div>
+
+            <div class="rounded-xl border border-[#e5e7ea] px-3 py-3 flex items-center gap-3">
+              <select
+                class="flex-1 leading-6 outline-none bg-transparent"
+                [ngModel]="diaPago()"
+                (ngModelChange)="onDiaPagoChange($event)"
+              >
+                <option [ngValue]="null">Seleccionar</option>
+
+                @for (d of diasPago; track d) {
+                  <option [ngValue]="d">{{ d }}</option>
+                }
+              </select>
+
+              <img
+                src="assets/icons/ChevronDown.svg"
+                alt=""
+                class="w-6 h-6 pointer-events-none"
+              />
+            </div>
+          </div>
         </div>
         <div step-footer class="bg-[#f5f8ff] px-6 py-6 flex flex-col gap-4 text-[#717680] text-[14px]">
 
@@ -432,7 +456,29 @@
           </div>
         </div>
       </div>
+      <div class="mt-4 w-[454px] mx-auto text-left">
+        <div class="text-[16px] font-medium mb-2">Día de pago</div>
 
+        <div class="rounded-xl border border-[#e5e7ea] px-3 py-3 flex items-center gap-3">
+          <select
+            class="flex-1 leading-6 outline-none bg-transparent"
+            [ngModel]="diaPago()"
+            (ngModelChange)="onDiaPagoChange($event)"
+          >
+            <option [ngValue]="null">Seleccionar</option>
+
+            @for (d of diasPago; track d) {
+              <option [ngValue]="d">{{ d }}</option>
+            }
+          </select>
+
+          <img
+            src="assets/icons/ChevronDown.svg"
+            alt=""
+            class="w-6 h-6 pointer-events-none"
+          />
+        </div>
+      </div>
       <div step-footer class="bg-[#f5f8ff] px-4 py-5">
         <div class="rounded-2xl bg-[#f5f8ff] text-[#717680] text-[14px] flex flex-col gap-4">
 
