@@ -1,11 +1,11 @@
-import {Component, computed, inject, OnInit, signal} from '@angular/core';
+import {Component, computed, inject, signal} from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { StepCardComponent } from '../../../shared/components/step-card/step-card.component';
 import { UserStore } from '../../../shared/stores/user.store';
 import { PuntosStore } from '../../../shared/stores/puntos.store';
 import { FormsModule } from '@angular/forms';
-import {EvaluarResponse, PuntosService} from '../services/puntos.service';
-import {Skeleton} from 'primeng/skeleton';
+import { EvaluarResponse, PuntosService } from '../services/puntos.service';
+import { Skeleton } from 'primeng/skeleton';
 
 function intFmt(n: number) {
   return new Intl.NumberFormat('es-PE', { maximumFractionDigits: 0 }).format(n);

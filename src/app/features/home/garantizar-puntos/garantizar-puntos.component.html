@@ -455,91 +455,98 @@
                  alt="">
           </div>
         </div>
-      </div>
-      <div class="mt-4 w-[454px] mx-auto text-left">
-        <div class="text-[16px] font-medium mb-2">Día de pago</div>
 
-        <div class="rounded-xl border border-[#e5e7ea] px-3 py-3 flex items-center gap-3">
-          <select
-            class="flex-1 leading-6 outline-none bg-transparent"
-            [ngModel]="diaPago()"
-            (ngModelChange)="onDiaPagoChange($event)"
-          >
-            <option [ngValue]="null">Seleccionar</option>
+        <div class="w-full mt-4">
+          <div class="text-[14px] font-medium mb-2">Día de pago</div>
 
-            @for (d of diasPago; track d) {
-              <option [ngValue]="d">{{ d }}</option>
-            }
-          </select>
+          <div class="relative rounded-xl border border-[#e5e7ea] px-3 py-3">
+            <select
+              class="appearance-none w-full leading-6 outline-none bg-transparent"
+              [ngModel]="diaPago()"
+              (ngModelChange)="onDiaPagoChange($event)"
+            >
+              <option [ngValue]="null">Seleccionar</option>
 
-          <img
-            src="assets/icons/ChevronDown.svg"
-            alt=""
-            class="w-6 h-6 pointer-events-none"
-          />
+              @for (d of diasPago; track d) {
+                <option [ngValue]="d">{{ d }}</option>
+              }
+            </select>
+
+            <img
+              src="assets/icons/ChevronDown.svg"
+              class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 w-6 h-6"
+              alt=""
+            />
+          </div>
         </div>
       </div>
+
       <div step-footer class="bg-[#f5f8ff] px-4 py-5">
         <div class="rounded-2xl bg-[#f5f8ff] text-[#717680] text-[14px] flex flex-col gap-4">
-
-          <div class="flex items-center justify-between px-2">
+          <div class="px-2 flex flex-col gap-1">
             <span class="font-medium leading-5">Mi cuota mensual sería</span>
+
             @if (isEvalLoading()) {
               <p-skeleton width="120px" height="20px" borderRadius="6px"></p-skeleton>
             } @else {
-              <span class="text-[16px] leading-6 font-medium text-[#0a0d12]">
-              {{ evalData()?.cuotaMensual || '—' }}
-            </span>
+              <span class="text-[16px] leading-6 font-semibold text-[#0a0d12]">
+                {{ evalData()?.cuotaMensual || '—' }}
+              </span>
             }
           </div>
 
-          <div class="flex items-center justify-between px-2">
+          <div class="px-2 flex flex-col gap-1">
             <span class="font-medium leading-5">Tasa efectiva anual (TEA)</span>
+
             @if (isEvalLoading()) {
               <p-skeleton width="90px" height="20px" borderRadius="6px"></p-skeleton>
             } @else {
-              <span class="text-[16px] leading-6 font-medium text-[#0a0d12]">
-              {{ evalData()?.tea || '—' }}
-            </span>
+              <span class="text-[16px] leading-6 font-semibold text-[#0a0d12]">
+                {{ evalData()?.tea || '—' }}
+              </span>
             }
           </div>
 
-          <div class="flex items-center justify-between px-2">
+          <div class="px-2 flex flex-col gap-1">
             <span class="font-medium leading-5">Tasa de costo efectiva anual (TCEA)</span>
+
             @if (isEvalLoading()) {
               <p-skeleton width="110px" height="20px" borderRadius="6px"></p-skeleton>
             } @else {
-              <span class="text-[16px] leading-6 font-medium text-[#0a0d12]">
-              {{ evalData()?.tcea || '—' }}
-            </span>
+              <span class="text-[16px] leading-6 font-semibold text-[#0a0d12]">
+                {{ evalData()?.tcea || '—' }}
+              </span>
             }
           </div>
 
-          <div class="flex items-center justify-between px-2">
+          <div class="px-2 flex flex-col gap-1">
             <span class="font-medium leading-5">Comisión por uso de plataforma</span>
+
             @if (isEvalLoading()) {
               <p-skeleton width="110px" height="20px" borderRadius="6px"></p-skeleton>
             } @else {
-              <span class="text-[16px] leading-6 font-medium text-[#0a0d12]">
-              {{ evalData()?.comision || '—' }}
-            </span>
+              <span class="text-[16px] leading-6 font-semibold text-[#0a0d12]">
+                {{ evalData()?.comision || '—' }}
+              </span>
             }
           </div>
 
-          <div class="flex items-center justify-between px-2">
+          <div class="px-2 flex flex-col gap-1">
             <span class="font-medium leading-5">Total a pagar</span>
+
             @if (isEvalLoading()) {
               <p-skeleton width="120px" height="20px" borderRadius="6px"></p-skeleton>
             } @else {
-              <span class="text-[16px] leading-6 font-medium text-[#0a0d12]">
-              {{ evalData()?.totalPagar || '—' }}
-            </span>
+              <span class="text-[16px] leading-6 font-semibold text-[#0a0d12]">
+                {{ evalData()?.totalPagar || '—' }}
+              </span>
             }
           </div>
 
           @if (errorMsg()) {
             <div class="px-2 text-red-600 text-sm">{{ errorMsg() }}</div>
           }
+
           <div class="mt-1 flex flex-col gap-3 text-[18px] text-black">
             <button type="button"
                     class="w-full rounded-full bg-white border border-[#e9eaeb] px-6 py-4 inline-flex items-center justify-center gap-2"
@@ -552,9 +559,9 @@
               class="w-full rounded-full bg-[#0a0d12] text-white px-6 py-4 disabled:opacity-50 disabled:cursor-not-allowed"
               [disabled]="isConfLoading() || isEvalLoading() || !evalData()"
               (click)="confirmar()">
-            <span class="font-semibold leading-6">
-              {{ isConfLoading() ? 'Procesando…' : 'Confirmar' }}
-            </span>
+                <span class="font-semibold leading-6">
+                  {{ isConfLoading() ? 'Procesando…' : 'Confirmar' }}
+                </span>
             </button>
           </div>
         </div>
