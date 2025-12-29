@@ -17,6 +17,7 @@ export class RecargarPuntosComponent {
   monto = signal<number>(500);
   isLoading = signal(false);
   errorMsg  = signal<string | null>(null);
+  COMISION = signal<number>(0.13);
 
   nroMovimiento = signal<string | null>(null);
   fechaMovimiento = signal<string | null>(null);
@@ -36,7 +37,7 @@ export class RecargarPuntosComponent {
     this.isLoading.set(true);
 
     try {
-      const m = Math.max(300, Math.min(3000, Number(this.monto()) || 0));
+      const m = Math.max(350, Math.min(3000, Number(this.monto()) || 0));
 
       const resp = await this.puntosSvc.recargarPuntos(m);
       this.nroMovimiento.set(resp.nroMovimiento);

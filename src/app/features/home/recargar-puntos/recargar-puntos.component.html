@@ -33,13 +33,13 @@
                 ¿No calificas? Recarga puntos como garantía para un préstamo sin evaluación.
               </div>
               <div class="flex flex-col items-center gap-2 text-[#a4a7ae]">
-                <div class="leading-5 text-center">Desde S/.300.00 hasta S/.3,000.00</div>
+                <div class="leading-5 text-center">Desde S/.350.00 hasta S/.3,000.00</div>
                 <div class="w-[211px] rounded-xl bg-[#f9fafb] border border-[#e5e7ea] px-3 py-3 flex items-center text-[24px] text-[#131927]">
                   <div class="w-full flex items-center justify-center gap-3">
                     <b class="leading-8">S/.</b>
                     <input
                       type="number"
-                      min="300"
+                      min="350"
                       max="3000"
                       step="1"
                       placeholder="0.00"
@@ -135,7 +135,7 @@
                 {{ (monto() || 0) | number:'1.2-2' }}
               </div>
             </div>
-            <div class="text-[14px] text-[#a4a7ae] -mt-2">Desde S/.300.00 hasta S/.3,000.00</div>
+            <div class="text-[14px] text-[#a4a7ae] -mt-2">Desde S/.350.00 hasta S/.3,000.00</div>
 
             <div class="shadow-[0_1px_2px_rgba(10,13,18,0.05)] rounded-2xl bg-white border-2 border-[#e9eaeb] p-6 flex flex-col gap-4">
               <div class="text-center text-[20px] sm:text-[22px] font-semibold text-[#181d27]">Costos</div>
@@ -146,11 +146,11 @@
               </div>
               <div class="flex items-center justify-between text-[14px] text-[#717680]">
                 <div class="font-medium">Comisión</div>
-                <b class="w-[131px] text-right text-[#181d27]">S/.{{ (monto() * 0.05) | number:'1.2-2'}}</b>
+                <b class="w-[131px] text-right text-[#181d27]">S/.{{ (monto() * COMISION()) | number:'1.2-2'}}</b>
               </div>
               <div class="flex items-center justify-between text-[14px] text-[#717680]">
                 <div class="font-medium">Puntos a recargar</div>
-                <b class="w-[131px] text-right text-[#181d27]">Pts {{ (monto() - (monto() * 0.05)) | number:'1.2-2' }}</b>
+                <b class="w-[131px] text-right text-[#181d27]">Pts {{ (monto() - (monto() * COMISION())) | number:'1.2-2' }}</b>
               </div>
             </div>
             <div class="w-full rounded-lg bg-[#eef4ff] border border-[#6172f3] p-2 flex text-left gap-2">
@@ -163,7 +163,7 @@
             <button
               class="w-full rounded-full bg-black text-white py-4 px-6 text-[16px] sm:text-[18px] font-semibold cursor-pointer
              disabled:opacity-50 disabled:cursor-not-allowed"
-              [disabled]="isLoading() || (monto() < 300) || (monto() > 3000)"
+              [disabled]="isLoading() || (monto() < 350) || (monto() > 3000)"
               (click)="confirmarRecarga()">
               {{ isLoading() ? 'Procesando…' : 'CONFIRMAR RECARGA' }}
             </button>
@@ -282,14 +282,14 @@
           ¿No calificas? Recarga puntos como garantía para un préstamo sin evaluación.
         </div>
         <div class="flex flex-col items-center gap-2 text-[#a4a7ae]">
-          <div class="leading-5 text-center">Desde S/.300.00 hasta S/.3,000.00</div>
+          <div class="leading-5 text-center">Desde S/.350.00 hasta S/.3,000.00</div>
 
           <div class="w-full max-w-[260px] rounded-xl bg-[#f9fafb] border border-[#e5e7ea] px-3 py-3 flex items-center text-[22px] text-[#131927]">
             <div class="w-full flex items-center justify-center gap-3">
               <b class="leading-8">S/.</b>
               <input
                 type="number"
-                min="300"
+                min="350"
                 max="3000"
                 step="1"
                 placeholder="0.00"
@@ -389,7 +389,7 @@
           {{ (monto() || 0) | number:'1.2-2' }}
         </div>
       </div>
-      <div class="text-[14px] text-[#a4a7ae] -mt-2">Desde S/.300.00 hasta S/.3,000.00</div>
+      <div class="text-[14px] text-[#a4a7ae] -mt-2">Desde S/.350.00 hasta S/.3,000.00</div>
 
       <div class="shadow-[0_1px_2px_rgba(10,13,18,0.05)] rounded-2xl bg-white border-2 border-[#e9eaeb] p-6 flex flex-col gap-4">
         <div class="text-center text-[20px] sm:text-[22px] font-semibold text-[#181d27]">Costos</div>
@@ -400,11 +400,11 @@
         </div>
         <div class="flex items-center justify-between text-[14px] text-[#717680]">
           <div class="font-medium">Comisión</div>
-          <b class="w-[131px] text-right text-[#181d27]">S/.{{ (monto() * 0.05) | number:'1.2-2'}}</b>
+          <b class="w-[131px] text-right text-[#181d27]">S/.{{ (monto() * COMISION()) | number:'1.2-2'}}</b>
         </div>
         <div class="flex items-center justify-between text-[14px] text-[#717680]">
           <div class="font-medium">Puntos a recargar</div>
-          <b class="w-[131px] text-right text-[#181d27]">Pts {{ (monto() - (monto() * 0.05)) | number:'1.2-2' }}</b>
+          <b class="w-[131px] text-right text-[#181d27]">Pts {{ (monto() - (monto() * COMISION())) | number:'1.2-2' }}</b>
         </div>
       </div>
 
@@ -419,7 +419,7 @@
       <button
         class="w-full rounded-full bg-black text-white py-4 px-6 text-[16px] sm:text-[18px] font-semibold
                disabled:opacity-50 disabled:cursor-not-allowed"
-        [disabled]="isLoading() || (monto() < 300) || (monto() > 3000)"
+        [disabled]="isLoading() || (monto() < 350) || (monto() > 3000)"
         (click)="confirmarRecarga()">
         {{ isLoading() ? 'Procesando…' : 'CONFIRMAR RECARGA' }}
       </button>

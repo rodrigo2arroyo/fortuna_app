@@ -209,7 +209,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   async onDepartamentoChange(dep: string) {
-    this.resetUbigeo('provinciaDni', dep);
+    this.datosForm.patchValue({ provinciaDni: '', distritoDni: '' });
+    this.provincias.set([]);
+    this.distritos.set([]);
+
     if (!dep) return;
 
     await this.loadUbigeo(
@@ -220,8 +223,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   async onProvinciaChange(prov: string) {
+    this.datosForm.patchValue({ distritoDni: '' });
+    this.distritos.set([]);
+
     const dep = this.datosForm.get('departamentoDni')?.value;
-    this.resetUbigeo('distritoDni', prov);
     if (!dep || !prov) return;
 
     await this.loadUbigeo(
@@ -303,15 +308,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
       this.ubigeoError.set(e?.message || 'Error cargando datos');
     } finally {
       loading.set(false);
-    }
-  }
-
-  private resetUbigeo(control: string, value: string) {
-    this.datosForm.patchValue({ [control]: value });
-    if (control === 'provinciaDni') this.distritos.set([]);
-    if (control === 'departamentoDni') {
-      this.provincias.set([]);
-      this.distritos.set([]);
     }
   }
 
